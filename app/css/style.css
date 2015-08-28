@@ -2,9 +2,12 @@
     width: 100%;
 }
 
-.upperPage md-whiteframe {
-    margin: 20px;
-    padding: 20px;
+#whiteFrameContainer {
+    margin: 2%;
+    height: 80%;
+    width: 96%;
+    #border: 3px solid red;
+    position: absolute;
 
     background: -webkit-linear-gradient(90deg, #348F50 10%, #56B4D3 90%); /* Chrome 10+, Saf5.1+ */
     background:    -moz-linear-gradient(90deg, #348F50 10%, #56B4D3 90%); /* FF3.6+ */
@@ -14,7 +17,38 @@
 
 }
 
-.upperPage .right {
+#canvasContainer {
+    margin: 0 auto;
+    width: 50%;
+    height: 90%;
+    border: 10px #333 solid;
+}
+
+#addVideoButton {
     margin-right: 2%;
-    margin-bottom: 4%;
+    margin-bottom: 2%;
+    position: absolute;
+}
+
+
+#lowerPage {
+    position: absolute;
+}
+
+
+#toolsContainer {
+    position: absolute;
+    bottom: 2%;
+    left: 1%;
+    width: 20%;
+}
+.fabSpeedDialdemoBasicUsage .text-capitalize {
+    text-transform: capitalize; }
+.fabSpeedDialdemoBasicUsage .md-fab:hover, .fabSpeedDialdemoBasicUsage .md-fab.md-focused {
+    background-color: #000 !important; }
+.fabSpeedDialdemoBasicUsage p.note {
+    font-size: 1.2rem; }
+.fabSpeedDialdemoBasicUsage .lock-size {
+    margin-left: auto;
+    margin-right: auto;
 }

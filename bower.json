@@ -18,12 +18,13 @@
   },
   "dependencies": {
     "angular": "~1.4.4",
-    "angular-material": "~0.10.1",
     "angular-animate": "~1.4.4",
     "angular-aria": "~1.4.4",
-    "hammerjs": "~2.0.4",
-    "ngvideo": "~0.4.13",
+    "angular-material": "~0.10.1",
+    "angular-route": "~1.4.4",
     "bootstrap": "~3.3.5",
-    "mdi": "~1.2.64"
+    "hammerjs": "~2.0.4",
+    "mdi": "~1.2.64",
+    "ngvideo": "~0.4.13"
   }
 }

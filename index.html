@@ -11,57 +11,35 @@
     <link rel="stylesheet" href="app/css/video-player.css">
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=RobotoDraft:400,500,700,400italic">
 </head>
-<body ng-app="helperApp" ng-controller="helperController" layout="column" layout-align="top center">
-<md-toolbar>
-    <div class="md-toolbar-tools">
-        <span class="md-flex">Remote Assistant</span>
-    </div>
-</md-toolbar>
-<md-content layout="column" layout-align="center center">
-    <div layout="column" layout-fill="" style="padding-bottom: 32px;" class="upperPage">
-        <md-whiteframe class="md-whiteframe-z5" layout="" layout-align="center center">
-            <section class="videoContainer" ng-video ng-model="interface">
-                <div class="videoScreenContainer">
-                    <!-- Video Screen Directive -->
-                    <video vi-screen></video>
-                </div>
-                <div class="videoAccessories">
-                    <!-- Controls Directive -->
-                    <section vi-controls class="controls">
-                        <span ng-click="interface.controls.play()" title="Play">
-                            <i class="mdi mdi-play mdi-36px"></i>  <!-- play icon -->
-                        </span>
-                        <span ng-click="interface.controls.pause()" title="Pause">
-                            <i class="mdi mdi-pause mdi-36px"></i>  <!-- pause icon -->
-                        </span>
-                    </section>
-                    <!-- Full Screen Directive -->
-                    <section class="full-screen">
-                    <span title="Full Screen" vi-full-screen-toggle>
-                        <i class="mdi mdi-fullscreen mdi-36px"></i>  <!-- fullscreen icon -->
-                    </span>
-                    </section>
-                </div>
-            </section>
-            <md-button class="md-fab md-primary md-fab-bottom-right right" aria-label="Add">
-                <i class="mdi mdi-plus mdi-24px"></i>  <!-- plus icon -->
-                <md-tooltip>
-                    Select Video
-                </md-tooltip>
-            </md-button>
-        </md-whiteframe>
-    </div>
-    <div class="lowerPage">
+<body ng-app="helperApp" layout="column" layout-align="top center">
 
-    </div>
-</md-content>
+<header-toolbar></header-toolbar>
+<div ng-controller="helperController" layout="column" layout-fill style="padding-bottom: 0px;">
+    <md-whiteframe id="whiteFrameContainer" class="md-whiteframe-z5" layout layout-align="center center">
+        <drawing-tools></drawing-tools>
+        <video-player></video-player>
+        <div id="canvasContainer">
+            <canvas id="outputCanvas"></canvas>
+        </div>
+        <md-button id="addVideoButton" class="md-fab md-primary md-fab-bottom-right right" aria-label="Add">
+            <i class="mdi mdi-plus mdi-24px"></i>  <!-- plus icon -->
+            <md-tooltip>Select Video</md-tooltip>
+        </md-button>
+    </md-whiteframe>
+</div>
+
+<!--<div ng-include="'app/partials/header.html'"></div>-->
+<!--<div ng-controller="helperController" ng-include="'app/partials/upper-page.html'" id="upperPage"></div>-->
+<!--<div ng-include="'app/partials/lower-page.html'" id="lowerPage"></div>-->
 
 <script src="bower_components/angular/angular.min.js"></script>
+<script src="bower_components/angular-route/angular-route.min.js"></script>
 <script src="bower_components/angular-aria/angular-aria.min.js"></script>
 <script src="bower_components/angular-animate/angular-animate.min.js"></script>
 <script src="bower_components/hammerjs/hammer.min.js"></script>
 <script src="bower_components/angular-material/angular-material.min.js"></script>
 <script src="bower_components/ngvideo/dist/ng-video.min.js"></script>
-<script src="app/js/script.js"></script>
+<script src="app/js/app.js"></script>
+<script src="app/js/controllers.js"></script>
 </body>
 </html>

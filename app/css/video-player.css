@@ -1,9 +1,11 @@
 section.videoContainer {
     padding: 5px;
-    position: relative;
-    width: 48%;
-    box-shadow: 0 0 15px rgba(0, 0, 0, .25);
-    border: 1px solid lightgray;
+    position: absolute;
+    right: 1%;
+    top: 2%;
+    width: 20%;
+    box-shadow: 0 0 35px rgba(0, 0, 0, .25);
+    border: 1px solid black;
 }
 
 section.videoContainer .videoScreenContainer {
