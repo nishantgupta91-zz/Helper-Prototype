@@ -3,12 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <title>Vicolla Assistant</title>
+    <title>ViColla</title>
     <link rel="stylesheet" href="bower_components/angular-material/angular-material.min.css">
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="bower_components/angular-material-icons/angular-material-icons.css">
     <link rel="stylesheet" href="bower_components/mdi/css/materialdesignicons.min.css" media="all" type="text/css" />
     <link rel="stylesheet" href="app/css/style.css">
     <link rel="stylesheet" href="app/css/video-player.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=RobotoDraft:400,500,700,400italic">
 </head>
 <body ng-app="helperApp" layout="column" layout-align="top center">
@@ -16,10 +18,10 @@
 <header-toolbar></header-toolbar>
 <div ng-controller="helperController" layout="column" layout-fill style="padding-bottom: 0px;">
     <md-whiteframe id="whiteFrameContainer" class="md-whiteframe-z5" layout layout-align="center center">
-        <drawing-tools></drawing-tools>
+        <bottom-grid-elem cursor="cursor"></bottom-grid-elem>
         <video-player></video-player>
         <div id="canvasContainer">
-            <canvas id="outputCanvas"></canvas>
+            <canvas id="outputCanvas" drawing></canvas>
         </div>
         <md-button id="addVideoButton" class="md-fab md-primary md-fab-bottom-right right" aria-label="Add">
             <i class="mdi mdi-plus mdi-24px"></i>  <!-- plus icon -->
@@ -28,18 +30,23 @@
     </md-whiteframe>
 </div>
 
-<!--<div ng-include="'app/partials/header.html'"></div>-->
-<!--<div ng-controller="helperController" ng-include="'app/partials/upper-page.html'" id="upperPage"></div>-->
-<!--<div ng-include="'app/partials/lower-page.html'" id="lowerPage"></div>-->
+
+
+
+
+
+
 
 <script src="bower_components/angular/angular.min.js"></script>
 <script src="bower_components/angular-route/angular-route.min.js"></script>
 <script src="bower_components/angular-aria/angular-aria.min.js"></script>
+<script src="bower_components/angular-material-icons/angular-material-icons.min.js"></script>
 <script src="bower_components/angular-animate/angular-animate.min.js"></script>
 <script src="bower_components/hammerjs/hammer.min.js"></script>
 <script src="bower_components/angular-material/angular-material.min.js"></script>
 <script src="bower_components/ngvideo/dist/ng-video.min.js"></script>
 <script src="app/js/app.js"></script>
+<script src="app/js/directives.js"></script>
 <script src="app/js/controllers.js"></script>
 </body>
 </html>

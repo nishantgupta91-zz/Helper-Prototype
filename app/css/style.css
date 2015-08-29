@@ -17,13 +17,6 @@
 
 }
 
-#canvasContainer {
-    margin: 0 auto;
-    width: 50%;
-    height: 90%;
-    border: 10px #333 solid;
-}
-
 #addVideoButton {
     margin-right: 2%;
     margin-bottom: 2%;
@@ -35,20 +28,92 @@
     position: absolute;
 }
 
-
+/*drawing tools*/
 #toolsContainer {
     position: absolute;
     bottom: 2%;
     left: 1%;
     width: 20%;
+    border: 3px solid red;
 }
 .fabSpeedDialdemoBasicUsage .text-capitalize {
     text-transform: capitalize; }
 .fabSpeedDialdemoBasicUsage .md-fab:hover, .fabSpeedDialdemoBasicUsage .md-fab.md-focused {
-    background-color: #000 !important; }
+    #background-color: #000 !important; }
 .fabSpeedDialdemoBasicUsage p.note {
     font-size: 1.2rem; }
 .fabSpeedDialdemoBasicUsage .lock-size {
-    margin-left: auto;
-    margin-right: auto;
+    border: 3px solid black;
+    position: relative;
+}
+.fabSpeedDialdemoBasicUsage .lock-size md-fab-speed-dial {
+    position: relative;
+    top: 0;
+    border: 3px solid blue;
+}
+
+/* bottom grid */
+#bottomGridElement {
+    position: absolute;
+    bottom: 2%;
+    width: 20%;
+}
+
+/*colors toolbar*/
+#colorsContainer {
+    position: absolute;
+    top: 2%;
+    left: 1%;
+    width: 20%;
+}
+#colorsContainer md-fab-toolbar {
+    position: relative;
+    padding: 1%;
+}
+.fabToolbardemoBasicUsage md-fab-toolbar.md-left md-fab-trigger.align-with-text {
+    left: 7px;
+}
+
+ul {
+    border-top: 1px solid #D5DDE4;
+    padding: 0;
+    margin: 0;
+}
+
+ul#tools {
+    border-top: none;
+    padding-left: 8px;
+}
+
+ul#palette {
+    line-height: 0;
+}
+
+#palette li, #erase {
+    display: inline-block;
+    height: 24px;
+    width: 24px;
+    border-radius: 100%;
+    border: 1px solid #D5DDE4;
+    margin: 4px 1px;
+}
+
+#palette span#erase {
+    margin-left: 8px;
+    background-image: url("../images/eraser24.png");
+}
+
+/* output canvas */
+#outputCanvas{
+    border-bottom: 1px solid rgba(0,0,0,0.3);
+    background-color: #FFF;
+    box-shadow: 0 9px 20px -5px rgba(0,0,0,0.8);
+}
+
+#canvasContainer{
+    text-align: center;
+    margin: 0 auto;
+    width: 50%;
+    height: 90%;
+    border: 10px #333 solid;
 }

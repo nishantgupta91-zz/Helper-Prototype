@@ -1,65 +1,77 @@
-<div id="toolsContainer" ng-controller="demoController as demo" layout="column" class="fabSpeedDialdemoBasicUsage" ng-app="helperApp">
-    <md-content layout="column" style="background-color: transparent">
-        <div class="lock-size" layout="row" layout-align="center center">
-            <md-fab-speed-dial md-open="demo.isDrawingToolOpen" md-direction="up" ng-class="demo.selectedMode">
+<div id="toolsContainer" ng-controller="demoController as demo" layout="column" class="fabSpeedDialdemoBasicUsage">
+        <div class="lock-size" layout="column" layout-align="center center">
+            <md-fab-speed-dial md-open="demo.isDrawingToolOpen" md-direction="right" ng-class="demo.selectedMode">
                 <md-fab-trigger>
                     <md-button aria-label="menu" class="md-fab md-warn">
-                        <md-icon md-svg-src="img/icons/menu.svg"></md-icon>
+                        <i class="material-icons">mode_edit</i>
                     </md-button>
                 </md-fab-trigger>
 
                 <md-fab-actions>
                     <md-button aria-label="twitter" class="md-fab md-raised md-mini">
-                        <md-icon md-svg-src="img/icons/twitter.svg"></md-icon>
+                        <i class="material-icons">mode_edit</i>
                     </md-button>
                     <md-button aria-label="facebook" class="md-fab md-raised md-mini">
-                        <md-icon md-svg-src="img/icons/facebook.svg"></md-icon>
-                    </md-button>
-                    <md-button aria-label="Google Hangout" class="md-fab md-raised md-mini">
-                        <md-icon md-svg-src="img/icons/hangout.svg"></md-icon>
+                        <i class="material-icons">panorama_wide_angle</i>
                     </md-button>
                 </md-fab-actions>
             </md-fab-speed-dial>
 
-            <md-fab-speed-dial md-open="demo.isShapesToolOpen" md-direction="up" ng-class="demo.selectedMode">
+            <md-fab-speed-dial md-open="demo.isShapesToolOpen" md-direction="right" ng-class="demo.selectedMode">
                 <md-fab-trigger>
                     <md-button aria-label="menu" class="md-fab md-warn">
-                        <md-icon md-svg-src="img/icons/menu.svg"></md-icon>
+                        <i class="material-icons">aspect_ratio</i>
                     </md-button>
                 </md-fab-trigger>
 
                 <md-fab-actions>
                     <md-button aria-label="twitter" class="md-fab md-raised md-mini">
-                        <md-icon md-svg-src="img/icons/twitter.svg"></md-icon>
+                        <i class="material-icons">panorama_fish_eye</i>
                     </md-button>
                     <md-button aria-label="facebook" class="md-fab md-raised md-mini">
-                        <md-icon md-svg-src="img/icons/facebook.svg"></md-icon>
+                        <i class="material-icons">crop_din</i>
                     </md-button>
                     <md-button aria-label="Google Hangout" class="md-fab md-raised md-mini">
-                        <md-icon md-svg-src="img/icons/hangout.svg"></md-icon>
+                        <i class="material-icons">change_history</i>
+                    </md-button>
+                    <md-button aria-label="Google Hangout" class="md-fab md-raised md-mini">
+                        <i class="material-icons">remove</i>
+                    </md-button>
+                    <md-button aria-label="Google Hangout" class="md-fab md-raised md-mini">
+                        <i class="material-icons">call_made</i>
+                    </md-button>
+                    <md-button aria-label="Google Hangout" class="md-fab md-raised md-mini">
+                        <i class="material-icons">call_received</i>
                     </md-button>
                 </md-fab-actions>
             </md-fab-speed-dial>
 
-            <md-fab-speed-dial md-open="demo.isTextToolOpen" md-direction="up" ng-class="demo.selectedMode">
+            <md-fab-speed-dial md-open="demo.isTextToolOpen" md-direction="right" ng-class="demo.selectedMode">
                 <md-fab-trigger>
                     <md-button aria-label="menu" class="md-fab md-warn">
-                        <i class="mdi mdi-pencil mdi-24px"></i>  <!-- plus icon -->
+                        <i class="material-icons">format_color_text</i>
+                    </md-button>
+                </md-fab-trigger>
+            </md-fab-speed-dial>
+
+            <md-fab-speed-dial md-open="demo.isColorToolOpen" md-direction="right" ng-class="demo.selectedMode">
+                <md-fab-trigger>
+                    <md-button aria-label="menu" class="md-fab md-warn">
+                        <i class="material-icons">color_lens</i>
                     </md-button>
                 </md-fab-trigger>
 
                 <md-fab-actions>
-                    <md-button aria-label="twitter" class="md-fab md-raised md-mini">
+                    <md-button aria-label="twitter" class="md-fab md-raised md-mini" style="background-color: red">
                         <md-icon md-svg-src="img/icons/twitter.svg"></md-icon>
                     </md-button>
-                    <md-button aria-label="facebook" class="md-fab md-raised md-mini">
+                    <md-button aria-label="facebook" class="md-fab md-raised md-mini" style="background-color: green">
                         <md-icon md-svg-src="img/icons/facebook.svg"></md-icon>
                     </md-button>
-                    <md-button aria-label="Google Hangout" class="md-fab md-raised md-mini">
+                    <md-button aria-label="Google Hangout" class="md-fab md-raised md-mini" style="background-color: blue">
                         <md-icon md-svg-src="img/icons/hangout.svg"></md-icon>
                     </md-button>
                 </md-fab-actions>
             </md-fab-speed-dial>
         </div>
-    </md-content>
 </div>
