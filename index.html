@@ -13,12 +13,13 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=RobotoDraft:400,500,700,400italic">
 </head>
-<body ng-app="helperApp" layout="column" layout-align="top center">
+<body ng-app="mainApp" layout="column" layout-align="top center">
 
 <header-toolbar></header-toolbar>
-<div ng-controller="helperController" layout="column" layout-fill style="padding-bottom: 0px;">
+
+<div ng-controller="mainController" layout="column" layout-fill style="padding-bottom: 0px; cursor: pointer;">
     <md-whiteframe id="whiteFrameContainer" class="md-whiteframe-z5" layout layout-align="center center">
-        <bottom-grid-elem cursor="cursor"></bottom-grid-elem>
+        <my-toolbox></my-toolbox>
         <video-player></video-player>
         <div id="canvasContainer">
             <canvas id="outputCanvas" drawing></canvas>

@@ -28,50 +28,11 @@
     position: absolute;
 }
 
-/*drawing tools*/
-#toolsContainer {
-    position: absolute;
-    bottom: 2%;
-    left: 1%;
-    width: 20%;
-    border: 3px solid red;
-}
-.fabSpeedDialdemoBasicUsage .text-capitalize {
-    text-transform: capitalize; }
-.fabSpeedDialdemoBasicUsage .md-fab:hover, .fabSpeedDialdemoBasicUsage .md-fab.md-focused {
-    #background-color: #000 !important; }
-.fabSpeedDialdemoBasicUsage p.note {
-    font-size: 1.2rem; }
-.fabSpeedDialdemoBasicUsage .lock-size {
-    border: 3px solid black;
-    position: relative;
-}
-.fabSpeedDialdemoBasicUsage .lock-size md-fab-speed-dial {
-    position: relative;
-    top: 0;
-    border: 3px solid blue;
-}
-
 /* bottom grid */
 #bottomGridElement {
     position: absolute;
     bottom: 2%;
     width: 20%;
-}
-
-/*colors toolbar*/
-#colorsContainer {
-    position: absolute;
-    top: 2%;
-    left: 1%;
-    width: 20%;
-}
-#colorsContainer md-fab-toolbar {
-    position: relative;
-    padding: 1%;
-}
-.fabToolbardemoBasicUsage md-fab-toolbar.md-left md-fab-trigger.align-with-text {
-    left: 7px;
 }
 
 ul {

@@ -1,27 +1,16 @@
-<div ng-controller="toolboxController" class="md-padding bottomSheetdemoBasicUsage" id="bottomGridElement">
+<div class="md-padding bottomSheetdemoBasicUsage" id="bottomGridElement">
 
     <div class="bottom-sheet-demo inset" layout="row" layout-sm="column" layout-align="center">
-        <md-button flex="50" class="md-primary md-raised" ng-click="showGridBottomSheet($event)">Tools</md-button>
+        <md-button flex="50" class="md-primary md-raised" ng-click="showToolbox($event)">Tools</md-button>
     </div>
 
-    <div ng-if="alert">
+    <div ng-if="toolboxAlert">
         <br>
         <b layout="row" layout-align="center center" class="md-padding">
-            {{alert}}
+            {{toolboxAlert}}
         </b>
+        <h2>
+            <md-icon md-svg-src="{{cursorIcon.icon}}"></md-icon>
+        </h2>
     </div>
-    <script type="text/ng-template" id="bottom-sheet-grid-template.html">
-        <md-bottom-sheet class="md-grid">
-            <md-list>
-                <md-list-item ng-repeat="item in items">
-
-                    <md-button class="md-grid-item-content" ng-click="listItemClick($index)">
-                        <md-icon md-svg-src="{{item.icon}}"></md-icon>
-                        <div class="md-grid-text"> {{ item.name }} </div>
-                    </md-button>
-
-                </md-list-item>
-            </md-list>
-        </md-bottom-sheet>
-    </script>
 </div>

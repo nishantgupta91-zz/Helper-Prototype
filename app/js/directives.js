@@ -1,7 +1,7 @@
 /**
  * Created by Nishant on 8/28/2015.
  */
-angular.module('helperApp')
+angular.module('mainApp')
     .directive("drawing", function(){
     return {
         restrict: "A",
@@ -80,17 +80,15 @@ angular.module('helperApp')
             templateUrl: "app/partials/header.html"
         }
     })
-    .directive('bottomGridElem', function() {
+    .directive('myToolbox', function() {
         return {
             restrict: "E",
             $scope: {
-                cursor: "="
+                name: "=",
+                toolboxAlert: "="
             },
             templateUrl: "app/partials/toolbox.html",
-            controller: function($scope) {
-                console.log("=========== bottom grid =============");
-                console.log($scope.cursor);
-            }
+            controller: "toolboxController"
         }
     })
     .directive('videoPlayer', function() {

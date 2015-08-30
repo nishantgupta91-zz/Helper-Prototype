@@ -1,25 +1,37 @@
 /**
  * Created by Nishant on 8/28/2015.
  */
-angular.module('helperApp')
-    .controller('helperController', ['$scope', 'video', function($scope, video){
-        video.addSource('mp4', 'app/resources/hand.mp4');
-    }])
-    .controller('toolboxController', function($scope, $timeout, $mdBottomSheet) {
-        $scope.alert = '';
+angular.module('mainApp')
 
-        $scope.showGridBottomSheet = function($event) {
-            $scope.alert = '';
-            $mdBottomSheet.show({
-                templateUrl: 'bottom-sheet-grid-template.html',
-                controller: 'GridBottomSheetCtrl',
-                targetEvent: $event
-            }).then(function(clickedItem) {
-                $scope.alert = clickedItem.name + ' clicked!';
-            });
+    .controller('mainController', ['$scope', 'video', function($scope, video){
+        video.addSource('mp4', 'app/resources/hand.mp4');
+        $scope.toolboxAlert = "";
+        console.log('==== main ====');
+        console.log($scope.toolboxAlert);
+    }])
+
+    .controller('toolboxController', function($scope, $mdBottomSheet) {
+        console.log("======== toolbox =============");
+        $scope.toolboxAlert = '';
+        $scope.cursorIcon = '';
+        console.log($scope.toolboxAlert);
+        $scope.showToolbox = function($event) {
+            $scope.toolboxAlert = '';
+            $scope.cursorIcon = '';
+            $mdBottomSheet
+                .show({
+                    templateUrl: 'app/partials/toolboxGrid.html',
+                    controller: 'toolboxGridController',
+                    targetEvent: $event
+                })
+                .then(function(clickedItem) {
+                    $scope.toolboxAlert = clickedItem.name + ' clicked!';
+                    $scope.cursorIcon = clickedItem;
+                });
         };
     })
-    .controller('GridBottomSheetCtrl', function($scope, $mdBottomSheet) {
+
+    .controller('toolboxGridController', function($scope, $mdBottomSheet) {
         $scope.items = [
             { name: 'Pen', icon: 'pen' },
             { name: 'Circle', icon: 'circle' },
@@ -32,8 +44,7 @@ angular.module('helperApp')
             { name: 'Eraser', icon: 'eraser' },
             { name: 'Clear', icon: 'clear' }
         ];
-
-        $scope.listItemClick = function($index) {
+        $scope.toolClicked = function($index) {
             var clickedItem = $scope.items[$index];
             //document.body.style.cursor = 'url(' + clickedItem.icon + '), auto';
             $mdBottomSheet.hide(clickedItem);

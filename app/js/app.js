@@ -4,7 +4,7 @@
 
 'use strict';
 
-angular.module('helperApp', ['ngMaterial', 'ngVideo'])
+angular.module('mainApp', ['ngMaterial', 'ngVideo'])
     .config(function($mdIconProvider) {
         $mdIconProvider
             .icon('text', 'app/img/icons/underline7.svg', 24)
