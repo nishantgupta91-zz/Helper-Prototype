@@ -3,11 +3,10 @@
  */
 angular.module('mainApp')
 
-    .controller('mainController', ['$scope', 'video', function($scope, video){
+    .controller('mainController', ['$scope', 'video', function($scope, video, $q){
         video.addSource('mp4', 'app/resources/hand.mp4');
-        $scope.toolboxAlert = "";
+        $scope.cursorIcon = "";
         console.log('==== main ====');
-        console.log($scope.toolboxAlert);
     }])
 
     .controller('toolboxController', function($scope, $mdBottomSheet) {
