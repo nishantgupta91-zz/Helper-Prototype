@@ -1,4 +1,4 @@
-section.videoContainer {
+section.video {
     padding: 5px;
     position: absolute;
     right: 1%;
@@ -8,13 +8,13 @@ section.videoContainer {
     border: 1px solid black;
 }
 
-section.videoContainer .videoScreenContainer {
+section.video .videoScreenContainer {
     position: relative;
     max-width: 100%;
     #border: 1px solid red;
 }
 
-section.videoContainer .videoScreenContainer video {
+section.video .videoScreenContainer video {
     background-color: rgba(0, 0, 0, .25);
     width: 100%;
     height: 100%;
@@ -22,13 +22,13 @@ section.videoContainer .videoScreenContainer video {
     #border: 1px solid black;
 }
 
-section.videoContainer .videoAccessories {
+section.video .videoAccessories {
     position: relative;
     height: 48px;
     border: 1px solid green;
 }
 
-section.videoContainer .videoAccessories section.controls {
+section.video .videoAccessories section.controls {
     position: absolute;
     z-index: 5;
     line-height: 48px;
@@ -38,7 +38,7 @@ section.videoContainer .videoAccessories section.controls {
     padding: 5px;
 }
 
-section.videoContainer .videoAccessories section.controls span {
+section.video .videoAccessories section.controls span {
     position: relative;
     cursor: pointer;
     line-height: 100%;
@@ -48,11 +48,11 @@ section.videoContainer .videoAccessories section.controls span {
     border-radius: 3px;
 }
 
-section.videoContainer .videoAccessories section.controls span:hover {
+section.video .videoAccessories section.controls span:hover {
     background-color: rgba(255, 255, 255, .25);
 }
 
-section.videoContainer .videoAccessories section.full-screen {
+section.video .videoAccessories section.full-screen {
     position: relative;
     cursor: pointer;
     color: white;

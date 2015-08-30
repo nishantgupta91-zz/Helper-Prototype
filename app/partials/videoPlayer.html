@@ -1,24 +1,56 @@
-<section class="videoContainer" ng-video ng-model="interface">
+<section class="video" ng-video ng-model="interface">
     <div class="videoScreenContainer">
         <!-- Video Screen Directive -->
-        <video vi-screen></video>
+        <video id="videoBackgrounddata" vi-screen></video>
     </div>
     <div class="videoAccessories">
         <!-- Controls Directive -->
         <section vi-controls class="controls">
-                        <span ng-click="interface.controls.play()" title="Play">
-                            <i class="mdi mdi-play mdi-36px"></i>  <!-- play icon -->
-                        </span>
-                        <span ng-click="interface.controls.pause()" title="Pause">
-                            <i class="mdi mdi-pause mdi-36px"></i>  <!-- pause icon -->
-                        </span>
+            <span vi-controls-play ng-click="drawCanvas()">
+                <md-icon md-svg-src="app/img/icons/play106.svg">
+                    <md-tooltip>Play</md-tooltip>
+                </md-icon>
+            </span>
+            <span vi-controls-pause>
+                <md-icon md-svg-src="app/img/icons/pause44.svg">
+                    <md-tooltip>Pause</md-tooltip>
+                </md-icon>
+            </span>
         </section>
-        <!-- Full Screen Directive
+
+        <!-- Full Screen Directive -->
         <section class="full-screen">
-                    <span title="Full Screen" vi-full-screen-toggle>
-                        <i class="mdi mdi-fullscreen mdi-36px"></i>
-                    </span>
+            <span title="Full Screen" vi-full-screen-toggle>
+                <md-icon md-svg-src="app/img/icons/switch27.svg">
+            </span>
         </section>
-        -->
+
+        <!-- Timeline Directive -->
+        <input vi-timeline />
+
+        <!-- Volume Control Directive -->
+        <section vi-volume>
+            <a vi-volume-decrease>Decrease</a>
+            <a vi-volume-increase>Increase</a>
+            <md-icon vi-volume-mute md-svg-src="app/img/icons/volume47.svg">
+            <a vi-volume-loudest>Loudest</a>
+        </section>
+
+        <!-- Video information Directive -->
+        <section vi-feedback>
+            <ul>
+                <li>Time: {{currentTime}}s / {{duration}}s</li>
+                <li>Volume: {{volume}}</li>
+            </ul>
+        </section>
+
+        <!-- Playback rate Directive -->
+        <section>
+            <span vi-playback-rate="2">Double Speed</span>
+            <span vi-playback-rate-increment="1">Increment by 1</span>
+            <span vi-playback-rate-decrement="1">Decrement by 1</span>
+            <span vi-playback-rate-normalise>Normalise</span>
+        </section>
+
     </div>
 </section>
