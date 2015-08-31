@@ -22,7 +22,10 @@
         <my-toolbox></my-toolbox>
         <video-player></video-player>
         <!--<div id="canvasContainer">-->
-            <canvas width="500" height="450" id="outputCanvas" toolstyle="{{cursorIcon.icon}}" drawing>
+            <canvas width="500" height="450" id="outputCanvas" toolstyle="{{cursorIcon.icon}}"
+                    ng-mousedown="mouseDownHandler($event)"
+                    ng-mousemove="mouseMoveHandler($event)"
+                    ng-mouseup="mouseUpHandler($event)">
                 <p>Sorry your browser does not support HTML5</p>
             </canvas>
         <!--</div>-->
