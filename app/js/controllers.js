@@ -2,8 +2,7 @@
  * Created by Nishant on 8/28/2015.
  */
 angular.module('mainApp')
-
-    .controller('mainController', ['$scope', 'video', function($scope, video){
+    .controller('mainController', ['$scope', 'video', 'toolsService', function($scope, video, toolsService){
         video.addSource('mp4', 'app/resources/hand.mp4');
         $scope.cursorIcon = "";
         console.log('==== main ====');
@@ -21,6 +20,9 @@ angular.module('mainApp')
         $scope.drawnRectangles = [];
         $scope.mouseDownHandler = function($event) {
             console.log("mouse down ============= ");
+            if(toolsService.getTool() != null) {
+                $scope.drawingStyle = toolsService.getTool().name;
+            }
             console.log($scope.drawingStyle);
             if($event.offsetX!==undefined){
                 $scope.lastX = $event.offsetX;
@@ -168,8 +170,8 @@ angular.module('mainApp')
         };
         $scope.drawVideoOnCanvas = function() {
             var backgroundObject = document.getElementById("videoBackgrounddata");
-            var width = ($scope.canvasElement.width)/2;
-            var height = ($scope.canvasElement.height)/2;
+            var width = ($scope.canvasElement.width);
+            var height = ($scope.canvasElement.height);
             if ($scope.ctx) {
                 $scope.ctx.drawImage(backgroundObject, 0, 0, width, height);
             }
@@ -192,8 +194,11 @@ angular.module('mainApp')
         };
     }])
 
-    .controller('toolboxController', function($scope, $mdBottomSheet) {
+    .controller('toolboxController', function($scope, $mdBottomSheet, toolsService) {
         console.log("======== toolbox =============");
+        $scope.setTool = function(tool) {
+            toolsService.setTool(tool);
+        };
         $scope.toolboxAlert = '';
         $scope.cursorIcon = '';
         console.log($scope.toolboxAlert);
@@ -209,6 +214,7 @@ angular.module('mainApp')
                 .then(function(clickedItem) {
                     $scope.toolboxAlert = clickedItem.name + ' clicked!';
                     $scope.cursorIcon = clickedItem;
+                    $scope.setTool($scope.cursorIcon);
                 });
         };
     })

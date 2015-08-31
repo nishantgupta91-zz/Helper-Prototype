@@ -22,12 +22,12 @@
         <my-toolbox></my-toolbox>
         <video-player></video-player>
         <!--<div id="canvasContainer">-->
-            <canvas width="500" height="450" id="outputCanvas" toolstyle="{{cursorIcon.icon}}"
-                    ng-mousedown="mouseDownHandler($event)"
-                    ng-mousemove="mouseMoveHandler($event)"
-                    ng-mouseup="mouseUpHandler($event)">
-                <p>Sorry your browser does not support HTML5</p>
-            </canvas>
+        <canvas width="500" height="450" id="outputCanvas" toolstyle="{{cursorIcon.icon}}"
+                ng-mousedown="mouseDownHandler($event)"
+                ng-mousemove="mouseMoveHandler($event)"
+                ng-mouseup="mouseUpHandler($event)">
+            <p>Sorry your browser does not support HTML5</p>
+        </canvas>
         <!--</div>-->
         <md-button id="addVideoButton" class="md-fab md-primary md-fab-bottom-right right" aria-label="Add">
             <i class="mdi mdi-plus mdi-24px"></i>  <!-- plus icon -->
@@ -52,6 +52,7 @@
 <script src="bower_components/angular-material/angular-material.min.js"></script>
 <script src="bower_components/ngvideo/dist/ng-video.min.js"></script>
 <script src="app/js/app.js"></script>
+<script src="app/js/services.js"></script>
 <script src="app/js/directives.js"></script>
 <script src="app/js/controllers.js"></script>
 </body>
