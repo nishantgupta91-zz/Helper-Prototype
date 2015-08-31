@@ -19,7 +19,7 @@ angular.module('mainApp')
         $scope.drawnLines = [];
         $scope.drawnRectangles = [];
         $scope.mouseDownHandler = function($event) {
-            console.log("mouse down ============= ");
+            console.log("========= mouse down ============= ");
             if(toolsService.getTool() != null) {
                 $scope.drawingStyle = toolsService.getTool().name;
             }
