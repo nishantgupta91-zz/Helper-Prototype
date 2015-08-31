@@ -15,6 +15,7 @@ angular.module('mainApp')
         $scope.lastX;
         $scope.lastY;
         $scope.penClicks = [];
+        $scope.tempLines = [];
         $scope.drawnLines = [];
         $scope.tempRectangles = [];
         $scope.drawnRectangles = [];
@@ -67,10 +68,17 @@ angular.module('mainApp')
                         startX: $scope.lastX,
                         startY: $scope.lastY,
                         sizeX: currentX - $scope.lastX,
-                        sizeY: currentY - $scope.lastY,
-                        drag: true
+                        sizeY: currentY - $scope.lastY
                     };
                     $scope.tempRectangles.push(drawnRectangle);
+                } else if($scope.drawingStyle.toLowerCase() == "line") {
+                    var drawnLine = {
+                        startX: $scope.lastX,
+                        startY: $scope.lastY,
+                        endX: currentX,
+                        endY: currentY
+                    };
+                    $scope.tempLines.push(drawnLine);
                 }
                 //$scope.draw($scope.lastX, $scope.lastY, currentX, currentY);
             }
@@ -108,53 +116,55 @@ angular.module('mainApp')
         $scope.reset = function() {
             $scope.canvasElement.width = $scope.canvasElement.width;
         };
-        $scope.draw = function(startX, startY, currentX, currentY) {
-            if($scope.drawingStyle.toLowerCase() == "pen") {
-                $scope.ctx.moveTo(startX, startY);
-                $scope.ctx.lineTo(currentX, currentY);
-                // color
-                $scope.ctx.strokeStyle = "#4bf";
-                // draw it
-                $scope.ctx.stroke();
-            } else if($scope.drawingStyle.toLowerCase() == "rectangle") {
-                $scope.reset();
-                for(var i = 0; i < $scope.drawnLines.length; i++) {
-                    $scope.ctx.moveTo($scope.drawnLines[i].startX, $scope.drawnLines[i].startY);
-                    $scope.ctx.lineTo($scope.drawnLines[i].endX, $scope.drawnLines[i].endY);
-                }
-                for(var i = 0; i < $scope.drawnRectangles.length; i++) {
-                    $scope.ctx.rect($scope.drawnRectangles[i].startX, $scope.drawnRectangles[i].startY,
-                        $scope.drawnRectangles[i].sizeX, $scope.drawnRectangles[i].sizeY);
-                }
-                var sizeX = currentX - startX;
-                var sizeY = currentY - startY;
+        /*
+         $scope.draw = function(startX, startY, currentX, currentY) {
+         if($scope.drawingStyle.toLowerCase() == "pen") {
+         $scope.ctx.moveTo(startX, startY);
+         $scope.ctx.lineTo(currentX, currentY);
+         // color
+         $scope.ctx.strokeStyle = "#4bf";
+         // draw it
+         $scope.ctx.stroke();
+         } else if($scope.drawingStyle.toLowerCase() == "rectangle") {
+         $scope.reset();
+         for(var i = 0; i < $scope.drawnLines.length; i++) {
+         $scope.ctx.moveTo($scope.drawnLines[i].startX, $scope.drawnLines[i].startY);
+         $scope.ctx.lineTo($scope.drawnLines[i].endX, $scope.drawnLines[i].endY);
+         }
+         for(var i = 0; i < $scope.drawnRectangles.length; i++) {
+         $scope.ctx.rect($scope.drawnRectangles[i].startX, $scope.drawnRectangles[i].startY,
+         $scope.drawnRectangles[i].sizeX, $scope.drawnRectangles[i].sizeY);
+         }
+         var sizeX = currentX - startX;
+         var sizeY = currentY - startY;
 
-                $scope.ctx.rect(startX, startY, sizeX, sizeY);
-                $scope.ctx.lineWidth = 3;
-                // color
-                $scope.ctx.strokeStyle = '#4bf';
-                // draw it
-                $scope.ctx.stroke();
-            } else if($scope.drawingStyle.toLowerCase() == "line") {
-                $scope.reset();
-                for(var i = 0; i < $scope.drawnLines.length; i++) {
-                    $scope.ctx.moveTo($scope.drawnLines[i].startX, $scope.drawnLines[i].startY);
-                    $scope.ctx.lineTo($scope.drawnLines[i].endX, $scope.drawnLines[i].endY);
-                }
-                for(var i = 0; i < $scope.drawnRectangles.length; i++) {
-                    $scope.ctx.rect($scope.drawnRectangles[i].startX, $scope.drawnRectangles[i].startY,
-                        $scope.drawnRectangles[i].sizeX, $scope.drawnRectangles[i].sizeY);
-                }
-                //ctx.beginPath();
-                $scope.ctx.moveTo(startX,startY);
-                $scope.ctx.lineTo(currentX, currentY);
-                $scope.ctx.lineWidth = 3;
-                // color
-                $scope.ctx.strokeStyle = '#4bf';
-                // draw it
-                $scope.ctx.stroke();
-            }
-        };
+         $scope.ctx.rect(startX, startY, sizeX, sizeY);
+         $scope.ctx.lineWidth = 3;
+         // color
+         $scope.ctx.strokeStyle = '#4bf';
+         // draw it
+         $scope.ctx.stroke();
+         } else if($scope.drawingStyle.toLowerCase() == "line") {
+         $scope.reset();
+         for(var i = 0; i < $scope.drawnLines.length; i++) {
+         $scope.ctx.moveTo($scope.drawnLines[i].startX, $scope.drawnLines[i].startY);
+         $scope.ctx.lineTo($scope.drawnLines[i].endX, $scope.drawnLines[i].endY);
+         }
+         for(var i = 0; i < $scope.drawnRectangles.length; i++) {
+         $scope.ctx.rect($scope.drawnRectangles[i].startX, $scope.drawnRectangles[i].startY,
+         $scope.drawnRectangles[i].sizeX, $scope.drawnRectangles[i].sizeY);
+         }
+         //ctx.beginPath();
+         $scope.ctx.moveTo(startX,startY);
+         $scope.ctx.lineTo(currentX, currentY);
+         $scope.ctx.lineWidth = 3;
+         // color
+         $scope.ctx.strokeStyle = '#4bf';
+         // draw it
+         $scope.ctx.stroke();
+         }
+         };
+         */
 
         $scope.drawCanvas = function() {
             if (window.requestAnimationFrame) window.requestAnimationFrame($scope.drawCanvas);
@@ -178,33 +188,49 @@ angular.module('mainApp')
 
             var imgData = $scope.ctx.getImageData(0, 0, $scope.canvasElement.width, $scope.canvasElement.height);
             $scope.ctx.putImageData(imgData, 0, 0);
-            if($scope.drawingStyle.toLowerCase() == "pen") {
-                for (var i = 1; i < $scope.penClicks.length; i++) {
-                    $scope.ctx.beginPath();
-                    if ($scope.penClicks[i].drag) {
-                        $scope.ctx.moveTo($scope.penClicks[i - 1].posX, $scope.penClicks[i - 1].posY);
-                    } else {
-                        $scope.ctx.moveTo($scope.penClicks[i].posX - 1, $scope.penClicks[i].posY);
-                    }
-                    $scope.ctx.lineTo($scope.penClicks[i].posX, $scope.penClicks[i].posY);
-                    $scope.ctx.strokeStyle = "#4bf";
-                    $scope.ctx.stroke();
+            $scope.ctx.beginPath();
+
+            for (var i = 1; i < $scope.penClicks.length; i++) {
+                if ($scope.penClicks[i].drag) {
+                    $scope.ctx.moveTo($scope.penClicks[i - 1].posX, $scope.penClicks[i - 1].posY);
+                } else {
+                    $scope.ctx.moveTo($scope.penClicks[i].posX - 1, $scope.penClicks[i].posY);
                 }
-            } else if($scope.drawingStyle.toLowerCase() == "rectangle") {
-                $scope.ctx.beginPath();
-                var numberOfTempRectangles = $scope.tempRectangles.length;
+                $scope.ctx.lineTo($scope.penClicks[i].posX, $scope.penClicks[i].posY);
+                $scope.ctx.strokeStyle = "#4bf";
+                $scope.ctx.stroke();
+            }
+
+            var numberOfTempRectangles = $scope.tempRectangles.length;
+            if(numberOfTempRectangles > 0) {
                 $scope.ctx.rect($scope.tempRectangles[numberOfTempRectangles - 1].startX,
                     $scope.tempRectangles[numberOfTempRectangles - 1].startY,
                     $scope.tempRectangles[numberOfTempRectangles - 1].sizeX,
                     $scope.tempRectangles[numberOfTempRectangles - 1].sizeY);
                 $scope.ctx.strokeStyle = "#4bf";
                 $scope.ctx.stroke();
-                for (var i = 0; i < $scope.drawnRectangles.length; i++) {
-                    $scope.ctx.rect($scope.drawnRectangles[i].startX, $scope.drawnRectangles[i].startY,
-                        $scope.drawnRectangles[i].sizeX, $scope.drawnRectangles[i].sizeY);
-                    $scope.ctx.strokeStyle = "#4bf";
-                    $scope.ctx.stroke();
-                }
+            }
+            for (var i = 0; i < $scope.drawnRectangles.length; i++) {
+                $scope.ctx.rect($scope.drawnRectangles[i].startX, $scope.drawnRectangles[i].startY,
+                    $scope.drawnRectangles[i].sizeX, $scope.drawnRectangles[i].sizeY);
+                $scope.ctx.strokeStyle = "#4bf";
+                $scope.ctx.stroke();
+            }
+
+            var numberOfTempLines = $scope.tempLines.length;
+            if(numberOfTempLines > 0) {
+                console.log('startX '+$scope.tempLines[numberOfTempLines - 1].startX);
+                console.log('endX '+$scope.tempLines[numberOfTempLines - 1].endX);
+                $scope.ctx.moveTo($scope.tempLines[numberOfTempLines - 1].startX, $scope.tempLines[numberOfTempLines - 1].startY);
+                $scope.ctx.lineTo($scope.tempLines[numberOfTempLines - 1].endX, $scope.tempLines[numberOfTempLines - 1].endY);
+                $scope.ctx.strokeStyle = "#4bf";
+                $scope.ctx.stroke();
+            }
+            for (var i = 0; i < $scope.drawnLines.length; i++) {
+                $scope.ctx.moveTo($scope.drawnLines[i].startX, $scope.drawnLines[i].startY);
+                $scope.ctx.lineTo($scope.drawnLines[i].endX, $scope.drawnLines[i].endY);
+                $scope.ctx.strokeStyle = "#4bf";
+                $scope.ctx.stroke();
             }
         };
     }])
