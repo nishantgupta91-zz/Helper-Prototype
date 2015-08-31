@@ -6,8 +6,7 @@ angular.module('mainApp')
         video.addSource('mp4', 'app/resources/hand.mp4');
         $scope.cursorIcon = "";
         console.log('==== main ====');
-
-        $scope.drawingStyle = "pen";
+        $scope.drawingStyle = "Pen";
         $scope.canvasElement = document.getElementById('outputCanvas');
         $scope.ctx = $scope.canvasElement.getContext('2d');
         // variable that decides if something should be drawn on mousemove
@@ -31,7 +30,7 @@ angular.module('mainApp')
                 $scope.lastX = $event.layerX - $event.currentTarget.offsetLeft;
                 $scope.lastY = $event.layerY - $event.currentTarget.offsetTop;
             }
-            if($scope.drawingStyle == "pen") {
+            if($scope.drawingStyle.toLowerCase() == "pen") {
                 var penClick = {
                     posX: $scope.lastX,
                     posY: $scope.lastY,
@@ -55,7 +54,14 @@ angular.module('mainApp')
                     currentX = $event.layerX - $event.currentTarget.offsetLeft;
                     currentY = $event.layerY - $event.currentTarget.offsetTop;
                 }
-                if($scope.drawingStyle == "pen") {
+                if($scope.drawingStyle.toLowerCase() == "pen") {
+                    var penClick = {
+                        posX: currentX,
+                        posY: currentY,
+                        drag: true
+                    };
+                    $scope.penClicks.push(penClick);
+                } else if($scope.drawingStyle.toLowerCase() == "rectangle") {
                     var penClick = {
                         posX: currentX,
                         posY: currentY,
@@ -78,7 +84,7 @@ angular.module('mainApp')
                 currentX = $event.layerX - $event.currentTarget.offsetLeft;
                 currentY = $event.layerY - $event.currentTarget.offsetTop;
             }
-            if($scope.drawingStyle == "line") {
+            if($scope.drawingStyle.toLowerCase() == "line") {
                 var drawnLine = {
                     startX: $scope.lastX,
                     startY: $scope.lastY,
@@ -86,7 +92,7 @@ angular.module('mainApp')
                     endY: currentY
                 };
                 $scope.drawnLines.push(drawnLine);
-            } else if($scope.drawingStyle == "rectangle") {
+            } else if($scope.drawingStyle.toLowerCase() == "rectangle") {
                 var drawnRectangle = {
                     startX: $scope.lastX,
                     startY: $scope.lastY,
@@ -99,24 +105,15 @@ angular.module('mainApp')
         $scope.reset = function() {
             $scope.canvasElement.width = $scope.canvasElement.width;
         };
-        $scope.drawStroke = function() {
-            if($scope.drawingStyle == "pen") {
-                $scope.ctx.lineTo(currentX, currentY);
-                // color
-                $scope.ctx.strokeStyle = "#4bf";
-                // draw it
-                $scope.ctx.stroke();
-            }
-        };
         $scope.draw = function(startX, startY, currentX, currentY) {
-            if($scope.drawingStyle == "pen") {
+            if($scope.drawingStyle.toLowerCase() == "pen") {
                 $scope.ctx.moveTo(startX, startY);
                 $scope.ctx.lineTo(currentX, currentY);
                 // color
                 $scope.ctx.strokeStyle = "#4bf";
                 // draw it
                 $scope.ctx.stroke();
-            } else if($scope.drawingStyle == "rectangle") {
+            } else if($scope.drawingStyle.toLowerCase() == "rectangle") {
                 $scope.reset();
                 for(var i = 0; i < $scope.drawnLines.length; i++) {
                     $scope.ctx.moveTo($scope.drawnLines[i].startX, $scope.drawnLines[i].startY);
@@ -135,7 +132,7 @@ angular.module('mainApp')
                 $scope.ctx.strokeStyle = '#4bf';
                 // draw it
                 $scope.ctx.stroke();
-            } else if($scope.drawingStyle == "line") {
+            } else if($scope.drawingStyle.toLowerCase() == "line") {
                 $scope.reset();
                 for(var i = 0; i < $scope.drawnLines.length; i++) {
                     $scope.ctx.moveTo($scope.drawnLines[i].startX, $scope.drawnLines[i].startY);
@@ -178,7 +175,7 @@ angular.module('mainApp')
 
             var imgData = $scope.ctx.getImageData(0, 0, $scope.canvasElement.width, $scope.canvasElement.height);
             $scope.ctx.putImageData(imgData, 0, 0);
-            if($scope.drawingStyle == "pen") {
+            if($scope.drawingStyle.toLowerCase() == "pen") {
                 for (var i = 1; i < $scope.penClicks.length; i++) {
                     $scope.ctx.beginPath();
                     if ($scope.penClicks[i].drag) {
@@ -187,6 +184,14 @@ angular.module('mainApp')
                         $scope.ctx.moveTo($scope.penClicks[i].posX - 1, $scope.penClicks[i].posY);
                     }
                     $scope.ctx.lineTo($scope.penClicks[i].posX, $scope.penClicks[i].posY);
+                    $scope.ctx.strokeStyle = "#4bf";
+                    $scope.ctx.stroke();
+                }
+            } else if($scope.drawingStyle.toLowerCase() == "rectangle") {
+                for (var i = 1; i < $scope.drawnRectangles.length; i++) {
+                    $scope.ctx.beginPath();
+                    $scope.ctx.rect($scope.drawnRectangles[i].startX, $scope.drawnRectangles[i].startY,
+                        $scope.drawnRectangles[i].sizeX, $scope.drawnRectangles[i].sizeY);
                     $scope.ctx.strokeStyle = "#4bf";
                     $scope.ctx.stroke();
                 }
