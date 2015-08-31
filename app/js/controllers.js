@@ -16,6 +16,7 @@ angular.module('mainApp')
         $scope.lastY;
         $scope.penClicks = [];
         $scope.drawnLines = [];
+        $scope.tempRectangles = [];
         $scope.drawnRectangles = [];
         $scope.mouseDownHandler = function($event) {
             console.log("========= mouse down ============= ");
@@ -62,12 +63,14 @@ angular.module('mainApp')
                     };
                     $scope.penClicks.push(penClick);
                 } else if($scope.drawingStyle.toLowerCase() == "rectangle") {
-                    var penClick = {
-                        posX: currentX,
-                        posY: currentY,
+                    var drawnRectangle = {
+                        startX: $scope.lastX,
+                        startY: $scope.lastY,
+                        sizeX: currentX - $scope.lastX,
+                        sizeY: currentY - $scope.lastY,
                         drag: true
                     };
-                    $scope.penClicks.push(penClick);
+                    $scope.tempRectangles.push(drawnRectangle);
                 }
                 //$scope.draw($scope.lastX, $scope.lastY, currentX, currentY);
             }
@@ -188,8 +191,15 @@ angular.module('mainApp')
                     $scope.ctx.stroke();
                 }
             } else if($scope.drawingStyle.toLowerCase() == "rectangle") {
-                for (var i = 1; i < $scope.drawnRectangles.length; i++) {
-                    $scope.ctx.beginPath();
+                $scope.ctx.beginPath();
+                var numberOfTempRectangles = $scope.tempRectangles.length;
+                $scope.ctx.rect($scope.tempRectangles[numberOfTempRectangles - 1].startX,
+                    $scope.tempRectangles[numberOfTempRectangles - 1].startY,
+                    $scope.tempRectangles[numberOfTempRectangles - 1].sizeX,
+                    $scope.tempRectangles[numberOfTempRectangles - 1].sizeY);
+                $scope.ctx.strokeStyle = "#4bf";
+                $scope.ctx.stroke();
+                for (var i = 0; i < $scope.drawnRectangles.length; i++) {
                     $scope.ctx.rect($scope.drawnRectangles[i].startX, $scope.drawnRectangles[i].startY,
                         $scope.drawnRectangles[i].sizeX, $scope.drawnRectangles[i].sizeY);
                     $scope.ctx.strokeStyle = "#4bf";
