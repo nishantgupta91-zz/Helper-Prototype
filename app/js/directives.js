@@ -2,11 +2,6 @@
  * Created by Nishant on 8/28/2015.
  */
 angular.module('mainApp')
-    .directive("drawing", function(){
-        return {
-            restrict: "A"
-        };
-    })
     .directive('headerToolbar', function() {
         return {
             restrict: "E",
