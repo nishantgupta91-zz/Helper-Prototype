@@ -21,6 +21,8 @@ angular.module('mainApp')
         $scope.drawnRectangles = [];
         $scope.tempCircles = [];
         $scope.drawnCircles = [];
+        $scope.tempTriangles = [];
+        $scope.drawnTriangles = [];
         $scope.videoName;
 
         $scope.openFileDialog = function(){
@@ -100,6 +102,16 @@ angular.module('mainApp')
                         endY: currentY
                     };
                     $scope.tempCircles.push(drawnCircle);
+                } else if($scope.drawingStyle.toLowerCase() == "triangle") {
+                    var drawnTriangle = {
+                        startX: $scope.lastX,
+                        startY: $scope.lastY,
+                        endX: currentX,
+                        endY: currentY,
+                        thirdX: $scope.lastX + 2*(currentX - $scope.lastX),
+                        thirdY: $scope.lastY
+                    };
+                    $scope.tempTriangles.push(drawnTriangle);
                 }
                 //$scope.draw($scope.lastX, $scope.lastY, currentX, currentY);
             }
@@ -140,6 +152,16 @@ angular.module('mainApp')
                     endY: currentY
                 };
                 $scope.drawnCircles.push(drawnCircle);
+            } else if($scope.drawingStyle.toLowerCase() == "triangle") {
+                var drawnTriangle = {
+                    startX: $scope.lastX,
+                    startY: $scope.lastY,
+                    endX: currentX,
+                    endY: currentY,
+                    thirdX: $scope.lastX + 2*(currentX - $scope.lastX),
+                    thirdY: $scope.lastY
+                };
+                $scope.drawnTriangles.push(drawnTriangle);
             }
         };
         $scope.reset = function() {
@@ -212,6 +234,25 @@ angular.module('mainApp')
             for (var i = 0; i < $scope.drawnLines.length; i++) {
                 $scope.ctx.moveTo($scope.drawnLines[i].startX, $scope.drawnLines[i].startY);
                 $scope.ctx.lineTo($scope.drawnLines[i].endX, $scope.drawnLines[i].endY);
+                $scope.ctx.strokeStyle = "#4bf";
+                $scope.ctx.stroke();
+            }
+
+            // triangles
+            var numberOfTempTriangles = $scope.tempTriangles.length;
+            if(numberOfTempTriangles > 0) {
+                $scope.ctx.moveTo($scope.tempTriangles[numberOfTempTriangles - 1].startX, $scope.tempTriangles[numberOfTempTriangles - 1].startY);
+                $scope.ctx.lineTo($scope.tempTriangles[numberOfTempTriangles - 1].endX, $scope.tempTriangles[numberOfTempTriangles - 1].endY);
+                $scope.ctx.lineTo($scope.tempTriangles[numberOfTempTriangles - 1].thirdX, $scope.tempTriangles[numberOfTempTriangles - 1].thirdY);
+                $scope.ctx.lineTo($scope.tempTriangles[numberOfTempTriangles - 1].startX, $scope.tempTriangles[numberOfTempTriangles - 1].startY);
+                $scope.ctx.strokeStyle = "#4bf";
+                $scope.ctx.stroke();
+            }
+            for (var i = 0; i < $scope.drawnTriangles.length; i++) {
+                $scope.ctx.moveTo($scope.drawnTriangles[i].startX, $scope.drawnTriangles[i].startY);
+                $scope.ctx.lineTo($scope.drawnTriangles[i].endX, $scope.drawnTriangles[i].endY);
+                $scope.ctx.lineTo($scope.drawnTriangles[i].thirdX, $scope.drawnTriangles[i].thirdY);
+                $scope.ctx.lineTo($scope.drawnTriangles[i].startX, $scope.drawnTriangles[i].startY);
                 $scope.ctx.strokeStyle = "#4bf";
                 $scope.ctx.stroke();
             }
