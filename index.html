@@ -28,6 +28,11 @@
                 ng-mouseup="mouseUpHandler($event)">
             <p>Sorry your browser does not support HTML5</p>
         </canvas>
+        <md-button id="clearButton" class="md-fab md-primary md-fab-bottom-left left" aria-label="Clear" ng-click="clearDrawings()">
+            <md-icon md-svg-src="app/img/icons/brush1.svg">
+                <md-tooltip>Clear</md-tooltip>
+            </md-icon>
+        </md-button>
         <!--</div>-->
         <input id="upload" type="file" onchange="angular.element(this).scope().getVideoFile()"
                accept=".mp4" ng-model="files" ng-multiple="false" style="display: none;">
