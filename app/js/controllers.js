@@ -12,6 +12,7 @@ angular.module('mainApp')
         // variable that decides if something should be drawn on mousemove
         $scope.drawing = false;
         // the last coordinates before the current move
+        $scope.strokeColor = 'black';
         $scope.lastX;
         $scope.lastY;
         $scope.penClicks = [];
@@ -236,7 +237,7 @@ angular.module('mainApp')
                     $scope.ctx.moveTo($scope.penClicks[i].posX - 1, $scope.penClicks[i].posY);
                 }
                 $scope.ctx.lineTo($scope.penClicks[i].posX, $scope.penClicks[i].posY);
-                $scope.ctx.strokeStyle = "#4bf";
+                $scope.ctx.strokeStyle = $scope.strokeColor;// "#4bf";
                 $scope.ctx.stroke();
             }
         };
@@ -246,13 +247,13 @@ angular.module('mainApp')
             if(numberOfTempLines > 0) {
                 $scope.ctx.moveTo($scope.tempLines[numberOfTempLines - 1].startX, $scope.tempLines[numberOfTempLines - 1].startY);
                 $scope.ctx.lineTo($scope.tempLines[numberOfTempLines - 1].endX, $scope.tempLines[numberOfTempLines - 1].endY);
-                $scope.ctx.strokeStyle = "#4bf";
+                $scope.ctx.strokeStyle = $scope.strokeColor;//"#4bf";
                 $scope.ctx.stroke();
             }
             for (var i = 0; i < $scope.drawnLines.length; i++) {
                 $scope.ctx.moveTo($scope.drawnLines[i].startX, $scope.drawnLines[i].startY);
                 $scope.ctx.lineTo($scope.drawnLines[i].endX, $scope.drawnLines[i].endY);
-                $scope.ctx.strokeStyle = "#4bf";
+                $scope.ctx.strokeStyle = $scope.strokeColor;//"#4bf";
                 $scope.ctx.stroke();
             }
         };
@@ -272,7 +273,7 @@ angular.module('mainApp')
                     $scope.ctx.lineTo(centerX + radiusX * Math.cos(a), centerY + radiusY * Math.sin(a));
                 }
                 $scope.ctx.closePath();
-                $scope.ctx.strokeStyle = "#4bf";
+                $scope.ctx.strokeStyle = $scope.strokeColor;//"#4bf";
                 $scope.ctx.stroke();
             }
             for (var i = 0; i < $scope.drawnCircles.length; i++) {
@@ -289,7 +290,7 @@ angular.module('mainApp')
                     $scope.ctx.lineTo(centerX + radiusX * Math.cos(a), centerY + radiusY * Math.sin(a));
                 }
                 $scope.ctx.closePath();
-                $scope.ctx.strokeStyle = '#4bf';
+                $scope.ctx.strokeStyle = $scope.strokeColor;//'#4bf';
                 $scope.ctx.stroke();
             }
         };
@@ -301,7 +302,7 @@ angular.module('mainApp')
                 $scope.ctx.lineTo($scope.tempTriangles[numberOfTempTriangles - 1].endX, $scope.tempTriangles[numberOfTempTriangles - 1].endY);
                 $scope.ctx.lineTo($scope.tempTriangles[numberOfTempTriangles - 1].thirdX, $scope.tempTriangles[numberOfTempTriangles - 1].thirdY);
                 $scope.ctx.lineTo($scope.tempTriangles[numberOfTempTriangles - 1].startX, $scope.tempTriangles[numberOfTempTriangles - 1].startY);
-                $scope.ctx.strokeStyle = "#4bf";
+                $scope.ctx.strokeStyle = $scope.strokeColor;//"#4bf";
                 $scope.ctx.stroke();
             }
             for (var i = 0; i < $scope.drawnTriangles.length; i++) {
@@ -309,7 +310,7 @@ angular.module('mainApp')
                 $scope.ctx.lineTo($scope.drawnTriangles[i].endX, $scope.drawnTriangles[i].endY);
                 $scope.ctx.lineTo($scope.drawnTriangles[i].thirdX, $scope.drawnTriangles[i].thirdY);
                 $scope.ctx.lineTo($scope.drawnTriangles[i].startX, $scope.drawnTriangles[i].startY);
-                $scope.ctx.strokeStyle = "#4bf";
+                $scope.ctx.strokeStyle = $scope.strokeColor;//"#4bf";
                 $scope.ctx.stroke();
             }
         };
@@ -321,13 +322,13 @@ angular.module('mainApp')
                     $scope.tempRectangles[numberOfTempRectangles - 1].startY,
                     $scope.tempRectangles[numberOfTempRectangles - 1].sizeX,
                     $scope.tempRectangles[numberOfTempRectangles - 1].sizeY);
-                $scope.ctx.strokeStyle = "#4bf";
+                $scope.ctx.strokeStyle = $scope.strokeColor;//"#4bf";
                 $scope.ctx.stroke();
             }
             for (var i = 0; i < $scope.drawnRectangles.length; i++) {
                 $scope.ctx.rect($scope.drawnRectangles[i].startX, $scope.drawnRectangles[i].startY,
                     $scope.drawnRectangles[i].sizeX, $scope.drawnRectangles[i].sizeY);
-                $scope.ctx.strokeStyle = "#4bf";
+                $scope.ctx.strokeStyle = $scope.strokeColor;//"#4bf";
                 $scope.ctx.stroke();
             }
         };
@@ -337,7 +338,7 @@ angular.module('mainApp')
             $mdBottomSheet
                 .show({
                     templateUrl: 'app/partials/clearOptionsGrid.html',
-                    controller: 'clearOptionsGridGridController',
+                    controller: 'clearOptionsGridController',
                     targetEvent: $event
                 })
                 .then(function(clickedItem) {
@@ -358,7 +359,73 @@ angular.module('mainApp')
                     //$scope.setTool($scope.cursorIcon);
                 });
         };
+        $scope.showColorOptionsToolbox = function($event) {
+            $scope.colorOption = '';
+            $mdBottomSheet
+                .show({
+                    templateUrl: 'app/partials/colorOptionsGrid.html',
+                    controller: 'colorsOptionsGridController',
+                    targetEvent: $event
+                })
+                .then(function(clickedItem) {
+                    //$scope.clearOption = clickedItem;
+                    $scope.strokeColor = clickedItem.name.toLowerCase();
+                    /*if(clickedItem.name.toLowerCase() == "red") {
+                        $scope.clearLineDrawings();
+                    }*/
+                    //$scope.setTool($scope.cursorIcon);
+                });
+        };
     }])
+
+    .controller('colorsOptionsGridController', function($scope, $mdBottomSheet, toolsService) {
+        $scope.items = [
+            { name: 'Black', color: 'black' },
+            { name: 'Grey', color: 'grey' },
+            { name: 'White', color: 'white' },
+            { name: 'Red', color: 'red' },
+            { name: 'Orange', color: 'orange' },
+            { name: 'Yellow', color: 'yellow' },
+            { name: 'Green', color: 'green' },
+            { name: 'Blue', color: 'blue' },
+            { name: 'Purple', color: 'purple' },
+            { name: 'Brown', color: 'brown' }
+        ];
+        $scope.toolClicked = function($index) {
+            var clickedItem = $scope.items[$index];
+            $mdBottomSheet.hide(clickedItem);
+        };
+    })
+
+    .controller('clearOptionsController', function($scope, $mdBottomSheet, toolsService) {
+        $scope.clearOption = '';
+        $scope.showClearOptionsToolbox = function($event) {
+            $scope.clearOption = '';
+            $mdBottomSheet
+                .show({
+                    templateUrl: 'app/partials/clearOptionsGrid.html',
+                    controller: 'clearOptionsGridController',
+                    targetEvent: $event
+                })
+                .then(function(clickedItem) {
+                    //$scope.clearOption = clickedItem;
+                    if(clickedItem.name.toLowerCase() == "clear lines") {
+                        $scope.clearLineDrawings();
+                    } else if(clickedItem.name.toLowerCase() == "clear rectangles") {
+                        $scope.clearRectangleDrawings();
+                    } else if(clickedItem.name.toLowerCase() == "clear circles") {
+                        $scope.clearCircleDrawings();
+                    } else if(clickedItem.name.toLowerCase() == "clear triangles") {
+                        $scope.clearTriangleDrawings();
+                    } else if(clickedItem.name.toLowerCase() == "clear pen drawings") {
+                        $scope.clearPenDrawings();
+                    } else if(clickedItem.name.toLowerCase() == "clear all") {
+                        $scope.clearDrawings();
+                    }
+                    //$scope.setTool($scope.cursorIcon);
+                });
+        };
+    })
 
     .controller('toolboxController', function($scope, $mdBottomSheet, toolsService) {
         console.log("======== toolbox =============");
@@ -400,7 +467,7 @@ angular.module('mainApp')
             $mdBottomSheet.hide(clickedItem);
         };
     })
-    .controller('clearOptionsGridGridController', function($scope, $mdBottomSheet) {
+    .controller('clearOptionsGridController', function($scope, $mdBottomSheet) {
         $scope.items = [
             { name: 'Clear All', icon: 'eraser' },
             { name: 'Clear Pen Drawings', icon: 'pen' },

@@ -28,20 +28,22 @@
                 ng-mouseup="mouseUpHandler($event)">
             <p>Sorry your browser does not support HTML5</p>
         </canvas>
-        <!--</div>-->
-        <!--
-        <md-button id="clearButton" class="md-fab md-primary md-fab-bottom-left left" aria-label="Clear" ng-click="clearDrawings()">
-            <md-icon md-svg-src="app/img/icons/brush1.svg">
-                <md-tooltip>Clear</md-tooltip>
-            </md-icon>
-        </md-button>
-        -->
 
         <div class="md-padding bottomSheetdemoBasicUsage" id="bottomGridElement">
             <div id="toolsButtonContainer" class="bottom-sheet-demo inset" layout="row" layout-sm="column" layout-align="center">
                 <md-button class="md-fab md-primary md-fab-bottom-left left" aria-label="Clear" ng-click="showClearOptionsToolbox($event)">
                     <md-icon md-svg-src="app/img/icons/brush1.svg">
                         <md-tooltip>Clear</md-tooltip>
+                    </md-icon>
+                </md-button>
+            </div>
+        </div>
+
+        <div class="md-padding bottomSheetdemoBasicUsage">
+            <div id="colorsPaletteContainer" class="bottom-sheet-demo inset" layout="row" layout-sm="column" layout-align="center">
+                <md-button class="md-fab md-primary md-fab-bottom-left left" aria-label="Clear" ng-click="showColorOptionsToolbox($event)">
+                    <md-icon md-svg-src="app/img/icons/painter14.svg">
+                        <md-tooltip>Colors</md-tooltip>
                     </md-icon>
                 </md-button>
             </div>

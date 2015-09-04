@@ -78,3 +78,8 @@ ul#palette {
     height: 90%;
     border: 10px #333 solid;
 }*/
+
+/* colors toolbox */
+.colorListItem {
+    max-width: 5%;
+}
