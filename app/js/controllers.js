@@ -3,7 +3,7 @@
  */
 angular.module('mainApp')
     .controller('mainController', ['$scope', 'video', 'toolsService', function($scope, video, toolsService){
-        video.addSource('mp4', 'app/resources/hand.mp4');
+        $scope.resourceDir = 'app/resources/';
         $scope.cursorIcon = "";
         console.log('==== main ====');
         $scope.drawingStyle = "Pen";
@@ -21,8 +21,19 @@ angular.module('mainApp')
         $scope.drawnRectangles = [];
         $scope.tempCircles = [];
         $scope.drawnCircles = [];
+        $scope.videoName;
+
+        $scope.openFileDialog = function(){
+            document.getElementById('upload').click();
+        };
+        $scope.getVideoFile = function() {
+            $scope.videoName = document.getElementById('upload').value;
+            var nameSplit = $scope.videoName.split("\\");
+            $scope.videoName = nameSplit[nameSplit.length - 1];
+            video.addSource('mp4', $scope.resourceDir + $scope.videoName);
+        };
+
         $scope.mouseDownHandler = function($event) {
-            console.log("========= mouse down ============= ");
             if(toolsService.getTool() != null) {
                 $scope.drawingStyle = toolsService.getTool().name;
             }
