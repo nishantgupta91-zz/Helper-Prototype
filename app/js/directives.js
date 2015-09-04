@@ -12,8 +12,7 @@ angular.module('mainApp')
         return {
             restrict: "E",
             $scope: {
-                name: "=",
-                toolboxAlert: "="
+                name: "="
             },
             templateUrl: "app/partials/toolbox.html",
             controller: "toolboxController"

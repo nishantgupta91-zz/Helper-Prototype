@@ -2,9 +2,9 @@
  * Created by Nishant on 8/28/2015.
  */
 angular.module('mainApp')
-    .controller('mainController', ['$scope', 'video', 'toolsService', function($scope, video, toolsService){
+    .controller('mainController', ['$scope', 'video', 'toolsService', '$mdBottomSheet', function($scope, video, toolsService, $mdBottomSheet){
         $scope.resourceDir = 'app/resources/';
-        $scope.cursorIcon = "";
+        //$scope.clearOption = "";
         console.log('==== main ====');
         $scope.drawingStyle = "Pen";
         $scope.canvasElement = document.getElementById('outputCanvas');
@@ -44,6 +44,25 @@ angular.module('mainApp')
             $scope.drawnLines = [];
             $scope.drawnRectangles = [];
             $scope.penClicks = [];
+        };
+        $scope.clearPenDrawings = function() {
+            $scope.penClicks = [];
+        };
+        $scope.clearLineDrawings = function() {
+            $scope.tempLines = [];
+            $scope.drawnLines = [];
+        };
+        $scope.clearRectangleDrawings = function() {
+            $scope.tempRectangles = [];
+            $scope.drawnRectangles = [];
+        };
+        $scope.clearTriangleDrawings = function() {
+            $scope.tempTriangles = [];
+            $scope.drawnTriangles = [];
+        };
+        $scope.clearCircleDrawings = function() {
+            $scope.tempCircles = [];
+            $scope.drawnCircles = [];
         };
         $scope.mouseDownHandler = function($event) {
             if(toolsService.getTool() != null) {
@@ -312,6 +331,33 @@ angular.module('mainApp')
                 $scope.ctx.stroke();
             }
         };
+
+        $scope.showClearOptionsToolbox = function($event) {
+            $scope.clearOption = '';
+            $mdBottomSheet
+                .show({
+                    templateUrl: 'app/partials/clearOptionsGrid.html',
+                    controller: 'clearOptionsGridGridController',
+                    targetEvent: $event
+                })
+                .then(function(clickedItem) {
+                    //$scope.clearOption = clickedItem;
+                    if(clickedItem.name.toLowerCase() == "clear lines") {
+                        $scope.clearLineDrawings();
+                    } else if(clickedItem.name.toLowerCase() == "clear rectangles") {
+                        $scope.clearRectangleDrawings();
+                    } else if(clickedItem.name.toLowerCase() == "clear circles") {
+                        $scope.clearCircleDrawings();
+                    } else if(clickedItem.name.toLowerCase() == "clear triangles") {
+                        $scope.clearTriangleDrawings();
+                    } else if(clickedItem.name.toLowerCase() == "clear pen drawings") {
+                        $scope.clearPenDrawings();
+                    } else if(clickedItem.name.toLowerCase() == "clear all") {
+                        $scope.clearDrawings();
+                    }
+                    //$scope.setTool($scope.cursorIcon);
+                });
+        };
     }])
 
     .controller('toolboxController', function($scope, $mdBottomSheet, toolsService) {
@@ -348,6 +394,21 @@ angular.module('mainApp')
             { name: 'Triangle', icon: 'triangle' },
             { name: 'Text', icon: 'text' },
             { name: 'Eraser', icon: 'eraser' }
+        ];
+        $scope.toolClicked = function($index) {
+            var clickedItem = $scope.items[$index];
+            $mdBottomSheet.hide(clickedItem);
+        };
+    })
+    .controller('clearOptionsGridGridController', function($scope, $mdBottomSheet) {
+        $scope.items = [
+            { name: 'Clear All', icon: 'eraser' },
+            { name: 'Clear Pen Drawings', icon: 'pen' },
+            { name: 'Clear Lines', icon: 'line' },
+            { name: 'Clear Circles', icon: 'circle' },
+            { name: 'Clear Rectangles', icon: 'rectangle' },
+            { name: 'Clear Triangles', icon: 'triangle' },
+            { name: 'Clear Text', icon: 'text' }
         ];
         $scope.toolClicked = function($index) {
             var clickedItem = $scope.items[$index];
