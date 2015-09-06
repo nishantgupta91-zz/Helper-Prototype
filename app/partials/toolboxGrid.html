@@ -1,12 +1,28 @@
-<md-bottom-sheet class="md-grid">
-    <md-list>
+<md-bottom-sheet layout="column">
+    <md-list layout="row">
         <md-list-item ng-repeat="item in items">
-
             <md-button class="md-grid-item-content" ng-click="toolClicked($index)">
                 <md-icon md-svg-src="{{item.icon}}"></md-icon>
                 <div class="md-grid-text"> {{ item.name }} </div>
             </md-button>
-
         </md-list-item>
+    </md-list>
+
+    <md-list layout="row" layout-align="start start" flex style="padding: 0; margin-bottom: 1%;">
+        <div flex layout="row" layout-align="space-around center" >
+            <div>Select Color</div>
+            <md-list-item style="max-width: 5%" ng-repeat="color in colors">
+                <md-button class="md-grid-item-content" ng-click="toolClicked($index)">
+                    <md-icon style="background-color: {{color.color}}">
+                        <md-tooltip>{{ color.name }}</md-tooltip>
+                    </md-icon>
+                </md-button>
+            </md-list-item>
+        </div>
+        <div flex layout="row" style="margin-left: 4%;" layout-align="center center">
+            <div flex="20">Brush Thickness</div>
+            <md-slider flex class="md-primary" md-discrete="" ng-model="rating3" step="1" min="1" max="20" aria-label="rating">
+            </md-slider>
+        </div>
     </md-list>
 </md-bottom-sheet>

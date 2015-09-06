@@ -486,8 +486,19 @@ angular.module('mainApp')
             { name: 'Line', icon: 'line' },
             { name: 'Rectangle', icon: 'rectangle' },
             { name: 'Triangle', icon: 'triangle' },
-            { name: 'Text', icon: 'text' },
-            { name: 'Eraser', icon: 'eraser' }
+            { name: 'Text', icon: 'text' }
+        ];
+        $scope.colors = [
+            { name: 'Black', color: 'black' },
+            { name: 'Grey', color: 'grey' },
+            { name: 'White', color: 'white' },
+            { name: 'Red', color: 'red' },
+            { name: 'Orange', color: 'orange' },
+            { name: 'Yellow', color: 'yellow' },
+            { name: 'Green', color: 'green' },
+            { name: 'Blue', color: 'blue' },
+            { name: 'Purple', color: 'purple' },
+            { name: 'Brown', color: 'brown' }
         ];
         $scope.toolClicked = function($index) {
             var clickedItem = $scope.items[$index];

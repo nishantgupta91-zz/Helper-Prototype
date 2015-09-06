@@ -1,13 +1,13 @@
 <md-bottom-sheet class="md-grid">
     <md-list>
-        <md-list-item style="max-width: 5%" ng-repeat="item in items">
+    <md-list-item style="max-width: 5%" ng-repeat="item in items">
 
-            <md-button class="md-grid-item-content" ng-click="toolClicked($index)">
-                <md-icon style="border: 3px black solid; background-color: {{item.color}}">
-                    <md-tooltip>{{ item.name }}</md-tooltip>
-                </md-icon>
-            </md-button>
+        <md-button class="md-grid-item-content" ng-click="toolClicked($index)">
+            <md-icon style="border: 3px black solid; background-color: {{item.color}}">
+                <md-tooltip>{{ item.name }}</md-tooltip>
+            </md-icon>
+        </md-button>
 
-        </md-list-item>
-    </md-list>
+    </md-list-item>
+</md-list>
 </md-bottom-sheet>
