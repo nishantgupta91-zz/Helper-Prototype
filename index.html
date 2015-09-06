@@ -39,16 +39,6 @@
             </div>
         </div>
 
-        <div class="md-padding bottomSheetdemoBasicUsage">
-            <div id="colorsPaletteContainer" class="bottom-sheet-demo inset" layout="row" layout-sm="column" layout-align="center">
-                <md-button class="md-fab md-primary md-fab-bottom-left left" aria-label="Clear" ng-click="showColorOptionsToolbox($event)">
-                    <md-icon md-svg-src="app/img/icons/painter14.svg">
-                        <md-tooltip>Colors</md-tooltip>
-                    </md-icon>
-                </md-button>
-            </div>
-        </div>
-
         <input id="upload" type="file" onchange="angular.element(this).scope().getVideoFile()"
                accept=".mp4" ng-model="files" ng-multiple="false" style="display: none;">
         <md-button id="addVideoButton" class="md-fab md-primary md-fab-bottom-right right" aria-label="Add" ng-click="openFileDialog()">

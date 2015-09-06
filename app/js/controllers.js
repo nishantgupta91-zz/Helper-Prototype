@@ -69,6 +69,9 @@ angular.module('mainApp')
             if(toolsService.getTool() != null) {
                 $scope.drawingStyle = toolsService.getTool().name;
             }
+            if(toolsService.getColor() != null) {
+                $scope.strokeColor = toolsService.getColor().color;
+            }
             console.log($scope.drawingStyle);
             if($event.offsetX!==undefined){
                 $scope.lastX = $event.offsetX;
@@ -389,40 +392,7 @@ angular.module('mainApp')
                     //$scope.setTool($scope.cursorIcon);
                 });
         };
-        $scope.showColorOptionsToolbox = function($event) {
-            $scope.colorOption = '';
-            $mdBottomSheet
-                .show({
-                    templateUrl: 'app/partials/colorOptionsGrid.html',
-                    controller: 'colorsOptionsGridController',
-                    targetEvent: $event
-                })
-                .then(function(clickedItem) {
-                    //$scope.clearOption = clickedItem;
-                    $scope.strokeColor = clickedItem.name.toLowerCase();
-                    //$scope.setTool($scope.cursorIcon);
-                });
-        };
     }])
-
-    .controller('colorsOptionsGridController', function($scope, $mdBottomSheet, toolsService) {
-        $scope.items = [
-            { name: 'Black', color: 'black' },
-            { name: 'Grey', color: 'grey' },
-            { name: 'White', color: 'white' },
-            { name: 'Red', color: 'red' },
-            { name: 'Orange', color: 'orange' },
-            { name: 'Yellow', color: 'yellow' },
-            { name: 'Green', color: 'green' },
-            { name: 'Blue', color: 'blue' },
-            { name: 'Purple', color: 'purple' },
-            { name: 'Brown', color: 'brown' }
-        ];
-        $scope.toolClicked = function($index) {
-            var clickedItem = $scope.items[$index];
-            $mdBottomSheet.hide(clickedItem);
-        };
-    })
 
     .controller('clearOptionsController', function($scope, $mdBottomSheet, toolsService) {
         $scope.clearOption = '';
@@ -456,25 +426,36 @@ angular.module('mainApp')
 
     .controller('toolboxController', function($scope, $mdBottomSheet, toolsService) {
         console.log("======== toolbox =============");
-        $scope.setTool = function(tool) {
-            toolsService.setTool(tool);
+        $scope.setTool = function(tool, type) {
+            if(type == "item") {
+                toolsService.setTool(tool);
+            } else {
+                toolsService.setColor(tool);
+            }
         };
-        $scope.toolboxAlert = '';
         $scope.cursorIcon = '';
-        console.log($scope.toolboxAlert);
+        $scope.cursorColor = '';
         $scope.showToolbox = function($event) {
-            $scope.toolboxAlert = '';
             $scope.cursorIcon = '';
+            $scope.cursorColor = '';
             $mdBottomSheet
                 .show({
                     templateUrl: 'app/partials/toolboxGrid.html',
                     controller: 'toolboxGridController',
                     targetEvent: $event
                 })
-                .then(function(clickedItem) {
-                    $scope.toolboxAlert = clickedItem.name + ' clicked!';
-                    $scope.cursorIcon = clickedItem;
-                    $scope.setTool($scope.cursorIcon);
+                .then(function(value) {
+                    if(value[1] == "item") {
+                        var clickedItem = value[0];
+                        console.log("clickedItem : " + clickedItem);
+                            $scope.cursorIcon = clickedItem;
+                            $scope.setTool($scope.cursorIcon, "item");
+                    } else {
+                        var clickedColor = value[0];
+                        console.log("clickedColor : " + clickedColor);
+                        $scope.cursorColor = clickedColor;
+                        $scope.setTool($scope.cursorColor, "color");
+                    }
                 });
         };
     })
@@ -502,7 +483,12 @@ angular.module('mainApp')
         ];
         $scope.toolClicked = function($index) {
             var clickedItem = $scope.items[$index];
-            $mdBottomSheet.hide(clickedItem);
+            $mdBottomSheet.hide([clickedItem, "item"]);
+        };
+        $scope.colorClicked = function($index) {
+            var clickedColor = $scope.colors[$index];
+            console.log("color being sent : " + clickedColor);
+            $mdBottomSheet.hide([clickedColor, "color"]);
         };
     })
     .controller('clearOptionsGridController', function($scope, $mdBottomSheet) {

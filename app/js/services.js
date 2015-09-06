@@ -4,14 +4,23 @@
 angular.module('mainApp')
     .service('toolsService', function() {
         var toolSelected = null;
+        var colorSelected = null;
         var setTool = function(newTool) {
             toolSelected = newTool;
         };
         var getTool = function() {
             return toolSelected;
         };
+        var setColor = function(selectedColor) {
+            colorSelected = selectedColor;
+        };
+        var getColor = function() {
+            return colorSelected;
+        }
         return {
             setTool: setTool,
-            getTool: getTool
+            getTool: getTool,
+            setColor: setColor,
+            getColor: getColor
         };
     });

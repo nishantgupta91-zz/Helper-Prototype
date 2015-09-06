@@ -83,3 +83,7 @@ ul#palette {
 .colorListItem {
     max-width: 5%;
 }
+
+.pathItem:hover{
+    box-shadow: 4px 4px 4px darkgray !important;
+}
