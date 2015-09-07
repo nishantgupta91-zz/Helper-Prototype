@@ -13,6 +13,7 @@ angular.module('mainApp')
         $scope.drawingStyle = "Pen";
         $scope.strokeColor = 'black';
         $scope.brushThickness = 1;
+        $scope.currentTime = 0;
         // the last coordinates before the current move
         $scope.lastX;
         $scope.lastY;
@@ -240,7 +241,7 @@ angular.module('mainApp')
         };
 
         $scope.drawCanvas = function() {
-            console.log("currentTime **************** : " + $scope.currentTime);
+            var backgroundObject = document.getElementById("videoBackgrounddata");
             if (window.requestAnimationFrame) window.requestAnimationFrame($scope.drawCanvas);
             // IE implementation
             else if (window.msRequestAnimationFrame) window.msRequestAnimationFrame($scope.drawCanvas);
