@@ -3,9 +3,9 @@
 }
 
 #whiteFrameContainer {
-    margin: 2%;
-    height: 80%;
-    width: 96%;
+    #margin: 2%;
+    height: 91%;
+    width: 100%;
     #border: 3px solid red;
     position: absolute;
 
@@ -23,7 +23,9 @@
     position: absolute;
 }
 
-#lowerPage {
+#toolsButton {
+    margin-right: 20%;
+    margin-bottom: 2%;
     position: absolute;
 }
 

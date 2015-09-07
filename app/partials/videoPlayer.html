@@ -1,7 +1,7 @@
 <section class="video" ng-video ng-model="interface">
     <div class="videoScreenContainer">
         <!-- Video Screen Directive -->
-        <video poster="app/img/others/poster_1.jpg" id="videoBackgrounddata"
+        <video poster="app/img/others/poster_1.jpg" id="videoBackgrounddata" muted
                video-current-time="currentTime" manage-time-update vi-screen></video>
     </div>
     <div class="videoAccessories">
@@ -18,30 +18,27 @@
                 </md-icon>
             </span>
             <!-- Video information Directive -->
-            <section vi-feedback layout="row" layout-align="start center" flex="70">
+            <section vi-feedback layout="row" layout-align="space-around center" flex>
                 <span style="font-size: small; color: black;">{{Math.round(currentTime)}}</span>
                 <!-- Timeline Directive -->
-                <md-slider flex min="0" max="{{duration}}" ng-model="currentTime" aria-label="blue" class="md-primary">
-                </md-slider>
+                <md-slider flex min="0" max="{{duration}}" ng-model="currentTime"
+                           aria-label="blue" class="md-primary" style="margin-left: 5%;"></md-slider>
                 <span style="font-size: small; color: black;">{{Math.round(duration)}}</span>
             </section>
             <!-- Volume Control Directive -->
+            <!--
             <section vi-volume flex>
                 <md-icon vi-volume-mute md-svg-src="app/img/icons/volume51.svg"></md-icon>
             </section>
+            -->
         </section>
     </div>
     <!-- Volume Control Directive -->
+    <!--
     <section vi-volume>
         <a vi-volume-decrease>Decrease</a>
         <a vi-volume-increase>Increase</a>
         <a vi-volume-loudest>Loudest</a>
     </section>
-
-    <!-- Video information Directive -->
-    <section vi-feedback>
-        <ul>
-            <li>Volume: {{volume}}</li>
-        </ul>
-    </section>
+    -->
 </section>

@@ -8,6 +8,8 @@ angular.module('mainApp')
         console.log('==== main ====');
         $scope.canvasElement = document.getElementById('outputCanvas');
         $scope.ctx = $scope.canvasElement.getContext('2d');
+        $scope.ctx.canvas.width = $scope.ctx.canvas.offsetWidth;
+        $scope.ctx.canvas.height = $scope.ctx.canvas.offsetHeight;
         // variable that decides if something should be drawn on mousemove
         $scope.drawing = false;
         $scope.drawingStyle = "Pen";
@@ -257,11 +259,12 @@ angular.module('mainApp')
             var backgroundObject = document.getElementById("videoBackgrounddata");
             var width = ($scope.canvasElement.width);
             var height = ($scope.canvasElement.height);
+            console.log("Width : " + width);
             if ($scope.ctx) {
                 $scope.ctx.drawImage(backgroundObject, 0, 0, width, height);
             }
             var imgData = $scope.ctx.getImageData(0, 0, $scope.canvasElement.width, $scope.canvasElement.height);
-            console.log("drawing video on canvas : ");
+            console.log("drawing video on canvas...");
             $scope.ctx.putImageData(imgData, 0, 0);
             $scope.ctx.beginPath();
             $scope.drawPenStrokes();
@@ -281,8 +284,6 @@ angular.module('mainApp')
                     $scope.ctx.moveTo($scope.penClicks[i].posX - 1, $scope.penClicks[i].posY);
                 }
                 $scope.ctx.lineTo($scope.penClicks[i].posX, $scope.penClicks[i].posY);
-                //$scope.ctx.strokeStyle = $scope.strokeColor;// "#4bf";
-                console.log("$scope.penClicks.length : " + $scope.penClicks.length);
                 $scope.ctx.lineWidth = $scope.penClicks[i].thickness;
                 $scope.ctx.strokeStyle = $scope.penClicks[i].color;
                 $scope.ctx.stroke();

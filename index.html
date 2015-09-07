@@ -16,38 +16,31 @@
 <body ng-app="mainApp" layout="column" layout-align="top center">
 
 <header-toolbar></header-toolbar>
+<div id="whiteFrameContainer" ng-controller="mainController" layout layout-align="center center">
+    <my-toolbox></my-toolbox>
+    <video-player></video-player>
+    <canvas style="position: absolute; left: 2%; top: 5%; width: 75%; height: 90%;" id="outputCanvas"
+            ng-mousedown="mouseDownHandler($event)"
+            ng-mousemove="mouseMoveHandler($event)"
+            ng-mouseup="mouseUpHandler($event)">
+        <p>Sorry your browser does not support HTML5</p>
+    </canvas>
 
-<div ng-controller="mainController" layout="column" layout-fill style="padding-bottom: 0px;">
-    <md-whiteframe id="whiteFrameContainer" class="md-whiteframe-z5" layout layout-align="center center">
-        <my-toolbox></my-toolbox>
-        <!--div class="videoScreenContainer">
-            <video poster="app/img/others/poster_1.jpg" id="videoBackgrounddata" vi-screen controls></video>
-        </div>-->
-        <video-player></video-player>
-        <!--<div id="canvasContainer">-->
-        <canvas width="500" height="450" id="outputCanvas"
-                ng-mousedown="mouseDownHandler($event)"
-                ng-mousemove="mouseMoveHandler($event)"
-                ng-mouseup="mouseUpHandler($event)">
-            <p>Sorry your browser does not support HTML5</p>
-        </canvas>
-
-        <div class="md-padding bottomSheetdemoBasicUsage" id="bottomGridElement">
-            <div id="toolsButtonContainer" class="bottom-sheet-demo inset" layout="row" layout-sm="column" layout-align="center">
-                <md-button class="md-fab md-primary md-fab-bottom-left left" aria-label="Clear" ng-click="showClearOptionsToolbox($event)">
-                    <md-tooltip>Clear</md-tooltip>
-                    <md-icon md-svg-src="app/img/icons/brush1.svg"></md-icon>
-                </md-button>
-            </div>
+    <div class="md-padding bottomSheetdemoBasicUsage" id="bottomGridElement">
+        <div id="toolsButtonContainer" class="bottom-sheet-demo inset" layout="row" layout-sm="column" layout-align="center">
+            <md-button class="md-fab md-primary md-fab-bottom-left left" aria-label="Clear" ng-click="showClearOptionsToolbox($event)">
+                <md-tooltip>Clear</md-tooltip>
+                <md-icon md-svg-src="app/img/icons/brush1.svg"></md-icon>
+            </md-button>
         </div>
+    </div>
 
-        <input id="upload" type="file" onchange="angular.element(this).scope().getVideoFile()"
-               accept=".mp4" ng-model="files" ng-multiple="false" style="display: none;">
-        <md-button id="addVideoButton" class="md-fab md-primary md-fab-bottom-right right" aria-label="Add" ng-click="openFileDialog()">
-            <md-tooltip>Select Video</md-tooltip>
-            <md-icon md-svg-src="app/img/icons/add186.svg"></md-icon>
-        </md-button>
-    </md-whiteframe>
+    <input id="upload" type="file" onchange="angular.element(this).scope().getVideoFile()"
+           accept=".mp4" ng-model="files" ng-multiple="false" style="display: none;">
+    <md-button id="addVideoButton" class="md-fab md-primary md-fab-bottom-right right" aria-label="Add" ng-click="openFileDialog()">
+        <md-tooltip>Select Video</md-tooltip>
+        <md-icon md-svg-src="app/img/icons/add186.svg"></md-icon>
+    </md-button>
 </div>
 
 
