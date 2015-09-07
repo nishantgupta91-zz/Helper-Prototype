@@ -6,13 +6,14 @@ angular.module('mainApp')
         $scope.resourceDir = 'app/resources/';
         //$scope.clearOption = "";
         console.log('==== main ====');
-        $scope.drawingStyle = "Pen";
         $scope.canvasElement = document.getElementById('outputCanvas');
         $scope.ctx = $scope.canvasElement.getContext('2d');
         // variable that decides if something should be drawn on mousemove
         $scope.drawing = false;
-        // the last coordinates before the current move
+        $scope.drawingStyle = "Pen";
         $scope.strokeColor = 'black';
+        $scope.brushThickness = 1;
+        // the last coordinates before the current move
         $scope.lastX;
         $scope.lastY;
         $scope.penClicks = [];
@@ -25,6 +26,7 @@ angular.module('mainApp')
         $scope.tempTriangles = [];
         $scope.drawnTriangles = [];
         $scope.videoName;
+        $scope.Math = window.Math;
 
         $scope.openFileDialog = function(){
             document.getElementById('upload').click();
@@ -72,7 +74,14 @@ angular.module('mainApp')
             if(toolsService.getColor() != null) {
                 $scope.strokeColor = toolsService.getColor().color;
             }
+            if(toolsService.getBrushThickness() != null) {
+                $scope.brushThickness = toolsService.getBrushThickness();
+            }
+            console.log("************************************");
             console.log($scope.drawingStyle);
+            console.log($scope.strokeColor);
+            console.log($scope.brushThickness);
+            console.log("************************************");
             if($event.offsetX!==undefined){
                 $scope.lastX = $event.offsetX;
                 $scope.lastY = $event.offsetY;
@@ -81,12 +90,14 @@ angular.module('mainApp')
                 $scope.lastY = $event.layerY - $event.currentTarget.offsetTop;
             }
             var color = $scope.strokeColor;
+            var thickness = $scope.brushThickness;
             if($scope.drawingStyle.toLowerCase() == "pen") {
                 var penClick = {
                     posX: $scope.lastX,
                     posY: $scope.lastY,
                     drag: false,
-                    color: color
+                    color: color,
+                    thickness: thickness
                 };
                 $scope.penClicks.push(penClick);
             }
@@ -107,13 +118,16 @@ angular.module('mainApp')
                     currentY = $event.layerY - $event.currentTarget.offsetTop;
                 }
                 var color = $scope.strokeColor;
+                var thickness = $scope.brushThickness;
                 console.log("$scope.strokeColor ************** : " + color);
+                console.log("$scope.brushThickness ************** : " + thickness);
                 if($scope.drawingStyle.toLowerCase() == "pen") {
                     var penClick = {
                         posX: currentX,
                         posY: currentY,
                         drag: true,
-                        color: color
+                        color: color,
+                        thickness: thickness
                     };
                     $scope.penClicks.push(penClick);
                 } else if($scope.drawingStyle.toLowerCase() == "rectangle") {
@@ -122,7 +136,8 @@ angular.module('mainApp')
                         startY: $scope.lastY,
                         sizeX: currentX - $scope.lastX,
                         sizeY: currentY - $scope.lastY,
-                        color: color
+                        color: color,
+                        thickness: thickness
                     };
                     $scope.tempRectangles.push(drawnRectangle);
                 } else if($scope.drawingStyle.toLowerCase() == "line") {
@@ -131,7 +146,8 @@ angular.module('mainApp')
                         startY: $scope.lastY,
                         endX: currentX,
                         endY: currentY,
-                        color: color
+                        color: color,
+                        thickness: thickness
                     };
                     $scope.tempLines.push(drawnLine);
                 } else if($scope.drawingStyle.toLowerCase() == "circle") {
@@ -140,7 +156,8 @@ angular.module('mainApp')
                         startY: $scope.lastY,
                         endX: currentX,
                         endY: currentY,
-                        color: color
+                        color: color,
+                        thickness: thickness
                     };
                     $scope.tempCircles.push(drawnCircle);
                 } else if($scope.drawingStyle.toLowerCase() == "triangle") {
@@ -151,7 +168,8 @@ angular.module('mainApp')
                         endY: currentY,
                         thirdX: $scope.lastX + 2*(currentX - $scope.lastX),
                         thirdY: $scope.lastY,
-                        color: color
+                        color: color,
+                        thickness: thickness
                     };
                     $scope.tempTriangles.push(drawnTriangle);
                 }
@@ -171,13 +189,15 @@ angular.module('mainApp')
                 currentY = $event.layerY - $event.currentTarget.offsetTop;
             }
             var color = $scope.strokeColor;
+            var thickness = $scope.brushThickness;
             if($scope.drawingStyle.toLowerCase() == "line") {
                 var drawnLine = {
                     startX: $scope.lastX,
                     startY: $scope.lastY,
                     endX: currentX,
                     endY: currentY,
-                    color: color
+                    color: color,
+                    thickness: thickness
                 };
                 $scope.drawnLines.push(drawnLine);
             } else if($scope.drawingStyle.toLowerCase() == "rectangle") {
@@ -186,7 +206,8 @@ angular.module('mainApp')
                     startY: $scope.lastY,
                     sizeX: currentX - $scope.lastX,
                     sizeY: currentY - $scope.lastY,
-                    color: color
+                    color: color,
+                    thickness: thickness
                 };
                 $scope.drawnRectangles.push(drawnRectangle);
             } else if($scope.drawingStyle.toLowerCase() == "circle") {
@@ -195,7 +216,8 @@ angular.module('mainApp')
                     startY: $scope.lastY,
                     endX: currentX,
                     endY: currentY,
-                    color: color
+                    color: color,
+                    thickness: thickness
                 };
                 $scope.drawnCircles.push(drawnCircle);
             } else if($scope.drawingStyle.toLowerCase() == "triangle") {
@@ -206,7 +228,8 @@ angular.module('mainApp')
                     endY: currentY,
                     thirdX: $scope.lastX + 2*(currentX - $scope.lastX),
                     thirdY: $scope.lastY,
-                    color: color
+                    color: color,
+                    thickness: thickness
                 };
                 $scope.drawnTriangles.push(drawnTriangle);
             }
@@ -217,6 +240,7 @@ angular.module('mainApp')
         };
 
         $scope.drawCanvas = function() {
+            console.log("currentTime **************** : " + $scope.currentTime);
             if (window.requestAnimationFrame) window.requestAnimationFrame($scope.drawCanvas);
             // IE implementation
             else if (window.msRequestAnimationFrame) window.msRequestAnimationFrame($scope.drawCanvas);
@@ -258,6 +282,7 @@ angular.module('mainApp')
                 $scope.ctx.lineTo($scope.penClicks[i].posX, $scope.penClicks[i].posY);
                 //$scope.ctx.strokeStyle = $scope.strokeColor;// "#4bf";
                 console.log("$scope.penClicks.length : " + $scope.penClicks.length);
+                $scope.ctx.lineWidth = $scope.penClicks[i].thickness;
                 $scope.ctx.strokeStyle = $scope.penClicks[i].color;
                 $scope.ctx.stroke();
             }
@@ -272,6 +297,7 @@ angular.module('mainApp')
                 $scope.ctx.moveTo($scope.tempLines[numberOfTempLines - 1].startX, $scope.tempLines[numberOfTempLines - 1].startY);
                 $scope.ctx.lineTo($scope.tempLines[numberOfTempLines - 1].endX, $scope.tempLines[numberOfTempLines - 1].endY);
                 //$scope.ctx.strokeStyle = $scope.strokeColor;//"#4bf";
+                $scope.ctx.lineWidth = $scope.tempLines[numberOfTempLines - 1].thickness;
                 $scope.ctx.strokeStyle = $scope.tempLines[numberOfTempLines - 1].color;
                 $scope.ctx.stroke();
             }
@@ -280,6 +306,7 @@ angular.module('mainApp')
                 $scope.ctx.moveTo($scope.drawnLines[i].startX, $scope.drawnLines[i].startY);
                 $scope.ctx.lineTo($scope.drawnLines[i].endX, $scope.drawnLines[i].endY);
                 //$scope.ctx.strokeStyle = $scope.strokeColor;//"#4bf";
+                $scope.ctx.lineWidth = $scope.drawnLines[i].thickness;
                 $scope.ctx.strokeStyle = $scope.drawnLines[i].color;
                 $scope.ctx.stroke();
             }
@@ -301,6 +328,7 @@ angular.module('mainApp')
                     $scope.ctx.lineTo(centerX + radiusX * Math.cos(a), centerY + radiusY * Math.sin(a));
                 }
                 $scope.ctx.closePath();
+                $scope.ctx.lineWidth = $scope.tempCircles[numberOfTempCircles - 1].thickness;
                 $scope.ctx.strokeStyle = $scope.tempCircles[numberOfTempCircles - 1].color;//"#4bf";
                 $scope.ctx.stroke();
             }
@@ -319,6 +347,7 @@ angular.module('mainApp')
                     $scope.ctx.lineTo(centerX + radiusX * Math.cos(a), centerY + radiusY * Math.sin(a));
                 }
                 $scope.ctx.closePath();
+                $scope.ctx.lineWidth = $scope.drawnCircles[i].thickness;
                 $scope.ctx.strokeStyle = $scope.drawnCircles[i].color;//'#4bf';
                 $scope.ctx.stroke();
             }
@@ -332,7 +361,8 @@ angular.module('mainApp')
                 $scope.ctx.lineTo($scope.tempTriangles[numberOfTempTriangles - 1].endX, $scope.tempTriangles[numberOfTempTriangles - 1].endY);
                 $scope.ctx.lineTo($scope.tempTriangles[numberOfTempTriangles - 1].thirdX, $scope.tempTriangles[numberOfTempTriangles - 1].thirdY);
                 $scope.ctx.lineTo($scope.tempTriangles[numberOfTempTriangles - 1].startX, $scope.tempTriangles[numberOfTempTriangles - 1].startY);
-                $scope.ctx.strokeStyle = $scope.tempTriangles[numberOfTempTriangles - 1].color;//"#4bf";
+                $scope.ctx.lineWidth = $scope.tempTriangles[numberOfTempTriangles - 1].thickness;
+                $scope.ctx.strokeStyle = $scope.tempTriangles[numberOfTempTriangles - 1].color;
                 $scope.ctx.stroke();
             }
             for (var i = 0; i < $scope.drawnTriangles.length; i++) {
@@ -341,6 +371,7 @@ angular.module('mainApp')
                 $scope.ctx.lineTo($scope.drawnTriangles[i].endX, $scope.drawnTriangles[i].endY);
                 $scope.ctx.lineTo($scope.drawnTriangles[i].thirdX, $scope.drawnTriangles[i].thirdY);
                 $scope.ctx.lineTo($scope.drawnTriangles[i].startX, $scope.drawnTriangles[i].startY);
+                $scope.ctx.lineWidth = $scope.drawnTriangles[i].thickness;
                 $scope.ctx.strokeStyle = $scope.drawnTriangles[i].color;//"#4bf";
                 $scope.ctx.stroke();
             }
@@ -354,14 +385,16 @@ angular.module('mainApp')
                     $scope.tempRectangles[numberOfTempRectangles - 1].startY,
                     $scope.tempRectangles[numberOfTempRectangles - 1].sizeX,
                     $scope.tempRectangles[numberOfTempRectangles - 1].sizeY);
-                $scope.ctx.strokeStyle = $scope.tempRectangles[numberOfTempRectangles - 1].color;//"#4bf";
+                $scope.ctx.lineWidth = $scope.tempRectangles[numberOfTempRectangles - 1].thickness;
+                $scope.ctx.strokeStyle = $scope.tempRectangles[numberOfTempRectangles - 1].color;
                 $scope.ctx.stroke();
             }
             for (var i = 0; i < $scope.drawnRectangles.length; i++) {
                 $scope.ctx.beginPath();
                 $scope.ctx.rect($scope.drawnRectangles[i].startX, $scope.drawnRectangles[i].startY,
                     $scope.drawnRectangles[i].sizeX, $scope.drawnRectangles[i].sizeY);
-                $scope.ctx.strokeStyle = $scope.drawnRectangles[i].color;//"#4bf";
+                $scope.ctx.lineWidth = $scope.drawnRectangles[i].thickness;
+                $scope.ctx.strokeStyle = $scope.drawnRectangles[i].color;
                 $scope.ctx.stroke();
             }
         };
@@ -393,7 +426,7 @@ angular.module('mainApp')
                 });
         };
     }])
-
+/*
     .controller('clearOptionsController', function($scope, $mdBottomSheet, toolsService) {
         $scope.clearOption = '';
         $scope.showClearOptionsToolbox = function($event) {
@@ -423,18 +456,36 @@ angular.module('mainApp')
                 });
         };
     })
+*/
+    .controller('clearOptionsGridController', function($scope, $mdBottomSheet) {
+        $scope.items = [
+            { name: 'Clear All', icon: 'eraser' },
+            { name: 'Clear Pen Drawings', icon: 'pen' },
+            { name: 'Clear Lines', icon: 'line' },
+            { name: 'Clear Circles', icon: 'circle' },
+            { name: 'Clear Rectangles', icon: 'rectangle' },
+            { name: 'Clear Triangles', icon: 'triangle' },
+            { name: 'Clear Text', icon: 'text' }
+        ];
+        $scope.toolClicked = function($index) {
+            var clickedItem = $scope.items[$index];
+            $mdBottomSheet.hide(clickedItem);
+        };
+    })
 
     .controller('toolboxController', function($scope, $mdBottomSheet, toolsService) {
         console.log("======== toolbox =============");
-        $scope.setTool = function(tool, type) {
-            if(type == "item") {
-                toolsService.setTool(tool);
-            } else {
-                toolsService.setColor(tool);
-            }
-        };
         $scope.cursorIcon = '';
         $scope.cursorColor = '';
+        $scope.brushThickness = 1;
+        $scope.setTool = function(tool, brushThickness, type) {
+            if("item" == type) {
+                toolsService.setTool(tool);
+            } else if("color" == type) {
+                toolsService.setColor(tool);
+            }
+            toolsService.setBrushThickness(brushThickness);
+        };
         $scope.showToolbox = function($event) {
             $scope.cursorIcon = '';
             $scope.cursorColor = '';
@@ -445,22 +496,25 @@ angular.module('mainApp')
                     targetEvent: $event
                 })
                 .then(function(value) {
-                    if(value[1] == "item") {
+                    $scope.brushThickness = value[1];
+                    console.log("$scope.brushThickness ............... " + $scope.brushThickness);
+                    if("item" == value[2]) {
                         var clickedItem = value[0];
-                        console.log("clickedItem : " + clickedItem);
-                            $scope.cursorIcon = clickedItem;
-                            $scope.setTool($scope.cursorIcon, "item");
-                    } else {
+                        $scope.cursorIcon = clickedItem;
+                        $scope.setTool($scope.cursorIcon, $scope.brushThickness, "item");
+                    } else if ("color" == value[2]){
                         var clickedColor = value[0];
-                        console.log("clickedColor : " + clickedColor);
                         $scope.cursorColor = clickedColor;
-                        $scope.setTool($scope.cursorColor, "color");
+                        $scope.setTool($scope.cursorColor, $scope.brushThickness, "color");
+                    } else {
+                        $scope.setTool(value[0], $scope.brushThickness, value[2])
                     }
                 });
         };
     })
 
-    .controller('toolboxGridController', function($scope, $mdBottomSheet) {
+    .controller('toolboxGridController', function($scope, $mdBottomSheet, toolsService) {
+        $scope.brushThickness = 1;
         $scope.items = [
             { name: 'Pen', icon: 'pen' },
             { name: 'Circle', icon: 'circle' },
@@ -482,27 +536,20 @@ angular.module('mainApp')
             { name: 'Brown', color: 'brown' }
         ];
         $scope.toolClicked = function($index) {
+            $scope.brushThickness = document.getElementById('thicknessSlider').textContent;
+            $scope.brushThickness = parseInt($scope.brushThickness);
             var clickedItem = $scope.items[$index];
-            $mdBottomSheet.hide([clickedItem, "item"]);
+            $mdBottomSheet.hide([clickedItem, $scope.brushThickness, "item"]);
         };
         $scope.colorClicked = function($index) {
+            $scope.brushThickness = document.getElementById('thicknessSlider').textContent;
+            $scope.brushThickness = parseInt($scope.brushThickness);
             var clickedColor = $scope.colors[$index];
-            console.log("color being sent : " + clickedColor);
-            $mdBottomSheet.hide([clickedColor, "color"]);
+            $mdBottomSheet.hide([clickedColor, $scope.brushThickness, "color"]);
         };
-    })
-    .controller('clearOptionsGridController', function($scope, $mdBottomSheet) {
-        $scope.items = [
-            { name: 'Clear All', icon: 'eraser' },
-            { name: 'Clear Pen Drawings', icon: 'pen' },
-            { name: 'Clear Lines', icon: 'line' },
-            { name: 'Clear Circles', icon: 'circle' },
-            { name: 'Clear Rectangles', icon: 'rectangle' },
-            { name: 'Clear Triangles', icon: 'triangle' },
-            { name: 'Clear Text', icon: 'text' }
-        ];
-        $scope.toolClicked = function($index) {
-            var clickedItem = $scope.items[$index];
-            $mdBottomSheet.hide(clickedItem);
+        $scope.setThickness = function() {
+            $scope.brushThickness = document.getElementById('thicknessSlider').textContent;
+            $scope.brushThickness = parseInt($scope.brushThickness);
+            $mdBottomSheet.hide([null, $scope.brushThickness, null]);
         };
     });

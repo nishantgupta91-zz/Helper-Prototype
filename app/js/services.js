@@ -5,6 +5,7 @@ angular.module('mainApp')
     .service('toolsService', function() {
         var toolSelected = null;
         var colorSelected = null;
+        var brushThickness = null;
         var setTool = function(newTool) {
             toolSelected = newTool;
         };
@@ -16,11 +17,19 @@ angular.module('mainApp')
         };
         var getColor = function() {
             return colorSelected;
-        }
+        };
+        var setBrushThickness = function(thickness) {
+            brushThickness = thickness;
+        };
+        var getBrushThickness = function() {
+            return brushThickness;
+        };
         return {
             setTool: setTool,
             getTool: getTool,
             setColor: setColor,
-            getColor: getColor
+            getColor: getColor,
+            setBrushThickness: setBrushThickness,
+            getBrushThickness: getBrushThickness
         };
     });

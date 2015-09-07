@@ -79,11 +79,6 @@ ul#palette {
     border: 10px #333 solid;
 }*/
 
-/* colors toolbox */
-.colorListItem {
-    max-width: 5%;
-}
-
 .pathItem:hover{
     box-shadow: 4px 4px 4px darkgray !important;
 }
