@@ -80,11 +80,7 @@ angular.module('mainApp')
             if(toolsService.getBrushThickness() != null) {
                 $scope.brushThickness = toolsService.getBrushThickness();
             }
-            console.log("************************************");
-            console.log($scope.drawingStyle);
-            console.log($scope.strokeColor);
-            console.log($scope.brushThickness);
-            console.log("************************************");
+
             if($event.offsetX!==undefined){
                 $scope.lastX = $event.offsetX;
                 $scope.lastY = $event.offsetY;
@@ -122,8 +118,6 @@ angular.module('mainApp')
                 }
                 var color = $scope.strokeColor;
                 var thickness = $scope.brushThickness;
-                console.log("$scope.strokeColor ************** : " + color);
-                console.log("$scope.brushThickness ************** : " + thickness);
                 if($scope.drawingStyle.toLowerCase() == "pen") {
                     var penClick = {
                         posX: currentX,
@@ -242,6 +236,11 @@ angular.module('mainApp')
             $scope.canvasElement.width = $scope.canvasElement.width;
         };
 
+        $scope.playVideo = function() {
+            //$scope.canvasElement.style.visibility = "visible";
+            $scope.drawCanvas();
+        };
+
         $scope.drawCanvas = function() {
             var backgroundObject = document.getElementById("videoBackgrounddata");
             if (window.requestAnimationFrame) window.requestAnimationFrame($scope.drawCanvas);
@@ -259,7 +258,6 @@ angular.module('mainApp')
             var backgroundObject = document.getElementById("videoBackgrounddata");
             var width = ($scope.canvasElement.width);
             var height = ($scope.canvasElement.height);
-            console.log("Width : " + width);
             if ($scope.ctx) {
                 $scope.ctx.drawImage(backgroundObject, 0, 0, width, height);
             }
@@ -288,8 +286,6 @@ angular.module('mainApp')
                 $scope.ctx.strokeStyle = $scope.penClicks[i].color;
                 $scope.ctx.stroke();
             }
-            if($scope.penClicks > 0)
-                console.log("penClicks : " + $scope.penClicks[2].color);
         };
         // lines
         $scope.drawLineStrokes = function() {
@@ -499,7 +495,6 @@ angular.module('mainApp')
                 })
                 .then(function(value) {
                     $scope.brushThickness = value[1];
-                    console.log("$scope.brushThickness ............... " + $scope.brushThickness);
                     if("item" == value[2]) {
                         var clickedItem = value[0];
                         $scope.cursorIcon = clickedItem;

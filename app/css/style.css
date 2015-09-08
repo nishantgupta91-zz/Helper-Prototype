@@ -15,6 +15,7 @@
     background:      -o-linear-gradient(90deg, #348F50 10%, #56B4D3 90%); /* Opera 11.10+ */
     background:         linear-gradient(90deg, #348F50 10%, #56B4D3 90%); /* W3C */
 
+
 }
 
 #addVideoButton {
@@ -23,8 +24,14 @@
     position: absolute;
 }
 
+#clearButton {
+    margin-right: 8%;
+    margin-bottom: 2%;
+    position: absolute;
+}
+
 #toolsButton {
-    margin-right: 20%;
+    margin-right: 14%;
     margin-bottom: 2%;
     position: absolute;
 }
@@ -60,17 +67,25 @@ ul#palette {
     margin: 4px 1px;
 }
 
-#palette span#erase {
-    margin-left: 8px;
-    background-image: url("../images/eraser24.png");
-}
-
 /* output canvas */
 #outputCanvas{
     border-bottom: 1px solid rgba(0,0,0,0.3);
-    background-color: #FFF;
+    background-color: black;
     box-shadow: 0 9px 20px -5px rgba(0,0,0,0.8);
     cursor: crosshair;
+    position: absolute;
+    left: 2%;
+    top: 5%;
+    width: 75%;
+    height: 90%;
+    #visibility: hidden;
+
+    #background: -webkit-linear-gradient(90deg, #517fa4 10%, #243949 90%); /* Chrome 10+, Saf5.1+ */
+    #background:    -moz-linear-gradient(90deg, #517fa4 10%, #243949 90%); /* FF3.6+ */
+    #background:     -ms-linear-gradient(90deg, #517fa4 10%, #243949 90%); /* IE10 */
+    #background:      -o-linear-gradient(90deg, #517fa4 10%, #243949 90%); /* Opera 11.10+ */
+    #background:         linear-gradient(90deg, #517fa4 10%, #243949 90%); /* W3C */
+
 }
 /*
 #canvasContainer{
