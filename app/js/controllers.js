@@ -72,16 +72,14 @@ angular.module('mainApp')
             $scope.tempCircles = [];
             $scope.drawnCircles = [];
         };
-        $scope.applyText = function(btnId, textId, leftPos, topPos) {
-            alert(document.getElementById(textId).value);
+        $scope.applyText = function(btnId, textId, containerId, leftPos, topPos) {
             var textToWrite = {
                 value: document.getElementById(textId).value,
                 left: leftPos,
                 top: topPos
             };
             $scope.drawnText.push(textToWrite);
-            console.log("drawnText : " + $scope.drawnText[0]);
-            console.log("drawnText value : " + $scope.drawnText[0].value);
+            document.getElementById(containerId).style.display = "none";
         };
         $scope.mouseDownHandler = function($event) {
             if(toolsService.getTool() != null) {
@@ -142,7 +140,8 @@ angular.module('mainApp')
                 applyButton.setAttribute("value", "Apply");
                 applyButton.onclick = function(){
                     var textFieldId = this.id.replace("button", "text");
-                    $scope.applyText(this.id, textFieldId, leftPos, topPos);
+                    var containerId = this.id.replace("button", "container");
+                    $scope.applyText(this.id, textFieldId, containerId, leftPos, topPos);
                 };
                 //applyButton.style.zIndex = 999;
                 applyButton.style.background = "transparent";
@@ -330,8 +329,7 @@ angular.module('mainApp')
         $scope.drawTextStrokes = function() {
             for (var i = 0; i < $scope.drawnText.length; i++) {
                 $scope.ctx.beginPath();
-                $scope.ctx.font = "40pt Calibri";
-                console.log("$scope.drawnText[i].value .............. : " + $scope.drawnText[i].value);
+                $scope.ctx.font = "10pt Arial";
                 $scope.ctx.fillText($scope.drawnText[i].value, $scope.drawnText[i].left, $scope.drawnText[i].top);
                 //$scope.ctx.stroke();
             }
