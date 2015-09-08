@@ -28,6 +28,8 @@ angular.module('mainApp')
         $scope.drawnCircles = [];
         $scope.tempTriangles = [];
         $scope.drawnTriangles = [];
+        $scope.tempText = [];
+        $scope.drawnText = [];
         $scope.videoName;
         $scope.Math = window.Math;
 
@@ -70,6 +72,17 @@ angular.module('mainApp')
             $scope.tempCircles = [];
             $scope.drawnCircles = [];
         };
+        $scope.applyText = function(btnId, textId, leftPos, topPos) {
+            alert(document.getElementById(textId).value);
+            var textToWrite = {
+                value: document.getElementById(textId).value,
+                left: leftPos,
+                top: topPos
+            };
+            $scope.drawnText.push(textToWrite);
+            console.log("drawnText : " + $scope.drawnText[0]);
+            console.log("drawnText value : " + $scope.drawnText[0].value);
+        };
         $scope.mouseDownHandler = function($event) {
             if(toolsService.getTool() != null) {
                 $scope.drawingStyle = toolsService.getTool().name;
@@ -99,6 +112,47 @@ angular.module('mainApp')
                     thickness: thickness
                 };
                 $scope.penClicks.push(penClick);
+            } else if($scope.drawingStyle.toLowerCase() == "text") {
+                var idText = "";
+                var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+                for( var i=0; i < 5; i++ )
+                    idText += possible.charAt(Math.floor(Math.random() * possible.length));
+                var tempDiv = document.createElement("div");
+                tempDiv.setAttribute("id", idText + "_container");
+                tempDiv.style.zIndex = 999;
+                tempDiv.style.background = "transparent";
+                tempDiv.style.position = "absolute";
+                var leftPos = $scope.lastX;
+                var topPos = $scope.lastY;
+                tempDiv.style.left = leftPos + 'px';
+                tempDiv.style.top = topPos + 'px';
+                var inputField = document.createElement("input");
+                inputField.setAttribute('type', 'text');
+                inputField.setAttribute('id', idText + "_text");
+                inputField.setAttribute('value', 'default');
+                //inputField.style.zIndex = 999;
+                inputField.style.background = "transparent";
+                inputField.style.color = "red";
+                inputField.style.position = "relative";
+                //inputField.style.left = $scope.lastX + 'px';
+                //inputField.style.top = $scope.lastY + 'px';
+                var applyButton = document.createElement("input");
+                applyButton.setAttribute("type", "button");
+                applyButton.setAttribute("id", idText + "_button");
+                applyButton.setAttribute("value", "Apply");
+                applyButton.onclick = function(){
+                    var textFieldId = this.id.replace("button", "text");
+                    $scope.applyText(this.id, textFieldId, leftPos, topPos);
+                };
+                //applyButton.style.zIndex = 999;
+                applyButton.style.background = "transparent";
+                applyButton.style.color = "red";
+                applyButton.style.position = "relative";
+                //applyButton.style.left = $scope.lastX + 25 + 'px';
+                //applyButton.style.top = $scope.lastY + 'px';
+                tempDiv.appendChild(inputField);
+                tempDiv.appendChild(applyButton);
+                document.getElementById('whiteFrameContainer').appendChild(tempDiv);
             }
             // begins new line
             $scope.ctx.beginPath();
@@ -270,6 +324,17 @@ angular.module('mainApp')
             $scope.drawLineStrokes();
             $scope.drawTriangleStrokes();
             $scope.drawCircleStrokes();
+            $scope.drawTextStrokes();
+        };
+
+        $scope.drawTextStrokes = function() {
+            for (var i = 0; i < $scope.drawnText.length; i++) {
+                $scope.ctx.beginPath();
+                $scope.ctx.font = "40pt Calibri";
+                console.log("$scope.drawnText[i].value .............. : " + $scope.drawnText[i].value);
+                $scope.ctx.fillText($scope.drawnText[i].value, $scope.drawnText[i].left, $scope.drawnText[i].top);
+                //$scope.ctx.stroke();
+            }
         };
 
         // freehand pen drawing
