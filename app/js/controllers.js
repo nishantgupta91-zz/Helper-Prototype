@@ -2,8 +2,8 @@
  * Created by Nishant on 8/28/2015.
  */
 angular.module('mainApp')
-    .controller('mainController', ['$scope', 'video', 'toolsService', '$mdBottomSheet', '$compile', '$mdDialog',
-        function($scope, video, toolsService, $mdBottomSheet, $compile, $mdDialog){
+    .controller('mainController', ['$scope', 'video', 'toolsService', '$mdBottomSheet', '$compile', '$mdDialog', '$timeout',
+        function($scope, video, toolsService, $mdBottomSheet, $compile, $mdDialog, $timeout){
         $scope.resourceDir = 'app/resources/';
         //$scope.clearOption = "";
         console.log('==== main ====');
@@ -106,8 +106,18 @@ angular.module('mainApp')
                 parent: angular.element(document.body)
             })
                 .then(function(answer) {
-                    //alert(answer);
                     durationSet = answer;
+                    document.getElementById(containerId).style.display = "none";
+                    videoObject.play();
+                    $scope.drawnText.push(textToWrite);
+                    console.log("duration : " + durationSet);
+                    $timeout(function () {
+                        console.log("removing...");
+                        var index = $scope.drawnText.indexOf(textToWrite);
+                        if(index > -1) {
+                            $scope.drawnText.splice(index, 1);
+                        }
+                    }, durationSet*1000);
                 }, function() {
                     console.log('text duration dialog closed');
                 });
@@ -118,9 +128,6 @@ angular.module('mainApp')
                 color: color,
                 duration: durationSet
             };
-            $scope.drawnText.push(textToWrite);
-            document.getElementById(containerId).style.display = "none";
-            videoObject.play();
         };
         $scope.mouseDownHandler = function($event) {
             if(toolsService.getTool() != null) {
