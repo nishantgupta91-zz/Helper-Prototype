@@ -2,7 +2,7 @@
  * Created by Nishant on 8/28/2015.
  */
 angular.module('mainApp')
-    .controller('mainController', ['$scope', 'video', 'toolsService', '$mdBottomSheet', function($scope, video, toolsService, $mdBottomSheet){
+    .controller('mainController', ['$scope', 'video', 'toolsService', '$mdBottomSheet', '$compile', function($scope, video, toolsService, $mdBottomSheet, $compile){
         $scope.resourceDir = 'app/resources/';
         //$scope.clearOption = "";
         console.log('==== main ====');
@@ -77,37 +77,25 @@ angular.module('mainApp')
             var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
             for( var i=0; i < 5; i++ )
                 idText += possible.charAt(Math.floor(Math.random() * possible.length));
-            var tempDiv = document.createElement("div");
-            tempDiv.setAttribute("id", idText + "_container");
-            tempDiv.style.zIndex = 999;
-            tempDiv.style.background = "transparent";
-            tempDiv.style.position = "absolute";
+            var idContainer = idText + "_container";
+            var idInputBox = idText + "_text";
+            var idButton = idText + "_button";
             var leftPos = $scope.lastX;
             var topPos = $scope.lastY;
-            tempDiv.style.left = leftPos + 'px';
-            tempDiv.style.top = topPos + 'px';
-            var inputField = document.createElement("input");
-            inputField.setAttribute('type', 'text');
-            inputField.setAttribute('id', idText + "_text");
-            inputField.setAttribute('value', '');
-            inputField.style.background = "transparent";
-            inputField.style.color = "red";
-            inputField.style.position = "relative";
-            var applyButton = document.createElement("input");
-            applyButton.setAttribute("type", "button");
-            applyButton.setAttribute("id", idText + "_button");
-            applyButton.setAttribute("value", "Apply");
-            applyButton.onclick = function(){
-                var textFieldId = this.id.replace("button", "text");
-                var containerId = this.id.replace("button", "container");
-                $scope.applyText(this.id, textFieldId, containerId, leftPos, topPos, color, videoObject);
+            var contentStyle = '{\"background\":\"transparent\", \"position\":\"absolute\",' +
+                                    '\"left\":\"' + leftPos + 'px\", \"top\":\"' + topPos + 'px\"}';
+            var newElement =
+                "<md-content id=\"" + idContainer + "\" ng-style='" + contentStyle + "' layout-padding layout='row'>" +
+                    "<md-input-container>" +
+                        "<label ng-style='{\"color\":\"" + color + "\"}'>Text</label>" +
+                        "<input id=\"" + idInputBox + "\" ng-style='{\"color\":\"" + color + "\"}'>" +
+                    "</md-input-container>" +
+                    "<md-button id=\"" + idButton + "\" ng-style='{\"color\":\"" + color + "\"}'>Apply</md-button></md-content>";
+            var childNode = $compile(newElement)($scope);
+            document.getElementById('whiteFrameContainer').appendChild(childNode[0]);
+            document.getElementById(idButton).onclick = function(){
+                $scope.applyText(idButton, idInputBox, idContainer, leftPos, topPos, color, videoObject);
             };
-            applyButton.style.background = "transparent";
-            applyButton.style.color = "blue";
-            applyButton.style.position = "relative";
-            tempDiv.appendChild(inputField);
-            tempDiv.appendChild(applyButton);
-            document.getElementById('whiteFrameContainer').appendChild(tempDiv);
         };
         $scope.applyText = function(btnId, textId, containerId, leftPos, topPos, color, videoObject) {
             var textToWrite = {
