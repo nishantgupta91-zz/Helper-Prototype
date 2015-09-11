@@ -72,14 +72,53 @@ angular.module('mainApp')
             $scope.tempCircles = [];
             $scope.drawnCircles = [];
         };
-        $scope.applyText = function(btnId, textId, containerId, leftPos, topPos) {
+        $scope.createInputsForText = function(color, videoObject) {
+            var idText = "";
+            var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            for( var i=0; i < 5; i++ )
+                idText += possible.charAt(Math.floor(Math.random() * possible.length));
+            var tempDiv = document.createElement("div");
+            tempDiv.setAttribute("id", idText + "_container");
+            tempDiv.style.zIndex = 999;
+            tempDiv.style.background = "transparent";
+            tempDiv.style.position = "absolute";
+            var leftPos = $scope.lastX;
+            var topPos = $scope.lastY;
+            tempDiv.style.left = leftPos + 'px';
+            tempDiv.style.top = topPos + 'px';
+            var inputField = document.createElement("input");
+            inputField.setAttribute('type', 'text');
+            inputField.setAttribute('id', idText + "_text");
+            inputField.setAttribute('value', '');
+            inputField.style.background = "transparent";
+            inputField.style.color = "red";
+            inputField.style.position = "relative";
+            var applyButton = document.createElement("input");
+            applyButton.setAttribute("type", "button");
+            applyButton.setAttribute("id", idText + "_button");
+            applyButton.setAttribute("value", "Apply");
+            applyButton.onclick = function(){
+                var textFieldId = this.id.replace("button", "text");
+                var containerId = this.id.replace("button", "container");
+                $scope.applyText(this.id, textFieldId, containerId, leftPos, topPos, color, videoObject);
+            };
+            applyButton.style.background = "transparent";
+            applyButton.style.color = "blue";
+            applyButton.style.position = "relative";
+            tempDiv.appendChild(inputField);
+            tempDiv.appendChild(applyButton);
+            document.getElementById('whiteFrameContainer').appendChild(tempDiv);
+        };
+        $scope.applyText = function(btnId, textId, containerId, leftPos, topPos, color, videoObject) {
             var textToWrite = {
                 value: document.getElementById(textId).value,
                 left: leftPos,
-                top: topPos
+                top: topPos,
+                color: color
             };
             $scope.drawnText.push(textToWrite);
             document.getElementById(containerId).style.display = "none";
+            videoObject.play();
         };
         $scope.mouseDownHandler = function($event) {
             if(toolsService.getTool() != null) {
@@ -111,47 +150,9 @@ angular.module('mainApp')
                 };
                 $scope.penClicks.push(penClick);
             } else if($scope.drawingStyle.toLowerCase() == "text") {
-                var idText = "";
-                var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-                for( var i=0; i < 5; i++ )
-                    idText += possible.charAt(Math.floor(Math.random() * possible.length));
-                var tempDiv = document.createElement("div");
-                tempDiv.setAttribute("id", idText + "_container");
-                tempDiv.style.zIndex = 999;
-                tempDiv.style.background = "transparent";
-                tempDiv.style.position = "absolute";
-                var leftPos = $scope.lastX;
-                var topPos = $scope.lastY;
-                tempDiv.style.left = leftPos + 'px';
-                tempDiv.style.top = topPos + 'px';
-                var inputField = document.createElement("input");
-                inputField.setAttribute('type', 'text');
-                inputField.setAttribute('id', idText + "_text");
-                inputField.setAttribute('value', 'default');
-                //inputField.style.zIndex = 999;
-                inputField.style.background = "transparent";
-                inputField.style.color = "red";
-                inputField.style.position = "relative";
-                //inputField.style.left = $scope.lastX + 'px';
-                //inputField.style.top = $scope.lastY + 'px';
-                var applyButton = document.createElement("input");
-                applyButton.setAttribute("type", "button");
-                applyButton.setAttribute("id", idText + "_button");
-                applyButton.setAttribute("value", "Apply");
-                applyButton.onclick = function(){
-                    var textFieldId = this.id.replace("button", "text");
-                    var containerId = this.id.replace("button", "container");
-                    $scope.applyText(this.id, textFieldId, containerId, leftPos, topPos);
-                };
-                //applyButton.style.zIndex = 999;
-                applyButton.style.background = "transparent";
-                applyButton.style.color = "red";
-                applyButton.style.position = "relative";
-                //applyButton.style.left = $scope.lastX + 25 + 'px';
-                //applyButton.style.top = $scope.lastY + 'px';
-                tempDiv.appendChild(inputField);
-                tempDiv.appendChild(applyButton);
-                document.getElementById('whiteFrameContainer').appendChild(tempDiv);
+                var videoObject = document.getElementById("videoBackgrounddata");
+                videoObject.pause();
+                $scope.createInputsForText(color, videoObject);
             }
             // begins new line
             $scope.ctx.beginPath();
@@ -330,8 +331,8 @@ angular.module('mainApp')
             for (var i = 0; i < $scope.drawnText.length; i++) {
                 $scope.ctx.beginPath();
                 $scope.ctx.font = "10pt Arial";
+                $scope.ctx.fillStyle = $scope.drawnText[i].color;
                 $scope.ctx.fillText($scope.drawnText[i].value, $scope.drawnText[i].left, $scope.drawnText[i].top);
-                //$scope.ctx.stroke();
             }
         };
 
