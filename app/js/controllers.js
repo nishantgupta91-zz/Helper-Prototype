@@ -2,7 +2,8 @@
  * Created by Nishant on 8/28/2015.
  */
 angular.module('mainApp')
-    .controller('mainController', ['$scope', 'video', 'toolsService', '$mdBottomSheet', '$compile', function($scope, video, toolsService, $mdBottomSheet, $compile){
+    .controller('mainController', ['$scope', 'video', 'toolsService', '$mdBottomSheet', '$compile', '$mdDialog',
+        function($scope, video, toolsService, $mdBottomSheet, $compile, $mdDialog){
         $scope.resourceDir = 'app/resources/';
         //$scope.clearOption = "";
         console.log('==== main ====');
@@ -98,11 +99,24 @@ angular.module('mainApp')
             };
         };
         $scope.applyText = function(btnId, textId, containerId, leftPos, topPos, color, videoObject) {
+            var durationSet = 3;
+            $mdDialog.show({
+                controller: 'textDurationDialogController',
+                templateUrl: 'app/partials/textDurationDialog.html',
+                parent: angular.element(document.body)
+            })
+                .then(function(answer) {
+                    //alert(answer);
+                    durationSet = answer;
+                }, function() {
+                    console.log('text duration dialog closed');
+                });
             var textToWrite = {
                 value: document.getElementById(textId).value,
                 left: leftPos,
                 top: topPos,
-                color: color
+                color: color,
+                duration: durationSet
             };
             $scope.drawnText.push(textToWrite);
             document.getElementById(containerId).style.display = "none";
@@ -476,6 +490,20 @@ angular.module('mainApp')
                 });
         };
     }])
+    .controller('textDurationDialogController', function ($scope, $mdDialog) {
+        $scope.durationSet = 3;
+        $scope.hide = function() {
+            $mdDialog.hide();
+        };
+
+        $scope.cancel = function() {
+            $mdDialog.cancel();
+        };
+
+        $scope.answer = function(answer) {
+            $mdDialog.hide($scope.durationSet);
+        };
+    })
 /*
     .controller('clearOptionsController', function($scope, $mdBottomSheet, toolsService) {
         $scope.clearOption = '';
