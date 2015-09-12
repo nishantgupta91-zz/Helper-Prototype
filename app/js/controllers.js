@@ -29,7 +29,6 @@ angular.module('mainApp')
             $scope.drawnCircles = [];
             $scope.tempTriangles = [];
             $scope.drawnTriangles = [];
-            $scope.tempText = [];
             $scope.drawnText = [];
             $scope.videoName;
             $scope.Math = window.Math;
@@ -72,6 +71,9 @@ angular.module('mainApp')
             $scope.clearCircleDrawings = function() {
                 $scope.tempCircles = [];
                 $scope.drawnCircles = [];
+            };
+            $scope.clearTextDrawings = function() {
+                $scope.drawnText = [];
             };
             $scope.createInputsForText = function(color, videoObject) {
                 var idText = "";
@@ -494,6 +496,8 @@ angular.module('mainApp')
                             $scope.clearTriangleDrawings();
                         } else if(clickedItem.name.toLowerCase() == "clear pen drawings") {
                             $scope.clearPenDrawings();
+                        } else if(clickedItem.name.toLowerCase() == "clear text") {
+                            $scope.clearTextDrawings();
                         } else if(clickedItem.name.toLowerCase() == "clear all") {
                             $scope.clearDrawings();
                         }
