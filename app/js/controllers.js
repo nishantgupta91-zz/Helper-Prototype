@@ -40,7 +40,8 @@ angular.module('mainApp')
                 $scope.videoName = document.getElementById('upload').value;
                 var nameSplit = $scope.videoName.split("\\");
                 $scope.videoName = nameSplit[nameSplit.length - 1];
-                video.addSource('mp4', $scope.resourceDir + $scope.videoName);
+                //alert(video.src);
+                video.addSource('mp4', $scope.resourceDir + $scope.videoName, true);
             };
             $scope.clearDrawings = function() {
                 $scope.tempCircles = [];
@@ -303,7 +304,6 @@ angular.module('mainApp')
             };
 
             $scope.playVideo = function() {
-                var backgroundObject = document.getElementById("videoBackgrounddata");
                 $scope.drawCanvas();
             };
             $scope.drawCanvas = function() {
