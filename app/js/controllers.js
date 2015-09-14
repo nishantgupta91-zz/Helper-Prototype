@@ -2,8 +2,8 @@
  * Created by Nishant on 8/28/2015.
  */
 angular.module('mainApp')
-    .controller('mainController', ['$scope', 'video', 'toolsService', '$mdBottomSheet', '$compile', '$mdDialog', '$timeout',
-        function($scope, video, toolsService, $mdBottomSheet, $compile, $mdDialog, $timeout){
+    .controller('MainController', ['$scope', 'video', 'ToolsService', '$mdBottomSheet', '$compile', '$mdDialog', '$timeout',
+        function($scope, video, ToolsService, $mdBottomSheet, $compile, $mdDialog, $timeout){
             $scope.resourceDir = 'app/resources/';
             //$scope.clearOption = "";
             console.log('==== main ====');
@@ -103,7 +103,7 @@ angular.module('mainApp')
             $scope.applyText = function(btnId, textId, containerId, leftPos, topPos, color, videoObject) {
                 var durationSet = 3;
                 $mdDialog.show({
-                    controller: 'textDurationDialogController',
+                    controller: 'TextDurationDialogController',
                     templateUrl: 'app/partials/textDurationDialog.html',
                     parent: angular.element(document.body)
                 })
@@ -132,14 +132,14 @@ angular.module('mainApp')
                 };
             };
             $scope.mouseDownHandler = function($event) {
-                if(toolsService.getTool() != null) {
-                    $scope.drawingStyle = toolsService.getTool().name;
+                if(ToolsService.getTool() != null) {
+                    $scope.drawingStyle = ToolsService.getTool().name;
                 }
-                if(toolsService.getColor() != null) {
-                    $scope.strokeColor = toolsService.getColor().color;
+                if(ToolsService.getColor() != null) {
+                    $scope.strokeColor = ToolsService.getColor().color;
                 }
-                if(toolsService.getBrushThickness() != null) {
-                    $scope.brushThickness = toolsService.getBrushThickness();
+                if(ToolsService.getBrushThickness() != null) {
+                    $scope.brushThickness = ToolsService.getBrushThickness();
                 }
 
                 if($event.offsetX!==undefined){
@@ -481,7 +481,7 @@ angular.module('mainApp')
                 $mdBottomSheet
                     .show({
                         templateUrl: 'app/partials/clearOptionsGrid.html',
-                        controller: 'clearOptionsGridController',
+                        controller: 'ClearOptionsGridController',
                         targetEvent: $event
                     })
                     .then(function(clickedItem) {
@@ -505,7 +505,7 @@ angular.module('mainApp')
                     });
             };
         }])
-    .controller('textDurationDialogController', function ($scope, $mdDialog) {
+    .controller('TextDurationDialogController', function ($scope, $mdDialog) {
         $scope.durationSet = 3;
         $scope.hide = function() {
             $mdDialog.hide();
@@ -520,14 +520,14 @@ angular.module('mainApp')
         };
     })
     /*
-     .controller('clearOptionsController', function($scope, $mdBottomSheet, toolsService) {
+     .controller('clearOptionsController', function($scope, $mdBottomSheet, ToolsService) {
      $scope.clearOption = '';
      $scope.showClearOptionsToolbox = function($event) {
      $scope.clearOption = '';
      $mdBottomSheet
      .show({
      templateUrl: 'app/partials/clearOptionsGrid.html',
-     controller: 'clearOptionsGridController',
+     controller: 'ClearOptionsGridController',
      targetEvent: $event
      })
      .then(function(clickedItem) {
@@ -550,7 +550,7 @@ angular.module('mainApp')
      };
      })
      */
-    .controller('clearOptionsGridController', function($scope, $mdBottomSheet) {
+    .controller('ClearOptionsGridController', function($scope, $mdBottomSheet) {
         $scope.items = [
             { name: 'Clear All', icon: 'eraser' },
             { name: 'Clear Pen Drawings', icon: 'pen' },
@@ -566,18 +566,18 @@ angular.module('mainApp')
         };
     })
 
-    .controller('toolboxController', function($scope, $mdBottomSheet, toolsService) {
+    .controller('ToolboxController', function($scope, $mdBottomSheet, ToolsService) {
         console.log("======== toolbox =============");
         $scope.cursorIcon = '';
         $scope.cursorColor = '';
         $scope.brushThickness = 1;
         $scope.setTool = function(tool, brushThickness, type) {
             if("item" == type) {
-                toolsService.setTool(tool);
+                ToolsService.setTool(tool);
             } else if("color" == type) {
-                toolsService.setColor(tool);
+                ToolsService.setColor(tool);
             }
-            toolsService.setBrushThickness(brushThickness);
+            ToolsService.setBrushThickness(brushThickness);
         };
         $scope.showToolbox = function($event) {
             $scope.cursorIcon = '';
@@ -585,7 +585,7 @@ angular.module('mainApp')
             $mdBottomSheet
                 .show({
                     templateUrl: 'app/partials/toolboxGrid.html',
-                    controller: 'toolboxGridController',
+                    controller: 'ToolboxGridController',
                     targetEvent: $event
                 })
                 .then(function(value) {
@@ -605,7 +605,7 @@ angular.module('mainApp')
         };
     })
 
-    .controller('toolboxGridController', function($scope, $mdBottomSheet, toolsService) {
+    .controller('ToolboxGridController', function($scope, $mdBottomSheet) {
         $scope.brushThickness = 1;
         $scope.items = [
             { name: 'Pen', icon: 'pen' },

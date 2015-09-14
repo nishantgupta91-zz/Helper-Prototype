@@ -15,7 +15,7 @@ angular.module('mainApp')
                 name: "="
             },
             templateUrl: "app/partials/toolbox.html",
-            controller: "toolboxController"
+            controller: "ToolboxController"
         }
     })
     .directive('videoPlayer', function() {

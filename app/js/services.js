@@ -2,7 +2,7 @@
  * Created by Nishant on 8/28/2015.
  */
 angular.module('mainApp')
-    .service('toolsService', function() {
+    .service('ToolsService', function() {
         var toolSelected = null;
         var colorSelected = null;
         var brushThickness = null;
