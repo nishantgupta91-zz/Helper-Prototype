@@ -32,6 +32,7 @@ angular.module('mainApp')
             $scope.drawnText = [];
             $scope.videoName;
             $scope.Math = window.Math;
+            $scope.stopDrawing;
 
             $scope.openFileDialog = function(){
                 document.getElementById('upload').click();
@@ -42,6 +43,10 @@ angular.module('mainApp')
                 $scope.videoName = nameSplit[nameSplit.length - 1];
                 //alert(video.src);
                 video.addSource('mp4', $scope.resourceDir + $scope.videoName, true);
+                var videoElem = document.getElementById('videoBackgrounddata');
+                video.currentTime = 0;
+                console.log("video loaded...");
+                //video.play();
             };
             $scope.clearDrawings = function() {
                 $scope.tempCircles = [];
@@ -304,6 +309,7 @@ angular.module('mainApp')
             };
 
             $scope.playVideo = function() {
+                $scope.stopDrawing = true;
                 $scope.drawCanvas();
             };
             $scope.drawCanvas = function() {
