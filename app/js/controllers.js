@@ -41,10 +41,13 @@ angular.module('mainApp')
                 $scope.videoName = document.getElementById('upload').value;
                 var nameSplit = $scope.videoName.split("\\");
                 $scope.videoName = nameSplit[nameSplit.length - 1];
-                //alert(video.src);
                 video.addSource('mp4', $scope.resourceDir + $scope.videoName, true);
                 var videoElem = document.getElementById('videoBackgrounddata');
-                video.currentTime = 0;
+                $timeout(function() {
+                    //video.currentTime = 0;
+                    videoElem.currentTime = 0;
+                    //videoElem.load();
+                }, 2000);
                 console.log("video loaded...");
                 //video.play();
             };
