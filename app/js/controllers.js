@@ -71,25 +71,43 @@ angular.module('mainApp')
             };
             $scope.clearPenDrawings = function() {
                 $scope.penClicks = [];
+                if($scope.videoEnded) {
+                    $scope.drawVideoOnCanvas();
+                }
             };
             $scope.clearLineDrawings = function() {
                 $scope.tempLines = [];
                 $scope.drawnLines = [];
+                if($scope.videoEnded) {
+                    $scope.drawVideoOnCanvas();
+                }
             };
             $scope.clearRectangleDrawings = function() {
                 $scope.tempRectangles = [];
                 $scope.drawnRectangles = [];
+                if($scope.videoEnded) {
+                    $scope.drawVideoOnCanvas();
+                }
             };
             $scope.clearTriangleDrawings = function() {
                 $scope.tempTriangles = [];
                 $scope.drawnTriangles = [];
+                if($scope.videoEnded) {
+                    $scope.drawVideoOnCanvas();
+                }
             };
             $scope.clearCircleDrawings = function() {
                 $scope.tempCircles = [];
                 $scope.drawnCircles = [];
+                if($scope.videoEnded) {
+                    $scope.drawVideoOnCanvas();
+                }
             };
             $scope.clearTextDrawings = function() {
                 $scope.drawnText = [];
+                if($scope.videoEnded) {
+                    $scope.drawVideoOnCanvas();
+                }
             };
             $scope.createInputsForText = function(color, videoObject) {
                 var idText = "";
