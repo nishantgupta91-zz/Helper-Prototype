@@ -31,6 +31,7 @@ angular.module('mainApp')
             $scope.drawnTriangles = [];
             $scope.drawnText = [];
             $scope.videoName;
+            $scope.isVideoReady = false;
             $scope.videoEnded = false;
             $scope.Math = window.Math;
             $scope.playerControls = [
@@ -48,6 +49,7 @@ angular.module('mainApp')
                 $scope.videoName = nameSplit[nameSplit.length - 1];
                 video.addSource('mp4', $scope.resourceDir + $scope.videoName, true);
                 console.log("video loaded...");
+                $scope.isVideoReady = true;
                 $scope.clearDrawings();
                 $scope.videoEnded = false;
             };
@@ -312,17 +314,19 @@ angular.module('mainApp')
             };
 
             $scope.playVideo = function() {
-                if($scope.videoEnded) {
-                    $scope.videoEnded = false;
-                    $scope.playerControls[0].show = true;
-                    $scope.playerControls[1].show = true;
-                    $scope.playerControls[2].show = false;
-                    $scope.clearDrawings();
-                    var videoObject = document.getElementById("videoBackgrounddata");
-                    videoObject.currentTime = '0';
-                    videoObject.play();
+                if($scope.isVideoReady) {
+                    if($scope.videoEnded) {
+                        $scope.videoEnded = false;
+                        $scope.playerControls[0].show = true;
+                        $scope.playerControls[1].show = true;
+                        $scope.playerControls[2].show = false;
+                        $scope.clearDrawings();
+                        var videoObject = document.getElementById("videoBackgrounddata");
+                        videoObject.currentTime = '0';
+                        videoObject.play();
+                    }
+                    $scope.drawCanvas();
                 }
-                $scope.drawCanvas();
             };
             $scope.drawCanvas = function() {
                 var backgroundObject = document.getElementById("videoBackgrounddata");
