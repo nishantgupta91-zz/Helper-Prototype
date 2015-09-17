@@ -7,7 +7,8 @@ angular.module('mainApp')
             $scope.resourceDir = 'app/resources/';
             //$scope.clearOption = "";
             console.log('==== main ====');
-            $scope.canvasElement = document.getElementById('outputCanvas');
+            //$scope.canvasElement = document.getElementById('outputCanvas');
+            $scope.canvasElement = angular.element($('#outputCanvas'))[0];
             $scope.ctx = $scope.canvasElement.getContext('2d');
             $scope.ctx.canvas.width = $scope.ctx.canvas.offsetWidth;
             $scope.ctx.canvas.height = $scope.ctx.canvas.offsetHeight;
@@ -41,10 +42,11 @@ angular.module('mainApp')
             ];
 
             $scope.openFileDialog = function(){
-                document.getElementById('upload').click();
+                var uploadButton = angular.element($('#upload'))[0];
+                uploadButton.click();
             };
             $scope.getVideoFile = function() {
-                $scope.videoName = document.getElementById('upload').value;
+                $scope.videoName = angular.element($('#upload'))[0].value;
                 var nameSplit = $scope.videoName.split("\\");
                 $scope.videoName = nameSplit[nameSplit.length - 1];
                 video.addSource('mp4', $scope.resourceDir + $scope.videoName, true);
@@ -63,6 +65,9 @@ angular.module('mainApp')
                 $scope.drawnLines = [];
                 $scope.drawnRectangles = [];
                 $scope.penClicks = [];
+                if($scope.videoEnded) {
+                    $scope.drawVideoOnCanvas();
+                }
             };
             $scope.clearPenDrawings = function() {
                 $scope.penClicks = [];
