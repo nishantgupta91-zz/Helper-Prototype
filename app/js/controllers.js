@@ -31,8 +31,8 @@ angular.module('mainApp')
             $scope.drawnTriangles = [];
             $scope.drawnText = [];
             $scope.videoName;
+            $scope.videoEnded = false;
             $scope.Math = window.Math;
-            $scope.stopDrawing;
 
             $scope.openFileDialog = function(){
                 document.getElementById('upload').click();
@@ -43,7 +43,8 @@ angular.module('mainApp')
                 $scope.videoName = nameSplit[nameSplit.length - 1];
                 video.addSource('mp4', $scope.resourceDir + $scope.videoName, true);
                 console.log("video loaded...");
-                //video.play();
+                $scope.clearDrawings();
+                $scope.videoEnded = false;
             };
             $scope.clearDrawings = function() {
                 $scope.tempCircles = [];
@@ -306,7 +307,13 @@ angular.module('mainApp')
             };
 
             $scope.playVideo = function() {
-                $scope.stopDrawing = true;
+                if($scope.videoEnded) {
+                    $scope.videoEnded = false;
+                    $scope.clearDrawings();
+                    var videoObject = document.getElementById("videoBackgrounddata");
+                    videoObject.currentTime = '0';
+                    videoObject.play();
+                }
                 $scope.drawCanvas();
             };
             $scope.drawCanvas = function() {
@@ -324,6 +331,13 @@ angular.module('mainApp')
                     $scope.drawVideoOnCanvas();
                 }
                 else {
+                    $scope.videoEnded = true;
+                    //var myEl = angular.element( document.querySelector( '#playButtonSpan' ) );
+                    //var str = '<md-icon id="replayIcon" md-svg-src="app/img/icons/replay4.svg"><md-tooltip>Play Again</md-tooltip></md-icon>'
+                    //var elem = document.getElementById('playButtonSpan');
+                    //myEl.removeAttr("md-svg-src");
+                    //myEl.attr("md-svg-src","app/img/icons/replay4.svg");
+                    //var playButtonIcon = document.getElementById("playIcon");
                     console.log("Video Ended. Stopping the video draw on canvas");
                 }
             };

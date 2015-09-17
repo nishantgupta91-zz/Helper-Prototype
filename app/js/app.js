@@ -14,6 +14,7 @@ angular.module('mainApp', ['ngMaterial', 'ngVideo'])
             .icon('triangle', 'app/img/icons/details.svg', 24)
             .icon('pen', 'app/img/icons/create3.svg', 24)
             .icon('eraser', 'app/img/icons/eraser.svg', 24)
+            .icon('replay', 'app/img/icons/replay4.svg', 24)
     })
     .run(function($http, $templateCache) {
         var urls = [
@@ -23,7 +24,8 @@ angular.module('mainApp', ['ngMaterial', 'ngVideo'])
             'app/img/icons/photo211.svg',
             'app/img/icons/details.svg',
             'app/img/icons/create3.svg',
-            'app/img/icons/eraser.svg'
+            'app/img/icons/eraser.svg',
+            'app/img/icons/replay4.svg'
         ];
 
         angular.forEach(urls, function(url) {
