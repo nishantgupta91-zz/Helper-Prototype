@@ -33,6 +33,11 @@ angular.module('mainApp')
             $scope.videoName;
             $scope.videoEnded = false;
             $scope.Math = window.Math;
+            $scope.playerControls = [
+                { name: 'Play', icon: 'play', show: true },
+                { name: 'Pause', icon: 'pause', show: true },
+                { name: 'Play Again', icon: 'replay', show: false }
+            ];
 
             $scope.openFileDialog = function(){
                 document.getElementById('upload').click();
@@ -309,6 +314,9 @@ angular.module('mainApp')
             $scope.playVideo = function() {
                 if($scope.videoEnded) {
                     $scope.videoEnded = false;
+                    $scope.playerControls[0].show = true;
+                    $scope.playerControls[1].show = true;
+                    $scope.playerControls[2].show = false;
                     $scope.clearDrawings();
                     var videoObject = document.getElementById("videoBackgrounddata");
                     videoObject.currentTime = '0';
@@ -332,12 +340,9 @@ angular.module('mainApp')
                 }
                 else {
                     $scope.videoEnded = true;
-                    //var myEl = angular.element( document.querySelector( '#playButtonSpan' ) );
-                    //var str = '<md-icon id="replayIcon" md-svg-src="app/img/icons/replay4.svg"><md-tooltip>Play Again</md-tooltip></md-icon>'
-                    //var elem = document.getElementById('playButtonSpan');
-                    //myEl.removeAttr("md-svg-src");
-                    //myEl.attr("md-svg-src","app/img/icons/replay4.svg");
-                    //var playButtonIcon = document.getElementById("playIcon");
+                    $scope.playerControls[2].show = true;
+                    $scope.playerControls[0].show = false;
+                    $scope.playerControls[1].show = false;
                     console.log("Video Ended. Stopping the video draw on canvas");
                 }
             };

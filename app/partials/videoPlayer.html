@@ -7,14 +7,19 @@
     <div class="videoAccessories">
         <!-- Controls Directive -->
         <section vi-controls class="controls" layout="row" layout-align="start center" flex>
-            <span id="playButtonSpan" vi-controls-play ng-click="playVideo()" flex="15">
-                <md-icon id="playIcon" md-svg-src="app/img/icons/play106.svg">
-                    <md-tooltip>Play</md-tooltip>
+            <span id="playButtonSpan" vi-controls-play ng-click="playVideo()" flex="15" ng-show="playerControls[0].show">
+                <md-icon id="playIcon" md-svg-src="{{playerControls[0].icon}}" ng-show="playerControls[0].show">
+                    <md-tooltip>{{playerControls[0].name}}</md-tooltip>
                 </md-icon>
             </span>
-            <span vi-controls-pause flex="15">
-                <md-icon md-svg-src="app/img/icons/pause44.svg">
-                    <md-tooltip>Pause</md-tooltip>
+            <span vi-controls-pause flex="15" ng-show="playerControls[1].show">
+                <md-icon md-svg-src="{{playerControls[1].icon}}" ng-show="playerControls[1].show">
+                    <md-tooltip>{{playerControls[1].name}}</md-tooltip>
+                </md-icon>
+            </span>
+            <span vi-controls-pause flex="15" ng-click="playVideo()" ng-show="playerControls[2].show">
+                <md-icon md-svg-src="{{playerControls[2].icon}}" ng-show="playerControls[2].show">
+                    <md-tooltip>{{playerControls[2].name}}</md-tooltip>
                 </md-icon>
             </span>
             <!-- Video information Directive -->
