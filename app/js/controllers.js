@@ -524,35 +524,6 @@ angular.module('mainApp')
                     $scope.ctx.stroke();
                 }
             };
-
-            $scope.showClearOptionsToolbox = function($event) {
-                $scope.clearOption = '';
-                $mdBottomSheet
-                    .show({
-                        templateUrl: 'app/partials/clearOptionsGrid.html',
-                        controller: 'ClearOptionsGridController',
-                        targetEvent: $event
-                    })
-                    .then(function(clickedItem) {
-                        //$scope.clearOption = clickedItem;
-                        if(clickedItem.name.toLowerCase() == "clear lines") {
-                            $scope.clearLineDrawings();
-                        } else if(clickedItem.name.toLowerCase() == "clear rectangles") {
-                            $scope.clearRectangleDrawings();
-                        } else if(clickedItem.name.toLowerCase() == "clear circles") {
-                            $scope.clearCircleDrawings();
-                        } else if(clickedItem.name.toLowerCase() == "clear triangles") {
-                            $scope.clearTriangleDrawings();
-                        } else if(clickedItem.name.toLowerCase() == "clear pen drawings") {
-                            $scope.clearPenDrawings();
-                        } else if(clickedItem.name.toLowerCase() == "clear text") {
-                            $scope.clearTextDrawings();
-                        } else if(clickedItem.name.toLowerCase() == "clear all") {
-                            $scope.clearDrawings();
-                        }
-                        //$scope.setTool($scope.cursorIcon);
-                    });
-            };
         }])
     .controller('TextDurationDialogController', function ($scope, $mdDialog) {
         $scope.durationSet = 3;
@@ -568,37 +539,7 @@ angular.module('mainApp')
             $mdDialog.hide($scope.durationSet);
         };
     })
-    /*
-     .controller('clearOptionsController', function($scope, $mdBottomSheet, ToolsService) {
-     $scope.clearOption = '';
-     $scope.showClearOptionsToolbox = function($event) {
-     $scope.clearOption = '';
-     $mdBottomSheet
-     .show({
-     templateUrl: 'app/partials/clearOptionsGrid.html',
-     controller: 'ClearOptionsGridController',
-     targetEvent: $event
-     })
-     .then(function(clickedItem) {
-     //$scope.clearOption = clickedItem;
-     if(clickedItem.name.toLowerCase() == "clear lines") {
-     $scope.clearLineDrawings();
-     } else if(clickedItem.name.toLowerCase() == "clear rectangles") {
-     $scope.clearRectangleDrawings();
-     } else if(clickedItem.name.toLowerCase() == "clear circles") {
-     $scope.clearCircleDrawings();
-     } else if(clickedItem.name.toLowerCase() == "clear triangles") {
-     $scope.clearTriangleDrawings();
-     } else if(clickedItem.name.toLowerCase() == "clear pen drawings") {
-     $scope.clearPenDrawings();
-     } else if(clickedItem.name.toLowerCase() == "clear all") {
-     $scope.clearDrawings();
-     }
-     //$scope.setTool($scope.cursorIcon);
-     });
-     };
-     })
-     */
+
     .controller('ClearOptionsGridController', function($scope, $mdBottomSheet) {
         $scope.items = [
             { name: 'Clear All', icon: 'eraser' },
@@ -615,6 +556,35 @@ angular.module('mainApp')
         };
     })
 
+    .controller('ClearOptionsController', function($scope, $mdBottomSheet) {
+        $scope.showClearOptionsToolbox = function($event) {
+            $scope.clearOption = '';
+            $mdBottomSheet
+                .show({
+                    templateUrl: 'app/partials/clearOptionsGrid.html',
+                    controller: 'ClearOptionsGridController',
+                    targetEvent: $event
+                })
+                .then(function(clickedItem) {
+                    if(clickedItem.name.toLowerCase() == "clear lines") {
+                        $scope.clearLineDrawings();
+                    } else if(clickedItem.name.toLowerCase() == "clear rectangles") {
+                        $scope.clearRectangleDrawings();
+                    } else if(clickedItem.name.toLowerCase() == "clear circles") {
+                        $scope.clearCircleDrawings();
+                    } else if(clickedItem.name.toLowerCase() == "clear triangles") {
+                        $scope.clearTriangleDrawings();
+                    } else if(clickedItem.name.toLowerCase() == "clear pen drawings") {
+                        $scope.clearPenDrawings();
+                    } else if(clickedItem.name.toLowerCase() == "clear text") {
+                        $scope.clearTextDrawings();
+                    } else if(clickedItem.name.toLowerCase() == "clear all") {
+                        $scope.clearDrawings();
+                    }
+                    //$scope.setTool($scope.cursorIcon);
+                });
+        };
+    })
     .controller('ToolboxController', function($scope, $mdBottomSheet, ToolsService) {
         console.log("======== toolbox =============");
         $scope.cursorIcon = '';

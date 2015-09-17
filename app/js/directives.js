@@ -18,6 +18,16 @@ angular.module('mainApp')
             controller: "ToolboxController"
         }
     })
+    .directive('clearButton', function() {
+        return {
+            restrict: "E",
+            $scope: {
+                name: "="
+            },
+            templateUrl: "app/partials/clearButton.html",
+            controller: "ClearOptionsController"
+        }
+    })
     .directive('videoPlayer', function() {
         return {
             restrict: "E",
