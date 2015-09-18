@@ -2,8 +2,8 @@
  * Created by Nishant on 8/28/2015.
  */
 angular.module('mainApp')
-    .controller('MainController', ['$scope', 'video', 'ToolsService', '$mdBottomSheet', '$compile', '$mdDialog', '$timeout',
-        function($scope, video, ToolsService, $mdBottomSheet, $compile, $mdDialog, $timeout){
+    .controller('MainController', ['$scope', 'ToolsService', '$compile', '$mdDialog', '$timeout',
+        function($scope, ToolsService, $compile, $mdDialog, $timeout){
             $scope.resourceDir = 'app/resources/';
             //$scope.clearOption = "";
             console.log('==== main ====');
@@ -31,7 +31,6 @@ angular.module('mainApp')
             $scope.tempTriangles = [];
             $scope.drawnTriangles = [];
             $scope.drawnText = [];
-            $scope.videoName;
             $scope.isVideoReady = false;
             $scope.videoEnded = false;
             $scope.Math = window.Math;
@@ -41,20 +40,6 @@ angular.module('mainApp')
                 { name: 'Play Again', icon: 'replay', show: false }
             ];
 
-            $scope.openFileDialog = function(){
-                var uploadButton = angular.element($('#upload'))[0];
-                uploadButton.click();
-            };
-            $scope.getVideoFile = function() {
-                $scope.videoName = angular.element($('#upload'))[0].value;
-                var nameSplit = $scope.videoName.split("\\");
-                $scope.videoName = nameSplit[nameSplit.length - 1];
-                video.addSource('mp4', $scope.resourceDir + $scope.videoName, true);
-                console.log("video loaded...");
-                $scope.isVideoReady = true;
-                $scope.clearDrawings();
-                $scope.videoEnded = false;
-            };
             $scope.clearDrawings = function() {
                 $scope.tempCircles = [];
                 $scope.tempTriangles = [];
@@ -331,11 +316,9 @@ angular.module('mainApp')
                     $scope.drawnTriangles.push(drawnTriangle);
                 }
             };
-
             $scope.reset = function() {
                 $scope.canvasElement.width = $scope.canvasElement.width;
             };
-
             $scope.playVideo = function() {
                 if($scope.isVideoReady) {
                     if($scope.videoEnded) {
@@ -391,7 +374,6 @@ angular.module('mainApp')
                 $scope.drawCircleStrokes();
                 $scope.drawTextStrokes();
             };
-
             $scope.drawTextStrokes = function() {
                 for (var i = 0; i < $scope.drawnText.length; i++) {
                     $scope.ctx.beginPath();
@@ -525,6 +507,27 @@ angular.module('mainApp')
                 }
             };
         }])
+
+    .controller('SelectVideoOptionsController', function($scope, video) {
+        $scope.uploadButton = angular.element($('#upload'))[0];
+        $scope.openFileDialog = function(){
+            $scope.uploadButton.click();
+        };
+        $scope.getVideoFile = function() {
+            var videoName = $scope.uploadButton.value;
+            if(videoName != null) {
+                var nameSplit = videoName.split("\\");
+                videoName = nameSplit[nameSplit.length - 1];
+                video.addSource('mp4', $scope.resourceDir + videoName, true);
+                console.log("video loaded...");
+                $scope.isVideoReady = true;
+                $scope.clearDrawings();
+                $scope.videoEnded = false;
+            } else {
+                console.log("Invalid Video Selection");
+            }
+        };
+    })
     .controller('TextDurationDialogController', function ($scope, $mdDialog) {
         $scope.durationSet = 3;
         $scope.hide = function() {
@@ -537,22 +540,6 @@ angular.module('mainApp')
 
         $scope.answer = function(answer) {
             $mdDialog.hide($scope.durationSet);
-        };
-    })
-
-    .controller('ClearOptionsGridController', function($scope, $mdBottomSheet) {
-        $scope.items = [
-            { name: 'Clear All', icon: 'eraser' },
-            { name: 'Clear Pen Drawings', icon: 'pen' },
-            { name: 'Clear Lines', icon: 'line' },
-            { name: 'Clear Circles', icon: 'circle' },
-            { name: 'Clear Rectangles', icon: 'rectangle' },
-            { name: 'Clear Triangles', icon: 'triangle' },
-            { name: 'Clear Text', icon: 'text' }
-        ];
-        $scope.toolClicked = function($index) {
-            var clickedItem = $scope.items[$index];
-            $mdBottomSheet.hide(clickedItem);
         };
     })
 
@@ -581,10 +568,26 @@ angular.module('mainApp')
                     } else if(clickedItem.name.toLowerCase() == "clear all") {
                         $scope.clearDrawings();
                     }
-                    //$scope.setTool($scope.cursorIcon);
                 });
         };
     })
+
+    .controller('ClearOptionsGridController', function($scope, $mdBottomSheet) {
+        $scope.items = [
+            { name: 'Clear All', icon: 'eraser' },
+            { name: 'Clear Pen Drawings', icon: 'pen' },
+            { name: 'Clear Lines', icon: 'line' },
+            { name: 'Clear Circles', icon: 'circle' },
+            { name: 'Clear Rectangles', icon: 'rectangle' },
+            { name: 'Clear Triangles', icon: 'triangle' },
+            { name: 'Clear Text', icon: 'text' }
+        ];
+        $scope.toolClicked = function($index) {
+            var clickedItem = $scope.items[$index];
+            $mdBottomSheet.hide(clickedItem);
+        };
+    })
+
     .controller('ToolboxController', function($scope, $mdBottomSheet, ToolsService) {
         console.log("======== toolbox =============");
         $scope.cursorIcon = '';

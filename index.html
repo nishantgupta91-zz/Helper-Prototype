@@ -25,15 +25,8 @@
             ng-mouseup="mouseUpHandler($event)">
         <p>Sorry your browser does not support HTML5</p>
     </canvas>
-
     <clear-button></clear-button>
-
-    <input id="upload" type="file" onchange="angular.element(this).scope().getVideoFile()"
-           accept=".mp4" ng-model="files" ng-multiple="false" style="display: none;">
-    <md-button id="addVideoButton" class="md-fab md-primary md-fab-bottom-right right" aria-label="Add" ng-click="openFileDialog()">
-        <md-tooltip>Select Video</md-tooltip>
-        <md-icon md-svg-src="app/img/icons/add186.svg"></md-icon>
-    </md-button>
+    <select-video-button></select-video-button>
 </div>
 
 

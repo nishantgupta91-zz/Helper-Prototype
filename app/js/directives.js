@@ -21,11 +21,15 @@ angular.module('mainApp')
     .directive('clearButton', function() {
         return {
             restrict: "E",
-            $scope: {
-                name: "="
-            },
             templateUrl: "app/partials/clearButton.html",
             controller: "ClearOptionsController"
+        }
+    })
+    .directive('selectVideoButton', function() {
+        return {
+            restrict: "E",
+            templateUrl: "app/partials/selectVideoButton.html",
+            controller: "SelectVideoOptionsController"
         }
     })
     .directive('videoPlayer', function() {
