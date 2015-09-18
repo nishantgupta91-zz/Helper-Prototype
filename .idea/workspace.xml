@@ -24,18 +24,18 @@
       <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-6.5384617">
-              <caret line="15" column="46" selection-start-line="15" selection-start-column="46" selection-end-line="15" selection-end-column="46" />
+            <state vertical-scroll-proportion="-13.730769">
+              <caret line="26" column="13" selection-start-line="26" selection-start-column="13" selection-end-line="26" selection-end-column="13" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="app.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="app.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/js/app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.44786325">
-              <caret line="22" column="23" selection-start-line="22" selection-start-column="23" selection-end-line="22" selection-end-column="23" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="7" column="39" selection-start-line="7" selection-start-column="39" selection-end-line="7" selection-end-column="39" />
               <folding />
             </state>
           </provider>
@@ -45,7 +45,7 @@
         <entry file="file://$PROJECT_DIR$/app/js/controllers.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="601" column="28" selection-start-line="601" selection-start-column="28" selection-end-line="601" selection-end-column="28" />
+              <caret line="384" column="35" selection-start-line="384" selection-start-column="35" selection-end-line="384" selection-end-column="35" />
               <folding>
                 <element signature="e#1899#2397#0" expanded="false" />
                 <element signature="e#2448#2608#0" expanded="false" />
@@ -55,6 +55,7 @@
                 <element signature="e#3445#3649#0" expanded="false" />
                 <element signature="e#3701#3861#0" expanded="false" />
                 <element signature="e#3933#5558#0" expanded="false" />
+                <element signature="e#5665#7074#0" expanded="false" />
                 <element signature="e#7131#8841#0" expanded="false" />
                 <element signature="e#8898#12274#0" expanded="false" />
                 <element signature="e#12329#14916#0" expanded="false" />
@@ -77,8 +78,20 @@
         <entry file="file://$PROJECT_DIR$/app/js/directives.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="31" column="35" selection-start-line="31" selection-start-column="35" selection-end-line="31" selection-end-column="35" />
+              <caret line="25" column="9" selection-start-line="25" selection-start-column="9" selection-end-line="25" selection-end-column="9" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="toolboxGrid.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/partials/toolboxGrid.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.030411448">
+              <caret line="1" column="25" selection-start-line="1" selection-start-column="25" selection-end-line="1" selection-end-column="25" />
+              <folding>
+                <element signature="n#style#0;n#div#1;n#md-list#1;n#md-bottom-sheet#0;n#!!top" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -115,7 +128,6 @@
         <option value="$PROJECT_DIR$/app/partials/canvas.html" />
         <option value="$PROJECT_DIR$/app/partials/clearOptionsGrid.html" />
         <option value="$PROJECT_DIR$/app/partials/colorOptionsGrid.html" />
-        <option value="$PROJECT_DIR$/app/partials/toolboxGrid.html" />
         <option value="$PROJECT_DIR$/app/css/video-player.css" />
         <option value="$PROJECT_DIR$/app/css/style.css" />
         <option value="$PROJECT_DIR$/app/js/services.js" />
@@ -126,9 +138,10 @@
         <option value="$PROJECT_DIR$/app/partials/selectVideoButton.html" />
         <option value="$PROJECT_DIR$/app/partials/clearButton.html" />
         <option value="$PROJECT_DIR$/app/partials/textDurationDialog.html" />
-        <option value="$PROJECT_DIR$/app/js/app.js" />
         <option value="$PROJECT_DIR$/app/js/controllers.js" />
         <option value="$PROJECT_DIR$/app/partials/toolbox.html" />
+        <option value="$PROJECT_DIR$/app/js/app.js" />
+        <option value="$PROJECT_DIR$/app/partials/toolboxGrid.html" />
       </list>
     </option>
   </component>
@@ -436,6 +449,7 @@
             <element signature="e#3445#3649#0" expanded="false" />
             <element signature="e#3701#3861#0" expanded="false" />
             <element signature="e#3933#5558#0" expanded="false" />
+            <element signature="e#5665#7074#0" expanded="false" />
             <element signature="e#7131#8841#0" expanded="false" />
             <element signature="e#8898#12274#0" expanded="false" />
             <element signature="e#12329#14916#0" expanded="false" />
@@ -508,6 +522,7 @@
             <element signature="e#3445#3649#0" expanded="false" />
             <element signature="e#3701#3861#0" expanded="false" />
             <element signature="e#3933#5558#0" expanded="false" />
+            <element signature="e#5665#7074#0" expanded="false" />
             <element signature="e#7131#8841#0" expanded="false" />
             <element signature="e#8898#12274#0" expanded="false" />
             <element signature="e#12329#14916#0" expanded="false" />
@@ -587,6 +602,7 @@
             <element signature="e#3445#3649#0" expanded="false" />
             <element signature="e#3701#3861#0" expanded="false" />
             <element signature="e#3933#5558#0" expanded="false" />
+            <element signature="e#5665#7074#0" expanded="false" />
             <element signature="e#7131#8841#0" expanded="false" />
             <element signature="e#8898#12274#0" expanded="false" />
             <element signature="e#12329#14916#0" expanded="false" />
@@ -666,6 +682,7 @@
             <element signature="e#3445#3649#0" expanded="false" />
             <element signature="e#3701#3861#0" expanded="false" />
             <element signature="e#3933#5558#0" expanded="false" />
+            <element signature="e#5665#7074#0" expanded="false" />
             <element signature="e#7131#8841#0" expanded="false" />
             <element signature="e#8898#12274#0" expanded="false" />
             <element signature="e#12329#14916#0" expanded="false" />
@@ -831,10 +848,46 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/partials/toolbox.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.09123435">
+          <caret line="3" column="12" selection-start-line="3" selection-start-column="12" selection-end-line="3" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/partials/videoPlayer.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.43828264">
+          <caret line="20" column="31" selection-start-line="20" selection-start-column="28" selection-end-line="20" selection-end-column="31" />
+          <folding>
+            <element signature="n#style#0;n#span#0;n#section#0;n#section#0;n#div#1;n#section#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#md-slider#0;n#section#0;n#section#0;n#div#1;n#section#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#1;n#section#0;n#section#0;n#div#1;n#section#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-13.730769">
+          <caret line="26" column="13" selection-start-line="26" selection-start-column="13" selection-end-line="26" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/js/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="7" column="39" selection-start-line="7" selection-start-column="39" selection-end-line="7" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/js/controllers.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="601" column="28" selection-start-line="601" selection-start-column="28" selection-end-line="601" selection-end-column="28" />
+          <caret line="384" column="35" selection-start-line="384" selection-start-column="35" selection-end-line="384" selection-end-column="35" />
           <folding>
             <element signature="e#1899#2397#0" expanded="false" />
             <element signature="e#2448#2608#0" expanded="false" />
@@ -844,6 +897,7 @@
             <element signature="e#3445#3649#0" expanded="false" />
             <element signature="e#3701#3861#0" expanded="false" />
             <element signature="e#3933#5558#0" expanded="false" />
+            <element signature="e#5665#7074#0" expanded="false" />
             <element signature="e#7131#8841#0" expanded="false" />
             <element signature="e#8898#12274#0" expanded="false" />
             <element signature="e#12329#14916#0" expanded="false" />
@@ -861,55 +915,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
+    <entry file="file://$PROJECT_DIR$/app/js/directives.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.5384617">
-          <caret line="15" column="46" selection-start-line="15" selection-start-column="46" selection-end-line="15" selection-end-column="46" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/partials/toolbox.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.09123435">
-          <caret line="3" column="12" selection-start-line="3" selection-start-column="12" selection-end-line="3" selection-end-column="12" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="25" column="9" selection-start-line="25" selection-start-column="9" selection-end-line="25" selection-end-column="9" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/partials/toolboxGrid.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.24329159">
-          <caret line="8" column="14" selection-start-line="8" selection-start-column="14" selection-end-line="8" selection-end-column="14" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/js/directives.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="31" column="35" selection-start-line="31" selection-start-column="35" selection-end-line="31" selection-end-column="35" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/partials/videoPlayer.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.43828264">
-          <caret line="20" column="31" selection-start-line="20" selection-start-column="28" selection-end-line="20" selection-end-column="31" />
+        <state vertical-scroll-proportion="0.030411448">
+          <caret line="1" column="25" selection-start-line="1" selection-start-column="25" selection-end-line="1" selection-end-column="25" />
           <folding>
-            <element signature="n#style#0;n#span#0;n#section#0;n#section#0;n#div#1;n#section#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#md-slider#0;n#section#0;n#section#0;n#div#1;n#section#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#1;n#section#0;n#section#0;n#div#1;n#section#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#md-list#1;n#md-bottom-sheet#0;n#!!top" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/js/app.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.44786325">
-          <caret line="22" column="23" selection-start-line="22" selection-start-column="23" selection-end-line="22" selection-end-column="23" />
-          <folding />
         </state>
       </provider>
     </entry>
