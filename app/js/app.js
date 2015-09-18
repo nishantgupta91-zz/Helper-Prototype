@@ -17,6 +17,10 @@ angular.module('mainApp', ['ngMaterial', 'ngVideo'])
             .icon('play', 'app/img/icons/play106.svg', 24)
             .icon('pause', 'app/img/icons/pause44.svg', 24)
             .icon('replay', 'app/img/icons/replay4.svg', 24)
+            .icon('add', 'app/img/icons/add186.svg', 24)
+            .icon('clear', 'app/img/icons/brush1.svg', 24)
+            .icon('close', 'app/img/icons/close47.svg', 24)
+            .icon('toolbox', 'app/img/icons/circles23.svg', 24)
     })
     .run(function($http, $templateCache) {
         var urls = [
@@ -29,7 +33,11 @@ angular.module('mainApp', ['ngMaterial', 'ngVideo'])
             'app/img/icons/eraser.svg',
             'app/img/icons/play106.svg',
             'app/img/icons/pause44.svg',
-            'app/img/icons/replay4.svg'
+            'app/img/icons/replay4.svg',
+            'app/img/icons/add186.svg',
+            'app/img/icons/brush1.svg',
+            'app/img/icons/close47.svg',
+            'app/img/icons/circles23.svg'
         ];
 
         angular.forEach(urls, function(url) {

@@ -509,6 +509,9 @@ angular.module('mainApp')
         }])
 
     .controller('SelectVideoOptionsController', function($scope, video) {
+        $scope.items = [
+            { name: 'Select Video', icon: 'add' }
+        ];
         $scope.uploadButton = angular.element($('#upload'))[0];
         $scope.openFileDialog = function(){
             $scope.uploadButton.click();
@@ -529,6 +532,9 @@ angular.module('mainApp')
         };
     })
     .controller('TextDurationDialogController', function ($scope, $mdDialog) {
+        $scope.durationDialogIcons = [
+            { name: 'Close', icon: 'close' }
+        ];
         $scope.durationSet = 3;
         $scope.hide = function() {
             $mdDialog.hide();
@@ -544,6 +550,9 @@ angular.module('mainApp')
     })
 
     .controller('ClearOptionsController', function($scope, $mdBottomSheet) {
+        $scope.options = [
+            { name: 'Clear', icon: 'clear' }
+        ];
         $scope.showClearOptionsToolbox = function($event) {
             $scope.clearOption = '';
             $mdBottomSheet
@@ -590,6 +599,9 @@ angular.module('mainApp')
 
     .controller('ToolboxController', function($scope, $mdBottomSheet, ToolsService) {
         console.log("======== toolbox =============");
+        $scope.toolboxIcon = [
+            { name: 'Drawing Tools', icon: 'toolbox' }
+        ];
         $scope.cursorIcon = '';
         $scope.cursorColor = '';
         $scope.brushThickness = 1;
