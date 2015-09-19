@@ -16,18 +16,33 @@
 <body ng-app="mainApp" layout="column" layout-align="top center">
 
 <header-toolbar></header-toolbar>
-<div id="whiteFrameContainer" ng-controller="MainController" layout layout-align="center center">
-    <my-toolbox></my-toolbox>
-    <video-player></video-player>
-    <canvas id="outputCanvas"
-            ng-mousedown="mouseDownHandler($event)"
-            ng-mousemove="mouseMoveHandler($event)"
-            ng-mouseup="mouseUpHandler($event)">
-        <p>Sorry your browser does not support HTML5</p>
-    </canvas>
-    <clear-button></clear-button>
-    <select-video-button></select-video-button>
-</div>
+<md-content>
+    <md-tabs md-dynamic-height md-border-bottom md-selected="currentTab" class="noTabPanel">
+        <md-tab label="Offline">
+            <md-content>
+                <div id="whiteFrameContainer"layout layout-align="center center" ng-controller="MainController">
+                    <my-toolbox></my-toolbox>
+                    <video-player></video-player>
+                    <canvas id="outputCanvas"
+                            ng-mousedown="mouseDownHandler($event)"
+                            ng-mousemove="mouseMoveHandler($event)"
+                            ng-mouseup="mouseUpHandler($event)">
+                        <p>Sorry your browser does not support HTML5</p>
+                    </canvas>
+                    <clear-button></clear-button>
+                    <select-video-button></select-video-button>
+                </div>
+            </md-content>
+        </md-tab>
+        <md-tab label="Online">
+            <md-content class="md-padding">
+                <h1>Tab One</h1>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla venenatis ante augue. Phasellus volutpat neque ac dui mattis vulputate. Etiam consequat aliquam cursus. In sodales pretium ultrices. Maecenas lectus est, sollicitudin consectetur felis nec, feugiat ultricies mi.</p>
+                <h1 class="md-display-2">Tab One</h1>
+            </md-content>
+        </md-tab>
+    </md-tabs>
+</md-content>
 
 
 

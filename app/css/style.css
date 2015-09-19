@@ -1,13 +1,10 @@
-.app-content {
-    width: 100%;
-}
-
 #whiteFrameContainer {
     #margin: 2%;
-    height: 91%;
-    width: 100%;
+    #height: 91%;
+    #width: 100%;
+    height: 675px;
     #border: 3px solid red;
-    position: absolute;
+    #position: absolute;
 
     background: -webkit-linear-gradient(90deg, #348F50 10%, #56B4D3 90%); /* Chrome 10+, Saf5.1+ */
     background:    -moz-linear-gradient(90deg, #348F50 10%, #56B4D3 90%); /* FF3.6+ */
@@ -98,4 +95,8 @@ ul#palette {
 
 .pathItem:hover{
     box-shadow: 4px 4px 4px darkgray !important;
+}
+
+md-tabs.noTabPanel md-tabs-wrapper {
+    display: none !important;
 }
