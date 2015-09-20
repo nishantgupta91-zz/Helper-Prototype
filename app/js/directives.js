@@ -2,10 +2,10 @@
  * Created by Nishant on 8/28/2015.
  */
 angular.module('mainApp')
-    .directive('headerToolbar', function() {
+    .directive('mainHeaderToolbar', function() {
         return {
             restrict: "E",
-            templateUrl: "app/partials/header.html"
+            templateUrl: "app/partials/mainHeader.html"
         }
     })
     .directive('myToolbox', function() {

@@ -15,10 +15,10 @@
 </head>
 <body ng-app="mainApp" layout="column" layout-align="top center">
 
-<header-toolbar></header-toolbar>
+<main-header-toolbar></main-header-toolbar>
 <md-content class="tabsContent">
-    <md-tabs md-dynamic-height md-border-bottom md-selected="currentTab" class="noTabPanel">
-        <md-tab label="Offline">
+    <md-tabs md-dynamic-height md-border-bottom md-selected="currentMainTab" class="noTabPanel">
+        <md-tab label="Offline Support">
             <md-content>
                 <div id="whiteFrameContainer"layout layout-align="center center" ng-controller="MainController">
                     <my-toolbox></my-toolbox>
@@ -34,8 +34,8 @@
                 </div>
             </md-content>
         </md-tab>
-        <md-tab label="Online">
-            <md-content class="md-padding">
+        <md-tab label="Online Support">
+            <md-content>
                 <h1>Tab One</h1>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla venenatis ante augue. Phasellus volutpat neque ac dui mattis vulputate. Etiam consequat aliquam cursus. In sodales pretium ultrices. Maecenas lectus est, sollicitudin consectetur felis nec, feugiat ultricies mi.</p>
                 <h1 class="md-display-2">Tab One</h1>

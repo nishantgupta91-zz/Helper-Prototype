@@ -7,6 +7,9 @@ html, body {
 md-tabs.noTabPanel md-tabs-wrapper {
     display: none !important;
 }
+md-tabs.noTabPanel1 md-tabs-wrapper {
+    display: block !important;
+}
 md-tabs.noTabPanel, md-tabs.noTabPanel md-tabs-content-wrapper, md-tabs.noTabPanel md-tabs-content-wrapper md-tab-content,
 md-tabs.noTabPanel md-tabs-content-wrapper md-tab-content div.ng-scope,
 md-tabs.noTabPanel md-tabs-content-wrapper md-tab-content div.ng-scope md-content{
