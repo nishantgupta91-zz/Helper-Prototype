@@ -105,7 +105,7 @@ angular.module('mainApp')
                 var leftPos = $scope.lastX;
                 var topPos = $scope.lastY;
                 var contentStyle = '{\"background\":\"transparent\", \"position\":\"absolute\",' +
-                    '\"left\":\"' + leftPos + 'px\", \"top\":\"' + topPos + 'px\"}';
+                    '\"left\":\"' + leftPos + 'px\", \"top\":\"' + topPos + 'px\", \"width\":\"20%\", \"height\":\"10%\"}';
                 var newElement =
                     "<md-content id=\"" + idContainer + "\" ng-style='" + contentStyle + "' layout-padding layout='row'>" +
                     "<md-input-container>" +
