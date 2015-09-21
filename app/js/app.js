@@ -4,8 +4,8 @@
 
 'use strict';
 
-angular.module('mainApp', ['ngMaterial', 'ngVideo'])
-    .config(function($mdIconProvider) {
+angular.module('mainApp', ['ngMaterial', 'ngVideo', 'ngRoute'])
+    .config(function($mdIconProvider, $routeProvider) {
         $mdIconProvider
             .icon('text', 'app/img/icons/underline7.svg', 24)
             .icon('line', 'app/img/icons/horizontal39.svg', 24)
@@ -21,6 +21,16 @@ angular.module('mainApp', ['ngMaterial', 'ngVideo'])
             .icon('clear', 'app/img/icons/brush1.svg', 24)
             .icon('close', 'app/img/icons/close47.svg', 24)
             .icon('toolbox', 'app/img/icons/circles23.svg', 24)
+        $routeProvider
+            .when("/view1",
+            {
+                templateUrl: "partials/view1.html"
+            })
+            .when("/onlineSupport",
+            {
+                templateUrl: "app/partials/onlineSupport.html"
+            })
+            .otherwise({redirectTo: "/onlineSupport"});
     })
     .run(function($http, $templateCache) {
         var urls = [

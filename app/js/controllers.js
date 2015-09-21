@@ -116,10 +116,10 @@ angular.module('mainApp')
                 var childNode = $compile(newElement)($scope);
                 document.getElementById('whiteFrameContainer').appendChild(childNode[0]);
                 document.getElementById(idButton).onclick = function(){
-                    $scope.applyText(idButton, idInputBox, idContainer, leftPos, topPos, color, videoObject);
+                    $scope.applyText(idInputBox, idContainer, leftPos, topPos, color, videoObject);
                 };
             };
-            $scope.applyText = function(btnId, textId, containerId, leftPos, topPos, color, videoObject) {
+            $scope.applyText = function(textId, containerId, leftPos, topPos, color, videoObject) {
                 var durationSet = 3;
                 $mdDialog.show({
                     controller: 'TextDurationDialogController',
@@ -132,6 +132,7 @@ angular.module('mainApp')
                         videoObject.play();
                         $scope.drawnText.push(textToWrite);
                         console.log("duration : " + durationSet);
+                        $scope.saveImage();
                         $timeout(function () {
                             console.log("removing...");
                             var index = $scope.drawnText.indexOf(textToWrite);
@@ -149,6 +150,30 @@ angular.module('mainApp')
                     color: color,
                     duration: durationSet
                 };
+            };
+            $scope.saveImage = function() {
+                var backgroundObject = document.getElementById("videoBackgrounddata");
+                var width = ($scope.canvasElement.width);
+                var height = ($scope.canvasElement.height);
+                if ($scope.ctx) {
+                    $scope.ctx.drawImage(backgroundObject, 0, 0, width, height);
+                }
+                var imgData = $scope.ctx.getImageData(0, 0, $scope.canvasElement.width, $scope.canvasElement.height);
+                console.log("drawing video on canvas...");
+                $scope.ctx.putImageData(imgData, 0, 0);
+                $scope.ctx.beginPath();
+                $scope.drawPenStrokes();
+                $scope.drawRectangleStrokes();
+                $scope.drawLineStrokes();
+                $scope.drawTriangleStrokes();
+                $scope.drawCircleStrokes();
+                $scope.drawTextStrokes();
+
+                // save canvas image as data url (png format by default)
+                var dataURL = $scope.canvasElement.toDataURL();
+                // set canvasImg image src to dataURL
+                // so it can be saved as an image
+                document.getElementById('canvasImg').src = dataURL;
             };
             $scope.mouseDownHandler = function($event) {
                 if(ToolsService.getTool() != null) {
