@@ -16,52 +16,47 @@
 <body ng-app="mainApp" layout="column" layout-align="top center">
 
 <main-header-toolbar></main-header-toolbar>
-<md-content class="tabsContent">
+<md-content class="tabsContent" layout="column" flex>
     <md-tabs md-dynamic-height md-border-bottom md-selected="currentMainTab" class="noTabPanel">
         <md-tab label="Offline Support">
-            <md-content>
-                <div id="whiteFrameContainer"layout layout-align="center center" ng-controller="MainController">
-                    <my-toolbox></my-toolbox>
-                    <video-player></video-player>
-                    <canvas id="outputCanvas"
-                            ng-mousedown="mouseDownHandler($event)"
-                            ng-mousemove="mouseMoveHandler($event)"
-                            ng-mouseup="mouseUpHandler($event)">
-                        <p>Sorry your browser does not support HTML5</p>
-                    </canvas>
-                    <section layout="row" flex=""
-                             style="position: absolute; border: 5px solid orange; height: 100%; width: 22%; right: 0; z-index: 999;">
-                        <md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="right"
-                                    md-is-locked-open="$mdMedia('gt-md')" style="background-color: yellow">
-                            <md-toolbar class="md-theme-light">
-                                <h1 class="md-toolbar-tools">Snapshots</h1>
-                            </md-toolbar>
-                            <md-content layout-padding="" layout="column">
-                                <div style="border: 3px red solid; position: relative; width: 200px; height: 200px; margin: 5px;">
-                                    <img id="canvasImg1" src="app/resources/Desert.jpg" style="position: absolute; width: 100%; height: 100%;">
-                                </div>
-                                <div style="border: 3px red solid; position: relative; width: 200px; height: 200px; margin: 5px;">
-                                    <img id="canvasImg2" src="app/resources/Desert.jpg" style="position: absolute; width: 100%; height: 100%;">
-                                </div>
-                                <div style="border: 3px red solid; position: relative; width: 200px; height: 200px; margin: 5px;">
-                                    <img id="canvasImg3" src="app/resources/Desert.jpg" style="position: absolute; width: 100%; height: 100%;">
-                                </div>
-                                <div style="border: 3px red solid; position: relative; width: 200px; height: 200px; margin: 5px;">
-                                    <img id="canvasImg4" src="app/resources/Desert.jpg" style="position: absolute; width: 100%; height: 100%;">
-                                </div>
-                                <div style="border: 3px red solid; position: relative; width: 200px; height: 200px; margin: 5px;">
-                                    <img id="canvasImg5" src="app/resources/Desert.jpg" style="position: absolute; width: 100%; height: 100%;">
-                                </div>
-                                <div style="border: 3px red solid; position: relative; width: 200px; height: 200px; margin: 5px;">
-                                    <img id="canvasImg6" src="app/resources/Desert.jpg" style="position: absolute; width: 100%; height: 100%;">
-                                </div>
-                            </md-content>
-                        </md-sidenav>
-                    </section>
-                    <clear-button></clear-button>
-                    <select-video-button></select-video-button>
-                </div>
-            </md-content>
+            <section flex layout="row">
+                <md-content flex>
+                    <div id="whiteFrameContainer"layout layout-align="center center" ng-controller="MainController">
+                        <canvas id="outputCanvas"
+                                ng-mousedown="mouseDownHandler($event)"
+                                ng-mousemove="mouseMoveHandler($event)"
+                                ng-mouseup="mouseUpHandler($event)">
+                            <p>Sorry your browser does not support HTML5</p>
+                        </canvas>
+                        <md-button ng-click="toggleRight()" class="md-primary">
+                            Toggle right
+                        </md-button>
+                        <md-button ng-click="saveImage()" class="md-primary">
+                            Save
+                        </md-button>
+                        <video-player></video-player>
+                        <my-toolbox></my-toolbox>
+                        <clear-button></clear-button>
+                        <select-video-button></select-video-button>
+                    </div>
+                </md-content>
+                <md-sidenav class="md-sidenav-right md-whiteframe-z5" md-component-id="right"
+                            layout="column" layout-align="start center">
+                    <md-toolbar class="md-theme-light">
+                        <h1 class="md-toolbar-tools">Snapshots</h1>
+                    </md-toolbar>
+                    <md-content ng-controller="RightCtrl" layout="column" layout-align="space-between center">
+                        <form layout="column" layout-align="space-around center">
+                            <div style="border: 3px red solid; width: 200px; height: 200px;">
+                                <img id="canvasImg" src="app/resources/Desert.jpg" style="position: relative; width: 100%; height: 100%;">
+                            </div>
+                        </form>
+                        <md-button ng-click="close()" class="md-primary">
+                            Close
+                        </md-button>
+                    </md-content>
+                </md-sidenav>
+            </section>
         </md-tab>
         <md-tab label="Online Support">
             <md-content class="md-padding">

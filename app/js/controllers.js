@@ -2,8 +2,8 @@
  * Created by Nishant on 8/28/2015.
  */
 angular.module('mainApp')
-    .controller('MainController', ['$scope', 'ToolsService', '$compile', '$mdDialog', '$timeout',
-        function($scope, ToolsService, $compile, $mdDialog, $timeout){
+    .controller('MainController', ['$scope', 'ToolsService', '$compile', '$mdDialog', '$timeout', '$mdSidenav', '$mdUtil', '$log',
+        function($scope, ToolsService, $compile, $mdDialog, $timeout, $mdSidenav, $mdUtil, $log){
             $scope.resourceDir = 'app/resources/';
             //$scope.clearOption = "";
             console.log('==== main ====');
@@ -34,12 +34,28 @@ angular.module('mainApp')
             $scope.isVideoReady = false;
             $scope.videoEnded = false;
             $scope.Math = window.Math;
+            $scope.toggleRight = buildToggler('right');
             $scope.playerControls = [
                 { name: 'Play', icon: 'play', show: true },
                 { name: 'Pause', icon: 'pause', show: true },
                 { name: 'Play Again', icon: 'replay', show: false }
             ];
 
+            /**
+             * Build handler to open/close a SideNav; when animation finishes
+             * report completion in console
+             */
+            function buildToggler(navID) {
+                var debounceFn =  $mdUtil.debounce(function(){
+                    $mdSidenav(navID)
+                        .toggle()
+                        .then(function () {
+                            $log.debug("toggle " + navID + " is done");
+                        });
+                },300);
+
+                return debounceFn;
+            }
             $scope.clearDrawings = function() {
                 $scope.tempCircles = [];
                 $scope.tempTriangles = [];
@@ -171,8 +187,7 @@ angular.module('mainApp')
 
                 // save canvas image as data url (png format by default)
                 var dataURL = $scope.canvasElement.toDataURL();
-                // set canvasImg image src to dataURL
-                // so it can be saved as an image
+                // set canvasImg image src to dataURL so it can be saved as an image
                 document.getElementById('canvasImg').src = dataURL;
             };
             $scope.mouseDownHandler = function($event) {
@@ -532,6 +547,15 @@ angular.module('mainApp')
                 }
             };
         }])
+
+    .controller('RightCtrl', function ($scope, $timeout, $mdSidenav, $log) {
+        $scope.close = function () {
+            $mdSidenav('right').close()
+                .then(function () {
+                    $log.debug("close RIGHT is done");
+                });
+        };
+    })
 
     .controller('SelectVideoOptionsController', function($scope, video) {
         $scope.items = [
