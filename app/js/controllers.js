@@ -137,11 +137,13 @@ angular.module('mainApp')
                 };
             };
             $scope.saveSnapshot = function() {
+                var videoObject = document.getElementById("videoBackgrounddata");
                 var durationSet = 3;
-                var playbackTime = 0;
+                var playbackTime = videoObject.currentTime
                 $mdDialog.show({
                     controller: 'SnapshotAttributesDialogController',
                     templateUrl: 'app/partials/snapshotAttributesDialog.html',
+                    locals: { playbackTime: playbackTime },
                     parent: angular.element(document.body)
                 })
                     .then(function(answer) {
@@ -152,7 +154,7 @@ angular.module('mainApp')
                         console.log("duration : " + durationSet);
                         console.log("playbackTime : " + playbackTime);
                         $scope.toggleRight();
-                        $scope.saveImage();
+                        $scope.saveImage(playbackTime);
                         /*$timeout(function () {
                             console.log("removing...");
                             var index = $scope.drawnText.indexOf(textToWrite);
@@ -173,11 +175,12 @@ angular.module('mainApp')
                 })
                     .then(function(answer) {
                         durationSet = answer;
+                        var playbackTime = "aa";
                         document.getElementById(containerId).style.display = "none";
                         videoObject.play();
                         $scope.drawnText.push(textToWrite);
                         console.log("duration : " + durationSet);
-                        $scope.saveImage();
+                        $scope.saveImage(playbackTime);
                         $timeout(function () {
                             console.log("removing...");
                             var index = $scope.drawnText.indexOf(textToWrite);
@@ -196,7 +199,7 @@ angular.module('mainApp')
                     duration: durationSet
                 };
             };
-            $scope.saveImage = function() {
+            $scope.saveImage = function(playbackTime) {
                 var backgroundObject = document.getElementById("videoBackgrounddata");
                 var width = ($scope.canvasElement.width);
                 var height = ($scope.canvasElement.height);
@@ -214,10 +217,16 @@ angular.module('mainApp')
                 $scope.drawCircleStrokes();
                 $scope.drawTextStrokes();
 
+                var snapshotElement = '<div id="snapshot_' + playbackTime + '" style="border: 1px black solid; width: 200px; height: 200px;">' +
+                                            '<img id="canvasImg_' + playbackTime + '" src="app/resources/Desert.jpg" ' +
+                                                    'style="position: relative; width: 100%; height: 100%;">' +
+                                    '</div>';
+                var childNode = $compile(snapshotElement)($scope);
+                document.getElementById('snapshots').appendChild(childNode[0]);
                 // save canvas image as data url (png format by default)
                 var dataURL = $scope.canvasElement.toDataURL();
                 // set canvasImg image src to dataURL so it can be saved as an image
-                document.getElementById('canvasImg').src = dataURL;
+                document.getElementById('canvasImg_' + playbackTime).src = dataURL;
             };
             $scope.mouseDownHandler = function($event) {
                 var backgroundObject = document.getElementById("videoBackgrounddata");
@@ -445,18 +454,6 @@ angular.module('mainApp')
                     $scope.ctx.drawImage(backgroundObject, 0, 0, width, height);
                 }
             };
-            $scope.drawStrokes = function() {
-                var imgData = $scope.ctx.getImageData(0, 0, $scope.canvasElement.width, $scope.canvasElement.height);
-                console.log("drawing video on canvas...");
-                $scope.ctx.putImageData(imgData, 0, 0);
-                $scope.ctx.beginPath();
-                $scope.drawPenStrokes();
-                $scope.drawRectangleStrokes();
-                $scope.drawLineStrokes();
-                $scope.drawTriangleStrokes();
-                $scope.drawCircleStrokes();
-                $scope.drawTextStrokes();
-            };
             $scope.drawTextStrokes = function() {
                 for (var i = 0; i < $scope.drawnText.length; i++) {
                     $scope.ctx.beginPath();
@@ -624,12 +621,12 @@ angular.module('mainApp')
         };
     })
 
-    .controller('SnapshotAttributesDialogController', function ($scope, $mdDialog) {
+    .controller('SnapshotAttributesDialogController', function ($scope, $mdDialog, playbackTime) {
         $scope.attributesDialogIcons = [
             { name: 'Close', icon: 'close' }
         ];
         $scope.durationSet = 3;
-        $scope.videoplayTime = 6;
+        $scope.videoplayTime = playbackTime;
         $scope.hide = function() {
             $mdDialog.hide();
         };
