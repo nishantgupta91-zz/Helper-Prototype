@@ -33,6 +33,7 @@ angular.module('mainApp')
             $scope.drawnText = [];
             $scope.isVideoReady = false;
             $scope.videoEnded = false;
+            $scope.isVideoPaused = true;
             $scope.Math = window.Math;
             $scope.toggleRight = buildToggler('right');
             $scope.playerControls = [
@@ -135,6 +136,34 @@ angular.module('mainApp')
                     $scope.applyText(idInputBox, idContainer, leftPos, topPos, color, videoObject);
                 };
             };
+            $scope.saveSnapshot = function() {
+                var durationSet = 3;
+                var playbackTime = 0;
+                $mdDialog.show({
+                    controller: 'SnapshotAttributesDialogController',
+                    templateUrl: 'app/partials/snapshotAttributesDialog.html',
+                    parent: angular.element(document.body)
+                })
+                    .then(function(answer) {
+                        durationSet = answer[0];
+                        playbackTime = answer[1];
+                        //videoObject.play();
+                        //$scope.drawnCircles.push(textToWrite);
+                        console.log("duration : " + durationSet);
+                        console.log("playbackTime : " + playbackTime);
+                        $scope.toggleRight();
+                        $scope.saveImage();
+                        /*$timeout(function () {
+                            console.log("removing...");
+                            var index = $scope.drawnText.indexOf(textToWrite);
+                            if(index > -1) {
+                                $scope.drawnText.splice(index, 1);
+                            }
+                        }, durationSet*1000);*/
+                    }, function() {
+                        console.log('text duration dialog closed');
+                    });
+            };
             $scope.applyText = function(textId, containerId, leftPos, topPos, color, videoObject) {
                 var durationSet = 3;
                 $mdDialog.show({
@@ -191,46 +220,50 @@ angular.module('mainApp')
                 document.getElementById('canvasImg').src = dataURL;
             };
             $scope.mouseDownHandler = function($event) {
-                if(ToolsService.getTool() != null) {
-                    $scope.drawingStyle = ToolsService.getTool().name;
-                }
-                if(ToolsService.getColor() != null) {
-                    $scope.strokeColor = ToolsService.getColor().color;
-                }
-                if(ToolsService.getBrushThickness() != null) {
-                    $scope.brushThickness = ToolsService.getBrushThickness();
-                }
+                var backgroundObject = document.getElementById("videoBackgrounddata");
+                $scope.isVideoPaused = backgroundObject.paused;
+                if($scope.isVideoPaused) {
+                    if(ToolsService.getTool() != null) {
+                        $scope.drawingStyle = ToolsService.getTool().name;
+                    }
+                    if(ToolsService.getColor() != null) {
+                        $scope.strokeColor = ToolsService.getColor().color;
+                    }
+                    if(ToolsService.getBrushThickness() != null) {
+                        $scope.brushThickness = ToolsService.getBrushThickness();
+                    }
 
-                if($event.offsetX!==undefined){
-                    $scope.lastX = $event.offsetX;
-                    $scope.lastY = $event.offsetY;
-                } else {
-                    $scope.lastX = $event.layerX - $event.currentTarget.offsetLeft;
-                    $scope.lastY = $event.layerY - $event.currentTarget.offsetTop;
+                    if($event.offsetX!==undefined){
+                        $scope.lastX = $event.offsetX;
+                        $scope.lastY = $event.offsetY;
+                    } else {
+                        $scope.lastX = $event.layerX - $event.currentTarget.offsetLeft;
+                        $scope.lastY = $event.layerY - $event.currentTarget.offsetTop;
+                    }
+                    var color = $scope.strokeColor;
+                    var thickness = $scope.brushThickness;
+                    if($scope.drawingStyle.toLowerCase() == "pen") {
+                        var penClick = {
+                            posX: $scope.lastX,
+                            posY: $scope.lastY,
+                            drag: false,
+                            color: color,
+                            thickness: thickness
+                        };
+                        $scope.penClicks.push(penClick);
+                    } else if($scope.drawingStyle.toLowerCase() == "text") {
+                        var videoObject = document.getElementById("videoBackgrounddata");
+                        videoObject.pause();
+                        $scope.createInputsForText(color, videoObject);
+                    }
+                    // begins new line
+                    $scope.ctx.beginPath();
+                    $scope.drawing = true;
                 }
-                var color = $scope.strokeColor;
-                var thickness = $scope.brushThickness;
-                if($scope.drawingStyle.toLowerCase() == "pen") {
-                    var penClick = {
-                        posX: $scope.lastX,
-                        posY: $scope.lastY,
-                        drag: false,
-                        color: color,
-                        thickness: thickness
-                    };
-                    $scope.penClicks.push(penClick);
-                } else if($scope.drawingStyle.toLowerCase() == "text") {
-                    var videoObject = document.getElementById("videoBackgrounddata");
-                    videoObject.pause();
-                    $scope.createInputsForText(color, videoObject);
-                }
-                // begins new line
-                $scope.ctx.beginPath();
-                $scope.drawing = true;
             };
             $scope.mouseMoveHandler = function($event) {
-                console.log("moving...");
                 if($scope.drawing){
+                    console.log("mouse moving over canvas...");
                     var currentX = 0;
                     var currentY = 0;
                     // get current mouse position
@@ -252,6 +285,7 @@ angular.module('mainApp')
                             thickness: thickness
                         };
                         $scope.penClicks.push(penClick);
+                        $scope.drawPenStrokes();
                     } else if($scope.drawingStyle.toLowerCase() == "rectangle") {
                         var drawnRectangle = {
                             startX: $scope.lastX,
@@ -262,6 +296,7 @@ angular.module('mainApp')
                             thickness: thickness
                         };
                         $scope.tempRectangles.push(drawnRectangle);
+                        $scope.drawRectangleStrokes();
                     } else if($scope.drawingStyle.toLowerCase() == "line") {
                         var drawnLine = {
                             startX: $scope.lastX,
@@ -272,6 +307,7 @@ angular.module('mainApp')
                             thickness: thickness
                         };
                         $scope.tempLines.push(drawnLine);
+                        $scope.drawLineStrokes();
                     } else if($scope.drawingStyle.toLowerCase() == "circle") {
                         var drawnCircle = {
                             startX: $scope.lastX,
@@ -282,6 +318,7 @@ angular.module('mainApp')
                             thickness: thickness
                         };
                         $scope.tempCircles.push(drawnCircle);
+                        $scope.drawCircleStrokes();
                     } else if($scope.drawingStyle.toLowerCase() == "triangle") {
                         var drawnTriangle = {
                             startX: $scope.lastX,
@@ -294,8 +331,8 @@ angular.module('mainApp')
                             thickness: thickness
                         };
                         $scope.tempTriangles.push(drawnTriangle);
+                        $scope.drawTriangleStrokes();
                     }
-                    //$scope.draw($scope.lastX, $scope.lastY, currentX, currentY);
                 }
             };
             $scope.mouseUpHandler = function($event) {
@@ -376,7 +413,9 @@ angular.module('mainApp')
             };
             $scope.drawCanvas = function() {
                 var backgroundObject = document.getElementById("videoBackgrounddata");
-                if(!backgroundObject.ended) {
+                $scope.videoEnded = backgroundObject.ended;
+                $scope.isVideoPaused = backgroundObject.paused;
+                if(!$scope.videoEnded && !$scope.isVideoPaused) {
                     if (window.requestAnimationFrame) window.requestAnimationFrame($scope.drawCanvas);
                     // IE implementation
                     else if (window.msRequestAnimationFrame) window.msRequestAnimationFrame($scope.drawCanvas);
@@ -388,12 +427,14 @@ angular.module('mainApp')
                     else setTimeout($scope.drawCanvas, 16.7);
                     $scope.drawVideoOnCanvas();
                 }
-                else {
-                    $scope.videoEnded = true;
+                else if($scope.videoEnded) {
+                    //$scope.videoEnded = true;
                     $scope.playerControls[2].show = true;
                     $scope.playerControls[0].show = false;
                     $scope.playerControls[1].show = false;
                     console.log("Video Ended. Stopping the video draw on canvas");
+                } else if($scope.isVideoPaused && !$scope.videoEnded) {
+                    console.log("Video Paused. Stopping the video draw on canvas");
                 }
             };
             $scope.drawVideoOnCanvas = function() {
@@ -403,6 +444,8 @@ angular.module('mainApp')
                 if ($scope.ctx) {
                     $scope.ctx.drawImage(backgroundObject, 0, 0, width, height);
                 }
+            };
+            $scope.drawStrokes = function() {
                 var imgData = $scope.ctx.getImageData(0, 0, $scope.canvasElement.width, $scope.canvasElement.height);
                 console.log("drawing video on canvas...");
                 $scope.ctx.putImageData(imgData, 0, 0);
@@ -580,6 +623,26 @@ angular.module('mainApp')
             }
         };
     })
+
+    .controller('SnapshotAttributesDialogController', function ($scope, $mdDialog) {
+        $scope.attributesDialogIcons = [
+            { name: 'Close', icon: 'close' }
+        ];
+        $scope.durationSet = 3;
+        $scope.videoplayTime = 6;
+        $scope.hide = function() {
+            $mdDialog.hide();
+        };
+
+        $scope.cancel = function() {
+            $mdDialog.cancel();
+        };
+
+        $scope.answer = function(answer) {
+            $mdDialog.hide([$scope.durationSet, $scope.videoplayTime]);
+        };
+    })
+
     .controller('TextDurationDialogController', function ($scope, $mdDialog) {
         $scope.durationDialogIcons = [
             { name: 'Close', icon: 'close' }
