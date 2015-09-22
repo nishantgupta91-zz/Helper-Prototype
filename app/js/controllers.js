@@ -217,10 +217,24 @@ angular.module('mainApp')
                 $scope.drawCircleStrokes();
                 $scope.drawTextStrokes();
 
+                /*
                 var snapshotElement = '<div id="snapshot_' + playbackTime + '" style="border: 1px black solid; width: 200px; height: 200px;">' +
                                             '<img id="canvasImg_' + playbackTime + '" src="app/resources/Desert.jpg" ' +
                                                     'style="position: relative; width: 100%; height: 100%;">' +
                                     '</div>';
+                */
+                var snapshotElement =
+                    "<md-grid-list id=\"snapshotsList_" + playbackTime + "\" md-cols=\"1\" md-row-height=\"" +
+                        $scope.ctx.canvas.width + ":" + $scope.ctx.canvas.height + "\" " +
+                        "style=\"border: 1px solid green\">" +
+                            "<md-grid-tile id=\"snapshot_" + playbackTime + "\">" +
+                                "<img id=\"canvasImg_" + playbackTime + "\" src=\"app/resources/Desert.jpg\" " +
+                                    "style=\"position: relative; width: 100%; height: 100%;\">" +
+                                "<md-grid-tile-footer>" +
+                                    "<h3>1r x 1c</h3>" +
+                                "</md-grid-tile-footer>" +
+                            "</md-grid-tile>" +
+                    "</md-grid-list>";
                 var childNode = $compile(snapshotElement)($scope);
                 document.getElementById('snapshots').appendChild(childNode[0]);
                 // save canvas image as data url (png format by default)

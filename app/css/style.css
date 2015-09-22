@@ -109,3 +109,18 @@ ul#palette {
 .pathItem:hover{
     box-shadow: 4px 4px 4px darkgray !important;
 }
+
+/* saved snapshots grid design */
+.gridListdemoBasicUsage md-grid-list {
+    margin: 8px; }
+.gridListdemoBasicUsage .green {
+    background: #b9f6ca; }
+.gridListdemoBasicUsage .yellow {
+    background: #ffff8d; }
+.gridListdemoBasicUsage md-grid-tile {
+    transition: all 400ms ease-out 50ms; }
+.gridListdemoBasicUsage md-grid-tile-footer {
+    background: #b9f6ca;
+    opacity: 0.5;
+    color: black;
+}
