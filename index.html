@@ -45,11 +45,12 @@
                     <md-toolbar class="md-theme-light">
                         <h1 class="md-toolbar-tools">Snapshots</h1>
                     </md-toolbar>
-                    <md-content ng-controller="RightCtrl" layout="column" flex>
-                        <div id="snapshots" class="gridListdemoBasicUsage" style="border: 3px solid black;" flex>
+                    <md-content ng-controller="RightCtrl" layout="column">
+                        <div id="snapshots" class="gridListdemoBasicUsage" style="border: 3px solid black;"
+                             layout="column">
 
                         </div>
-                        <md-button ng-click="close()" class="md-primary">
+                        <md-button ng-click="close()" class="md-raised md-primary">
                             Close
                         </md-button>
                     </md-content>
