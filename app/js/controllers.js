@@ -595,6 +595,22 @@ angular.module('mainApp')
                     $scope.ctx.stroke();
                 }
             };
+            $scope.playAugmentedVideo = function() {
+                $mdDialog.show({
+                    controller: 'AugmentedVideoDialogController',
+                    templateUrl: 'app/partials/augmentedVideoDialog.html',
+                    locals: {
+                        canvasWidth: $scope.canvasElement.width,
+                        canvasHeight: $scope.canvasElement.height
+                    },
+                    parent: angular.element(document.body)
+                })
+                    .then(function(answer) {
+
+                    }, function() {
+                        console.log('text duration dialog closed');
+                    });
+            };
         }])
 
     .controller('RightCtrl', function ($scope, $timeout, $mdSidenav, $log) {
@@ -627,6 +643,47 @@ angular.module('mainApp')
             } else {
                 console.log("Invalid Video Selection");
             }
+        };
+    })
+
+    .controller('AugmentedVideoDialogController', function($scope, $mdDialog, canvasWidth, canvasHeight) {
+        $scope.canvasWidth = canvasWidth;
+        $scope.canvasHeight = canvasHeight;
+        $scope.augmentedVideoDialogIcons = [
+            { name: 'Close', icon: 'close' }
+        ];
+        $scope.hide = function() {
+            $mdDialog.hide();
+        };
+
+        $scope.cancel = function() {
+            $mdDialog.cancel();
+        };
+
+        $scope.drawAugmentedVideoOnCanvas = function() {
+            console.log("drawing augmented video...");
+            var canvasElem = angular.element($('#augmentedVideoCanvas'))[0];
+            var context = canvasElem.getContext('2d');
+            var backgroundObject = document.getElementById("videoBackgrounddata");
+            var width = ($scope.canvasWidth);
+            var height = ($scope.canvasHeight);
+            if (context) {
+                context.drawImage(backgroundObject, 0, 0, width, height);
+            }
+        };
+
+        $scope.playVideo = function(answer) {
+            //$mdDialog.hide(1);
+            if (window.requestAnimationFrame) window.requestAnimationFrame($scope.playVideo);
+            // IE implementation
+            else if (window.msRequestAnimationFrame) window.msRequestAnimationFrame($scope.playVideo);
+            // Firefox implementation
+            else if (window.mozRequestAnimationFrame) window.mozRequestAnimationFrame($scope.playVideo);
+            // Chrome implementation
+            else if (window.webkitRequestAnimationFrame) window.webkitRequestAnimationFrame($scope.playVideo);
+            // Other browsers that do not yet support feature
+            else setTimeout($scope.playVideo, 16.7);
+            $scope.drawAugmentedVideoOnCanvas();
         };
     })
 

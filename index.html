@@ -34,6 +34,9 @@
                         <md-button ng-click="saveSnapshot()" class="md-primary">
                             Save
                         </md-button>
+                        <md-button ng-click="playAugmentedVideo()" class="md-primary">
+                            Play
+                        </md-button>
                         <video-player></video-player>
                         <my-toolbox></my-toolbox>
                         <clear-button></clear-button>
@@ -46,7 +49,7 @@
                         <h1 class="md-toolbar-tools">Snapshots</h1>
                     </md-toolbar>
                     <md-content ng-controller="RightCtrl" layout="column">
-                        <div id="snapshots" class="gridListdemoBasicUsage" style="border: 3px solid black;"
+                        <div id="snapshots" class="gridListdemoBasicUsage"
                              layout="column">
 
                         </div>
