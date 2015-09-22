@@ -1,5 +1,5 @@
-<md-dialog aria-label="Augmented Video">
-    <form>
+<md-dialog aria-label="Augmented Video" ng-style="{'width':canvasWidth + 'px', 'height':canvasHeight + 'px'}">
+    <form layout-fill layout-padding>
         <md-toolbar>
             <div class="md-toolbar-tools">
                 <h2>Augmented Video</h2>
@@ -9,22 +9,18 @@
                 </md-button>
             </div>
         </md-toolbar>
-        <md-dialog-content layout="row" layout-sm="column">
-            <form>
-                <canvas ng-style="{'width':canvasWidth + 'px', 'height':canvasHeight + 'px', 'background-color':'black'}"
+        <md-dialog-content layout="column" flex>
+            <form flex>
+                <canvas ng-style="{'background-color':'black'}" flex
                         id="augmentedVideoCanvas">
                     <p>Sorry your browser does not support HTML5</p>
                 </canvas>
             </form>
+            <div class="md-actions" layout="row">
+                <md-button ng-click="playVideo('apply')" style="margin-right:20px;" >
+                    Play Video
+                </md-button>
+            </div>
         </md-dialog-content>
-
-        <div class="md-actions" layout="row">
-            <md-button ng-click="answer('cancel')" >
-                Cancel
-            </md-button>
-            <md-button ng-click="playVideo('apply')" style="margin-right:20px;" >
-                Play Video
-            </md-button>
-        </div>
     </form>
 </md-dialog>

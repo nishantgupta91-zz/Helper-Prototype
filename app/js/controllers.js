@@ -222,7 +222,7 @@ angular.module('mainApp')
                         $scope.ctx.canvas.width + ":" + $scope.ctx.canvas.height + "\" " +
                         "style=\"border: 1px solid green\">" +
                             "<md-grid-tile id=\"snapshot_" + playbackTime + "\">" +
-                                "<img id=\"canvasImg_" + playbackTime + "\" src=\"app/resources/Desert.jpg\" " +
+                                "<img id=\"canvasImg_" + playbackTime + "\" " +
                                     "style=\"position: relative; width: 100%; height: 100%;\">" +
                                 "<md-grid-tile-footer layout=\"row\" layout-align=\"space-between center\">" +
                                     "<h3>Time : " + playbackTime + "</h3>" +
