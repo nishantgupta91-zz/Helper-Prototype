@@ -647,8 +647,15 @@ angular.module('mainApp')
     })
 
     .controller('AugmentedVideoDialogController', function($scope, $mdDialog, canvasWidth, canvasHeight) {
-        $scope.canvasWidth = canvasWidth;
-        $scope.canvasHeight = canvasHeight;
+        $scope.augPlayerControls = [
+            { name: 'Play', icon: 'play', show: true },
+            { name: 'Pause', icon: 'pause', show: true },
+            { name: 'Play Again', icon: 'replay', show: false }
+        ];
+        $scope.augCanvasWidth = canvasWidth;
+        $scope.augCanvasHeight = canvasHeight;
+        $scope.canvasElem = null;
+        $scope.context = null;
         $scope.augmentedVideoDialogIcons = [
             { name: 'Close', icon: 'close' }
         ];
@@ -661,28 +668,30 @@ angular.module('mainApp')
         };
 
         $scope.drawAugmentedVideoOnCanvas = function() {
-            console.log("drawing augmented video...");
-            var canvasElem = angular.element($('#augmentedVideoCanvas'))[0];
-            var context = canvasElem.getContext('2d');
+            console.log("drawing augmented video... " + $scope.augCanvasWidth);
+            $scope.canvasElem = angular.element($('#augmentedVideoCanvas'))[0];
+            $scope.context = $scope.canvasElem.getContext('2d');
+            $scope.context.canvas.width = $scope.context.canvas.offsetWidth;
+            $scope.context.canvas.height = $scope.context.canvas.offsetHeight;
             var backgroundObject = document.getElementById("videoBackgrounddata");
-            var width = ($scope.canvasWidth);
-            var height = ($scope.canvasHeight);
-            if (context) {
-                context.drawImage(backgroundObject, 0, 0, width, height);
+            var width = ($scope.augCanvasWidth);
+            var height = ($scope.augCanvasHeight);
+            if ($scope.context) {
+                $scope.context.drawImage(backgroundObject, 0, 0, width, height);
             }
         };
 
-        $scope.playVideo = function(answer) {
+        $scope.playAugVideo = function() {
             //$mdDialog.hide(1);
-            if (window.requestAnimationFrame) window.requestAnimationFrame($scope.playVideo);
+            if (window.requestAnimationFrame) window.requestAnimationFrame($scope.playAugVideo);
             // IE implementation
-            else if (window.msRequestAnimationFrame) window.msRequestAnimationFrame($scope.playVideo);
+            else if (window.msRequestAnimationFrame) window.msRequestAnimationFrame($scope.playAugVideo);
             // Firefox implementation
-            else if (window.mozRequestAnimationFrame) window.mozRequestAnimationFrame($scope.playVideo);
+            else if (window.mozRequestAnimationFrame) window.mozRequestAnimationFrame($scope.playAugVideo);
             // Chrome implementation
-            else if (window.webkitRequestAnimationFrame) window.webkitRequestAnimationFrame($scope.playVideo);
+            else if (window.webkitRequestAnimationFrame) window.webkitRequestAnimationFrame($scope.playAugVideo);
             // Other browsers that do not yet support feature
-            else setTimeout($scope.playVideo, 16.7);
+            else setTimeout($scope.playAugVideo, 16.7);
             $scope.drawAugmentedVideoOnCanvas();
         };
     })
