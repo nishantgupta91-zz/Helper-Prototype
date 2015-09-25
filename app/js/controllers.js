@@ -36,6 +36,7 @@ angular.module('mainApp')
             $scope.isVideoPaused = true;
             $scope.Math = window.Math;
             $scope.toggleRight = buildToggler('right');
+            $scope.savedSnapshotsData = [];
             $scope.playerControls = [
                 { name: 'Play', icon: 'play', show: true },
                 { name: 'Pause', icon: 'pause', show: true },
@@ -156,12 +157,12 @@ angular.module('mainApp')
                         $scope.toggleRight();
                         $scope.saveImage(playbackTime, durationSet);
                         /*$timeout(function () {
-                            console.log("removing...");
-                            var index = $scope.drawnText.indexOf(textToWrite);
-                            if(index > -1) {
-                                $scope.drawnText.splice(index, 1);
-                            }
-                        }, durationSet*1000);*/
+                         console.log("removing...");
+                         var index = $scope.drawnText.indexOf(textToWrite);
+                         if(index > -1) {
+                         $scope.drawnText.splice(index, 1);
+                         }
+                         }, durationSet*1000);*/
                     }, function() {
                         console.log('text duration dialog closed');
                     });
@@ -219,16 +220,16 @@ angular.module('mainApp')
 
                 var snapshotElement =
                     "<md-grid-list id=\"snapshotsList_" + playbackTime + "\" md-cols=\"1\" md-row-height=\"" +
-                        $scope.ctx.canvas.width + ":" + $scope.ctx.canvas.height + "\" " +
-                        "style=\"border: 1px solid green\">" +
-                            "<md-grid-tile id=\"snapshot_" + playbackTime + "\">" +
-                                "<img id=\"canvasImg_" + playbackTime + "\" " +
-                                    "style=\"position: relative; width: 100%; height: 100%;\">" +
-                                "<md-grid-tile-footer layout=\"row\" layout-align=\"space-between center\">" +
-                                    "<h3>Time : " + playbackTime + "</h3>" +
-                                    "<h3>Duration : " + duration + "</h3>" +
-                                "</md-grid-tile-footer>" +
-                            "</md-grid-tile>" +
+                    $scope.ctx.canvas.width + ":" + $scope.ctx.canvas.height + "\" " +
+                    "style=\"border: 1px solid green\">" +
+                    "<md-grid-tile id=\"snapshot_" + playbackTime + "\">" +
+                    "<img id=\"canvasImg_" + playbackTime + "\" " +
+                    "style=\"position: relative; width: 100%; height: 100%;\">" +
+                    "<md-grid-tile-footer layout=\"row\" layout-align=\"space-between center\">" +
+                    "<h3>Time : " + playbackTime + "</h3>" +
+                    "<h3>Duration : " + duration + "</h3>" +
+                    "</md-grid-tile-footer>" +
+                    "</md-grid-tile>" +
                     "</md-grid-list>";
                 var childNode = $compile(snapshotElement)($scope);
                 document.getElementById('snapshots').appendChild(childNode[0]);
@@ -236,6 +237,12 @@ angular.module('mainApp')
                 var dataURL = $scope.canvasElement.toDataURL();
                 // set canvasImg image src to dataURL so it can be saved as an image
                 document.getElementById('canvasImg_' + playbackTime).src = dataURL;
+                var savedSnapshot = {
+                    imageId: 'canvasImg_' + playbackTime,
+                    playbackTime: playbackTime,
+                    duration: duration
+                };
+                $scope.savedSnapshotsData.push(savedSnapshot);
             };
             $scope.mouseDownHandler = function($event) {
                 var backgroundObject = document.getElementById("videoBackgrounddata");
@@ -601,7 +608,8 @@ angular.module('mainApp')
                     templateUrl: 'app/partials/augmentedVideoDialog.html',
                     locals: {
                         canvasWidth: $scope.canvasElement.width,
-                        canvasHeight: $scope.canvasElement.height
+                        canvasHeight: $scope.canvasElement.height,
+                        snapshotsData: $scope.savedSnapshotsData
                     },
                     parent: angular.element(document.body)
                 })
@@ -646,7 +654,7 @@ angular.module('mainApp')
         };
     })
 
-    .controller('AugmentedVideoDialogController', function($scope, $mdDialog, canvasWidth, canvasHeight) {
+    .controller('AugmentedVideoDialogController', function($scope, $mdDialog, canvasWidth, canvasHeight, snapshotsData) {
         $scope.augPlayerControls = [
             { name: 'Play', icon: 'play', show: true },
             { name: 'Pause', icon: 'pause', show: true },
@@ -662,25 +670,9 @@ angular.module('mainApp')
         $scope.hide = function() {
             $mdDialog.hide();
         };
-
         $scope.cancel = function() {
             $mdDialog.cancel();
         };
-
-        $scope.drawAugmentedVideoOnCanvas = function() {
-            console.log("drawing augmented video... " + $scope.augCanvasWidth);
-            $scope.canvasElem = angular.element($('#augmentedVideoCanvas'))[0];
-            $scope.context = $scope.canvasElem.getContext('2d');
-            $scope.context.canvas.width = $scope.context.canvas.offsetWidth;
-            $scope.context.canvas.height = $scope.context.canvas.offsetHeight;
-            var backgroundObject = document.getElementById("videoBackgrounddata");
-            var width = ($scope.augCanvasWidth);
-            var height = ($scope.augCanvasHeight);
-            if ($scope.context) {
-                $scope.context.drawImage(backgroundObject, 0, 0, width, height);
-            }
-        };
-
         $scope.playAugVideo = function() {
             //$mdDialog.hide(1);
             if (window.requestAnimationFrame) window.requestAnimationFrame($scope.playAugVideo);
@@ -693,6 +685,25 @@ angular.module('mainApp')
             // Other browsers that do not yet support feature
             else setTimeout($scope.playAugVideo, 16.7);
             $scope.drawAugmentedVideoOnCanvas();
+        };
+        $scope.drawAugmentedVideoOnCanvas = function() {
+            $scope.canvasElem = angular.element($('#augmentedVideoCanvas'))[0];
+            if($scope.canvasElem) {
+                $scope.context = $scope.canvasElem.getContext('2d');
+                if($scope.context) {
+                    $scope.context.canvas.width = $scope.context.canvas.offsetWidth;
+                    $scope.context.canvas.height = $scope.context.canvas.offsetHeight;
+                    /*
+                    var backgroundObject = document.getElementById("videoBackgrounddata");
+                    backgroundObject.play();
+                    */
+                    var width = ($scope.augCanvasWidth);
+                    var height = ($scope.augCanvasHeight);
+                    console.log("drawing augmented video... ");
+                    var ee = document.getElementById(snapshotsData[0].imageId);
+                    $scope.context.drawImage(ee, 0, 0, width, height);
+                }
+            }
         };
     })
 
