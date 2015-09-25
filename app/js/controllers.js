@@ -654,7 +654,7 @@ angular.module('mainApp')
         };
     })
 
-    .controller('AugmentedVideoDialogController', function($scope, $mdDialog, canvasWidth, canvasHeight, snapshotsData) {
+    .controller('AugmentedVideoDialogController', function($scope, $timeout, $mdDialog, canvasWidth, canvasHeight, snapshotsData) {
         $scope.augPlayerControls = [
             { name: 'Play', icon: 'play', show: true },
             { name: 'Pause', icon: 'pause', show: true },
@@ -669,6 +669,7 @@ angular.module('mainApp')
         $scope.nextSnapshotTime;
         $scope.nextImageElem;
         $scope.nextDuration;
+        $scope.stopDrawing = false;
         $scope.augmentedVideoDialogIcons = [
             { name: 'Close', icon: 'close' }
         ];
@@ -681,23 +682,25 @@ angular.module('mainApp')
         $scope.playAugVideo = function() {
             $scope.backgroundObject.currentTime = 0;
             $scope.backgroundObject.play();
-            $scope.drawAugVideo();
-        };
-        $scope.drawAugVideo = function() {
             $scope.nextSnapshotTime = snapshotsData[$scope.iterator].playbackTime;
             $scope.nextImageElem = document.getElementById(snapshotsData[$scope.iterator].imageId);
             $scope.nextDuration = snapshotsData[$scope.iterator].duration;
-            //$mdDialog.hide(1);
-            if (window.requestAnimationFrame) window.requestAnimationFrame($scope.drawAugVideo);
-            // IE implementation
-            else if (window.msRequestAnimationFrame) window.msRequestAnimationFrame($scope.drawAugVideo);
-            // Firefox implementation
-            else if (window.mozRequestAnimationFrame) window.mozRequestAnimationFrame($scope.drawAugVideo);
-            // Chrome implementation
-            else if (window.webkitRequestAnimationFrame) window.webkitRequestAnimationFrame($scope.drawAugVideo);
-            // Other browsers that do not yet support feature
-            else setTimeout($scope.drawAugVideo, 16.7);
-            $scope.drawAugmentedVideoOnCanvas();
+            $scope.drawAugVideo();
+        };
+        $scope.drawAugVideo = function() {
+            if(!$scope.stopDrawing) {
+                //$mdDialog.hide(1);
+                if (window.requestAnimationFrame) window.requestAnimationFrame($scope.drawAugVideo);
+                // IE implementation
+                else if (window.msRequestAnimationFrame) window.msRequestAnimationFrame($scope.drawAugVideo);
+                // Firefox implementation
+                else if (window.mozRequestAnimationFrame) window.mozRequestAnimationFrame($scope.drawAugVideo);
+                // Chrome implementation
+                else if (window.webkitRequestAnimationFrame) window.webkitRequestAnimationFrame($scope.drawAugVideo);
+                // Other browsers that do not yet support feature
+                else setTimeout($scope.drawAugVideo, 16.7);
+                $scope.drawAugmentedVideoOnCanvas();
+            }
         };
         $scope.drawAugmentedVideoOnCanvas = function() {
             $scope.canvasElem = angular.element($('#augmentedVideoCanvas'))[0];
@@ -711,25 +714,40 @@ angular.module('mainApp')
                     var height = ($scope.augCanvasHeight);
                     console.log("drawing augmented video... : " + $scope.backgroundObject.currentTime);
                     console.log("$scope.nextSnapshotTime : " + $scope.nextSnapshotTime);
+                    console.log("$scope.nextDuration : " + $scope.nextDuration);
 
                     //for(var i = 0; i < snapshotsData.length;  i++) {
                         //var nextSnapshotTime = snapshotsData[i].playbackTime;
                         //var nextImageElem = document.getElementById(snapshotsData[i].imageId);
                         //var nextDuration = snapshotsData[i].duration;
 
-                        if(Math.abs($scope.backgroundObject.currentTime - $scope.nextSnapshotTime) < 0.1) {
+                        if(Math.abs($scope.backgroundObject.currentTime - $scope.nextSnapshotTime) < 0.15) {
                             $scope.backgroundObject.pause();
+                            $scope.stopDrawing = true;
+                            console.log("Drawing snapshot now....... ");
                             $scope.context.drawImage($scope.nextImageElem, 0, 0, width, height);
-                            if($scope.iterator < snapshotsData.length - 1)
-                            $scope.iterator++;
+                            if($scope.iterator < snapshotsData.length - 1) {
+                                $scope.iterator++;
+                            }
+                            $timeout(function() {
+                                $scope.updateSnapshotDetails();
+                            }, $scope.nextDuration * 1000);
                         } else {
                             //$scope.backgroundObject.play();
                             $scope.context.drawImage($scope.backgroundObject, 0, 0, width, height);
                         }
-                    //}
-
                 }
             }
+        };
+        $scope.updateSnapshotDetails = function() {
+            console.log("updateSnapshotDetails ...");
+            $scope.nextSnapshotTime = snapshotsData[$scope.iterator].playbackTime;
+            $scope.nextImageElem = document.getElementById(snapshotsData[$scope.iterator].imageId);
+            $scope.nextDuration = snapshotsData[$scope.iterator].duration;
+            $scope.stopDrawing = false;
+            $scope.backgroundObject.play();
+            $scope.backgroundObject.currentTime = $scope.backgroundObject.currentTime + 0.5;
+            $scope.drawAugVideo();
         };
     })
 

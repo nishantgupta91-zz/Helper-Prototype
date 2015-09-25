@@ -34,8 +34,8 @@
       <file leaf-file-name="controllers.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/js/controllers.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.50598294">
-              <caret line="719" column="104" selection-start-line="719" selection-start-column="104" selection-end-line="719" selection-end-column="104" />
+            <state vertical-scroll-proportion="0.82564104">
+              <caret line="749" column="22" selection-start-line="749" selection-start-column="22" selection-end-line="749" selection-end-column="22" />
               <folding>
                 <element signature="e#2066#2207#0" expanded="false" />
                 <element signature="e#2249#2603#0" expanded="false" />
@@ -46,14 +46,11 @@
                 <element signature="e#4196#4400#0" expanded="false" />
                 <element signature="e#4452#4612#0" expanded="false" />
                 <element signature="e#4684#6338#0" expanded="false" />
-                <element signature="e#6385#7889#0" expanded="false" />
-                <element signature="e#7989#9516#0" expanded="false" />
                 <element signature="e#12114#14176#0" expanded="false" />
                 <element signature="e#14233#17808#0" expanded="false" />
                 <element signature="e#17863#20450#0" expanded="false" />
                 <element signature="e#20490#20578#0" expanded="false" />
                 <element signature="e#20622#21279#0" expanded="false" />
-                <element signature="e#21324#22921#0" expanded="false" />
                 <element signature="e#22973#23326#0" expanded="false" />
                 <element signature="e#23376#23762#0" expanded="false" />
                 <element signature="e#23847#24575#0" expanded="false" />
@@ -440,14 +437,11 @@
             <element signature="e#4196#4400#0" expanded="false" />
             <element signature="e#4452#4612#0" expanded="false" />
             <element signature="e#4684#6338#0" expanded="false" />
-            <element signature="e#6385#7889#0" expanded="false" />
-            <element signature="e#7989#9516#0" expanded="false" />
             <element signature="e#12114#14176#0" expanded="false" />
             <element signature="e#14233#17808#0" expanded="false" />
             <element signature="e#17863#20450#0" expanded="false" />
             <element signature="e#20490#20578#0" expanded="false" />
             <element signature="e#20622#21279#0" expanded="false" />
-            <element signature="e#21324#22921#0" expanded="false" />
             <element signature="e#22973#23326#0" expanded="false" />
             <element signature="e#23376#23762#0" expanded="false" />
             <element signature="e#23847#24575#0" expanded="false" />
@@ -511,14 +505,11 @@
             <element signature="e#4196#4400#0" expanded="false" />
             <element signature="e#4452#4612#0" expanded="false" />
             <element signature="e#4684#6338#0" expanded="false" />
-            <element signature="e#6385#7889#0" expanded="false" />
-            <element signature="e#7989#9516#0" expanded="false" />
             <element signature="e#12114#14176#0" expanded="false" />
             <element signature="e#14233#17808#0" expanded="false" />
             <element signature="e#17863#20450#0" expanded="false" />
             <element signature="e#20490#20578#0" expanded="false" />
             <element signature="e#20622#21279#0" expanded="false" />
-            <element signature="e#21324#22921#0" expanded="false" />
             <element signature="e#22973#23326#0" expanded="false" />
             <element signature="e#23376#23762#0" expanded="false" />
             <element signature="e#23847#24575#0" expanded="false" />
@@ -589,14 +580,11 @@
             <element signature="e#4196#4400#0" expanded="false" />
             <element signature="e#4452#4612#0" expanded="false" />
             <element signature="e#4684#6338#0" expanded="false" />
-            <element signature="e#6385#7889#0" expanded="false" />
-            <element signature="e#7989#9516#0" expanded="false" />
             <element signature="e#12114#14176#0" expanded="false" />
             <element signature="e#14233#17808#0" expanded="false" />
             <element signature="e#17863#20450#0" expanded="false" />
             <element signature="e#20490#20578#0" expanded="false" />
             <element signature="e#20622#21279#0" expanded="false" />
-            <element signature="e#21324#22921#0" expanded="false" />
             <element signature="e#22973#23326#0" expanded="false" />
             <element signature="e#23376#23762#0" expanded="false" />
             <element signature="e#23847#24575#0" expanded="false" />
@@ -667,14 +655,11 @@
             <element signature="e#4196#4400#0" expanded="false" />
             <element signature="e#4452#4612#0" expanded="false" />
             <element signature="e#4684#6338#0" expanded="false" />
-            <element signature="e#6385#7889#0" expanded="false" />
-            <element signature="e#7989#9516#0" expanded="false" />
             <element signature="e#12114#14176#0" expanded="false" />
             <element signature="e#14233#17808#0" expanded="false" />
             <element signature="e#17863#20450#0" expanded="false" />
             <element signature="e#20490#20578#0" expanded="false" />
             <element signature="e#20622#21279#0" expanded="false" />
-            <element signature="e#21324#22921#0" expanded="false" />
             <element signature="e#22973#23326#0" expanded="false" />
             <element signature="e#23376#23762#0" expanded="false" />
             <element signature="e#23847#24575#0" expanded="false" />
@@ -899,8 +884,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/js/controllers.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.50598294">
-          <caret line="719" column="104" selection-start-line="719" selection-start-column="104" selection-end-line="719" selection-end-column="104" />
+        <state vertical-scroll-proportion="0.82564104">
+          <caret line="749" column="22" selection-start-line="749" selection-start-column="22" selection-end-line="749" selection-end-column="22" />
           <folding>
             <element signature="e#2066#2207#0" expanded="false" />
             <element signature="e#2249#2603#0" expanded="false" />
@@ -911,14 +896,11 @@
             <element signature="e#4196#4400#0" expanded="false" />
             <element signature="e#4452#4612#0" expanded="false" />
             <element signature="e#4684#6338#0" expanded="false" />
-            <element signature="e#6385#7889#0" expanded="false" />
-            <element signature="e#7989#9516#0" expanded="false" />
             <element signature="e#12114#14176#0" expanded="false" />
             <element signature="e#14233#17808#0" expanded="false" />
             <element signature="e#17863#20450#0" expanded="false" />
             <element signature="e#20490#20578#0" expanded="false" />
             <element signature="e#20622#21279#0" expanded="false" />
-            <element signature="e#21324#22921#0" expanded="false" />
             <element signature="e#22973#23326#0" expanded="false" />
             <element signature="e#23376#23762#0" expanded="false" />
             <element signature="e#23847#24575#0" expanded="false" />
