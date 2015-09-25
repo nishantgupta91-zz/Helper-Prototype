@@ -123,7 +123,7 @@ angular.module('mainApp')
                 var leftPos = $scope.lastX;
                 var topPos = $scope.lastY;
                 var contentStyle = '{\"background\":\"transparent\", \"position\":\"absolute\",' +
-                    '\"left\":\"' + leftPos + 'px\", \"top\":\"' + topPos + 'px\", \"width\":\"20%\", \"height\":\"10%\"}';
+                    '\"left\":\"' + leftPos + 'px\", \"top\":\"' + topPos + 'px\", \"width\":\"25%\", \"height\":\"25%\"}';
                 var newElement =
                     "<md-content id=\"" + idContainer + "\" ng-style='" + contentStyle + "' layout-padding layout='row'>" +
                     "<md-input-container>" +
@@ -140,7 +140,7 @@ angular.module('mainApp')
             $scope.saveSnapshot = function() {
                 var videoObject = document.getElementById("videoBackgrounddata");
                 var durationSet = 3;
-                var playbackTime = videoObject.currentTime
+                var playbackTime = videoObject.currentTime;
                 $mdDialog.show({
                     controller: 'SnapshotAttributesDialogController',
                     templateUrl: 'app/partials/snapshotAttributesDialog.html',
@@ -150,25 +150,29 @@ angular.module('mainApp')
                     .then(function(answer) {
                         durationSet = answer[0];
                         playbackTime = answer[1];
-                        //videoObject.play();
-                        //$scope.drawnCircles.push(textToWrite);
                         console.log("duration : " + durationSet);
                         console.log("playbackTime : " + playbackTime);
                         $scope.toggleRight();
                         $scope.saveImage(playbackTime, durationSet);
-                        /*$timeout(function () {
-                         console.log("removing...");
-                         var index = $scope.drawnText.indexOf(textToWrite);
-                         if(index > -1) {
-                         $scope.drawnText.splice(index, 1);
-                         }
-                         }, durationSet*1000);*/
                     }, function() {
                         console.log('text duration dialog closed');
                     });
             };
             $scope.applyText = function(textId, containerId, leftPos, topPos, color, videoObject) {
+                var textToWrite = {
+                    value: document.getElementById(textId).value,
+                    left: leftPos,
+                    top: topPos,
+                    color: color,
+                    duration: durationSet
+                };
                 var durationSet = 3;
+                $scope.drawnText.push(textToWrite);
+                console.log("duration : " + durationSet);
+                document.getElementById(containerId).style.display = "none";
+                //var playbackTime = videoObject.currentTime;
+                //$scope.saveImage(playbackTime, durationSet);
+                /*
                 $mdDialog.show({
                     controller: 'TextDurationDialogController',
                     templateUrl: 'app/partials/textDurationDialog.html',
@@ -192,13 +196,7 @@ angular.module('mainApp')
                     }, function() {
                         console.log('text duration dialog closed');
                     });
-                var textToWrite = {
-                    value: document.getElementById(textId).value,
-                    left: leftPos,
-                    top: topPos,
-                    color: color,
-                    duration: durationSet
-                };
+                */
             };
             $scope.saveImage = function(playbackTime, duration) {
                 var backgroundObject = document.getElementById("videoBackgrounddata");
@@ -209,6 +207,7 @@ angular.module('mainApp')
                 }
                 var imgData = $scope.ctx.getImageData(0, 0, $scope.canvasElement.width, $scope.canvasElement.height);
                 console.log("drawing video on canvas...");
+                // draw all strokes over canvas
                 $scope.ctx.putImageData(imgData, 0, 0);
                 $scope.ctx.beginPath();
                 $scope.drawPenStrokes();
@@ -217,6 +216,9 @@ angular.module('mainApp')
                 $scope.drawTriangleStrokes();
                 $scope.drawCircleStrokes();
                 $scope.drawTextStrokes();
+
+                // clear strokes data from respective arrays
+                $scope.clearDrawings();
 
                 var snapshotElement =
                     "<md-grid-list id=\"snapshotsList_" + playbackTime + "\" md-cols=\"1\" md-row-height=\"" +
@@ -498,6 +500,8 @@ angular.module('mainApp')
                 $scope.ctx.beginPath();
                 var numberOfTempLines = $scope.tempLines.length;
                 if(numberOfTempLines > 0) {
+                    // introduced drawVideoOnCanvas() here while moving from video to photo as base for drawing
+                    $scope.drawVideoOnCanvas();
                     $scope.ctx.moveTo($scope.tempLines[numberOfTempLines - 1].startX, $scope.tempLines[numberOfTempLines - 1].startY);
                     $scope.ctx.lineTo($scope.tempLines[numberOfTempLines - 1].endX, $scope.tempLines[numberOfTempLines - 1].endY);
                     //$scope.ctx.strokeStyle = $scope.strokeColor;//"#4bf";
@@ -520,6 +524,8 @@ angular.module('mainApp')
                 $scope.ctx.beginPath();
                 var numberOfTempCircles = $scope.tempCircles.length;
                 if(numberOfTempCircles > 0) {
+                    // introduced drawVideoOnCanvas() here while moving from video to photo as base for drawing
+                    $scope.drawVideoOnCanvas();
                     var radiusX = ($scope.tempCircles[numberOfTempCircles - 1].endX - $scope.tempCircles[numberOfTempCircles - 1].startX) * 0.5;
                     var radiusY = ($scope.tempCircles[numberOfTempCircles - 1].endY - $scope.tempCircles[numberOfTempCircles - 1].startY) * 0.5;
                     var centerX = $scope.tempCircles[numberOfTempCircles - 1].startX + radiusX;
@@ -561,6 +567,8 @@ angular.module('mainApp')
                 $scope.ctx.beginPath();
                 var numberOfTempTriangles = $scope.tempTriangles.length;
                 if(numberOfTempTriangles > 0) {
+                    // introduced drawVideoOnCanvas() here while moving from video to photo as base for drawing
+                    $scope.drawVideoOnCanvas();
                     $scope.ctx.moveTo($scope.tempTriangles[numberOfTempTriangles - 1].startX, $scope.tempTriangles[numberOfTempTriangles - 1].startY);
                     $scope.ctx.lineTo($scope.tempTriangles[numberOfTempTriangles - 1].endX, $scope.tempTriangles[numberOfTempTriangles - 1].endY);
                     $scope.ctx.lineTo($scope.tempTriangles[numberOfTempTriangles - 1].thirdX, $scope.tempTriangles[numberOfTempTriangles - 1].thirdY);
@@ -585,6 +593,8 @@ angular.module('mainApp')
                 $scope.ctx.beginPath();
                 var numberOfTempRectangles = $scope.tempRectangles.length;
                 if(numberOfTempRectangles > 0) {
+                    // introduced drawVideoOnCanvas() here while moving from video to photo as base for drawing
+                    $scope.drawVideoOnCanvas();
                     $scope.ctx.rect($scope.tempRectangles[numberOfTempRectangles - 1].startX,
                         $scope.tempRectangles[numberOfTempRectangles - 1].startY,
                         $scope.tempRectangles[numberOfTempRectangles - 1].sizeX,
@@ -716,26 +726,21 @@ angular.module('mainApp')
                     console.log("$scope.nextSnapshotTime : " + $scope.nextSnapshotTime);
                     console.log("$scope.nextDuration : " + $scope.nextDuration);
 
-                    //for(var i = 0; i < snapshotsData.length;  i++) {
-                        //var nextSnapshotTime = snapshotsData[i].playbackTime;
-                        //var nextImageElem = document.getElementById(snapshotsData[i].imageId);
-                        //var nextDuration = snapshotsData[i].duration;
-
-                        if(Math.abs($scope.backgroundObject.currentTime - $scope.nextSnapshotTime) < 0.15) {
-                            $scope.backgroundObject.pause();
-                            $scope.stopDrawing = true;
-                            console.log("Drawing snapshot now....... ");
-                            $scope.context.drawImage($scope.nextImageElem, 0, 0, width, height);
-                            if($scope.iterator < snapshotsData.length - 1) {
-                                $scope.iterator++;
-                            }
-                            $timeout(function() {
-                                $scope.updateSnapshotDetails();
-                            }, $scope.nextDuration * 1000);
-                        } else {
-                            //$scope.backgroundObject.play();
-                            $scope.context.drawImage($scope.backgroundObject, 0, 0, width, height);
+                    if(Math.abs($scope.backgroundObject.currentTime - $scope.nextSnapshotTime) < 0.15) {
+                        $scope.backgroundObject.pause();
+                        $scope.stopDrawing = true;
+                        console.log("Drawing snapshot now....... ");
+                        $scope.context.drawImage($scope.nextImageElem, 0, 0, width, height);
+                        if($scope.iterator < snapshotsData.length - 1) {
+                            $scope.iterator++;
                         }
+                        $timeout(function() {
+                            $scope.updateSnapshotDetails();
+                        }, $scope.nextDuration * 1000);
+                    } else {
+                        //$scope.backgroundObject.play();
+                        $scope.context.drawImage($scope.backgroundObject, 0, 0, width, height);
+                    }
                 }
             }
         };
