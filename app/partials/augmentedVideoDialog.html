@@ -13,15 +13,17 @@
             id="augmentedVideoCanvas">
         <p>Sorry your browser does not support HTML5</p>
     </canvas>
-                <span ng-click="playAugVideo()">
+    <section layout="row">
+        <span ng-click="playAugVideo()">
                 <md-icon id="playIcon" md-svg-src="{{augPlayerControls[0].icon}}">
                     <md-tooltip>{{augPlayerControls[0].name}}</md-tooltip>
                 </md-icon>
                 </span>
-    <!--<div class="md-actions" layout="row">
-        <md-button ng-click="playAugVideo('apply')" style="margin-right:20px;" >
-            Play Video
-        </md-button>
-    </div>-->
+        <span ng-click="pauseAugVideo()">
+                <md-icon id="pauseIcon" md-svg-src="{{augPlayerControls[1].icon}}">
+                    <md-tooltip>{{augPlayerControls[1].name}}</md-tooltip>
+                </md-icon>
+        </span>
+    </section>
     <!--</md-dialog-content>-->
 </md-dialog>

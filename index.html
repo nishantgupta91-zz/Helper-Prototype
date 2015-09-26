@@ -22,28 +22,28 @@
             <section flex layout="row">
                 <md-content flex>
                     <div id="whiteFrameContainer"layout="row" layout-align="center center" ng-controller="MainController">
-                        <section flex="75" layout-padding layout="column" layout-align="space-around center" layout-fill>
+                        <section flex="75" layout-padding layout="column" layout-align="start center" layout-fill>
                             <canvas id="outputCanvas" layout-fill
                                     ng-mousedown="mouseDownHandler($event)"
                                     ng-mousemove="mouseMoveHandler($event)"
                                     ng-mouseup="mouseUpHandler($event)">
                                 <p>Sorry your browser does not support HTML5</p>
                             </canvas>
+                            <section layout="row" layout-align="start center">
+                                <md-button ng-click="toggleRight()" class="md-raised md-primary">
+                                    Toggle right
+                                </md-button>
+                                <md-button ng-click="saveSnapshot()" class="md-raised md-primary">
+                                    Save
+                                </md-button>
+                                <md-button ng-click="playAugmentedVideo()" class="md-raised md-primary">
+                                    Play
+                                </md-button>
+                            </section>
                         </section>
                         <section flex layout-padding layout="column" layout-align="space-between center" layout-fill>
                             <section>
                                 <video-player></video-player>
-                            </section>
-                            <section>
-                                <md-button ng-click="toggleRight()" class="md-primary">
-                                    Toggle right
-                                </md-button>
-                                <md-button ng-click="saveSnapshot()" class="md-primary">
-                                    Save
-                                </md-button>
-                                <md-button ng-click="playAugmentedVideo()" class="md-primary">
-                                    Play
-                                </md-button>
                             </section>
                             <section layout-padding layout="row" layout-align="center center">
                                 <my-toolbox></my-toolbox>

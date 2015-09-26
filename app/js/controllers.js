@@ -718,6 +718,7 @@ angular.module('mainApp')
         $scope.nextImageElem;
         $scope.nextDuration;
         $scope.stopDrawing = false;
+        $scope.videoOnceStarted = false;
         $scope.augmentedVideoDialogIcons = [
             { name: 'Close', icon: 'close' }
         ];
@@ -727,12 +728,18 @@ angular.module('mainApp')
         $scope.cancel = function() {
             $mdDialog.cancel();
         };
+        $scope.pauseAugVideo = function() {
+            $scope.backgroundObject.pause();
+        };
         $scope.playAugVideo = function() {
-            $scope.backgroundObject.currentTime = 0;
+            if(!$scope.videoOnceStarted) {
+                $scope.backgroundObject.currentTime = 0;
+            }
             $scope.backgroundObject.play();
             $scope.nextSnapshotTime = snapshotsData[$scope.iterator].playbackTime;
             $scope.nextImageElem = document.getElementById(snapshotsData[$scope.iterator].imageId);
             $scope.nextDuration = snapshotsData[$scope.iterator].duration;
+            $scope.videoOnceStarted = true;
             $scope.drawAugVideo();
         };
         $scope.drawAugVideo = function() {
