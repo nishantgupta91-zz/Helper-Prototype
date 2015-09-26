@@ -1,6 +1,6 @@
 <input id="upload" type="file" onchange="angular.element(this).scope().getVideoFile()"
        accept=".mp4" ng-model="files" ng-multiple="false" style="display: none;">
-<md-button id="addVideoButton" class="md-fab md-primary md-fab-bottom-right right" aria-label="Add" ng-click="openFileDialog()">
+<md-button id="addVideoButton" class="md-fab md-primary" aria-label="Add" ng-click="openFileDialog()">
     <md-tooltip>{{ items[0].name }}</md-tooltip>
     <md-icon md-svg-src="{{ items[0].icon }}"></md-icon>
 </md-button>
